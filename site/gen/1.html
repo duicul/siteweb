@@ -1,0 +1,100 @@
+<html>
+<head>
+<script>
+function showHint() {
+    var xmlhttp = new XMLHttpRequest();
+	var temp=document.getElementById("temp").value;
+	var humid=document.getElementById("humid").value;
+	var heat=document.getElementById("heat").value;
+	document.getElementById("txtHint").innerHTML = temp+" "+humid+" "+heat;
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "test.py?temp=" + temp+"&humid="+humid+"&heat="+heat, true);
+        xmlhttp.send();
+    }
+function search() {
+    var xmlhttp = new XMLHttpRequest();
+	var temp=document.getElementById("temp").value;
+	var humid=document.getElementById("humid").value;
+	var heat=document.getElementById("heat").value;
+	document.getElementById("txtHint").innerHTML = temp+" "+humid+" "+heat;
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "search.py?search=" + temp, true);
+        xmlhttp.send();
+    }
+</script>
+<link rel="stylesheet" href="/site/bootstrap.css">
+<script src="/site/bootstrap.js"></script>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
+ <a class="navbar-brand" href="/site/">Stiri</a>
+  <form action="search.py" class="navbar-form navbar-left ">
+		<div class="input-group">
+		<input type="search" class="form-control" placeholder="Search" name="search">
+		<div class="input-group-btn">
+		<button type="submit" class="btn btn-default">Search</button>
+		</div>
+		</div>
+	</form>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
+	<ul class="nav navbar-nav mr-auto">
+		<li class="active nav-link"><a href="1/">Business </a></li>
+		<li class="nav-link"><a href="1/">Divertisment </a></li>
+		<li class="nav-link"><a href="1/">Sport </a></li>
+		<li class="nav-link"><a href="1/">General </a></li>
+	</ul>
+	<form action="ext.py" class="navbar-form navbar-left ">
+		<div class="input-group">
+		<input type="search" class="form-control" placeholder="Extensie" name="ext">
+		<div class="input-group-btn">
+		<button type="submit" class="btn btn-default">Extensie</button>
+		</div>
+		</div>
+	</form>
+	<ul class="nav navbar-nav navbar-right mr-auto">
+	<li class="nav-link"><a href="1/">Login</a></li>
+	<li class="nav-link"><a href="1/">Signup</a></li>
+	</ul>
+</div>	
+
+</nav>
+<div class="container-fluid">
+<div class="row">
+	<div class="col-3"></div>
+	<div class="col-6">
+<form action="test.py" method="get" name="dataget">
+Temperature: <input type="text" name="temp" id="temp">  <br />
+Humidity: <input type="text" name="humid" id="humid">  <br />
+Heat Index: <input type="text" name="heat" id="heat">  
+<input type="submit" value="Submit"/>
+<input type="button" value="apasa" onClick="showHint()"/>
+<input type="button" value="search" onClick="search()"/>
+</form>
+<form action="search.py" method="get" name="dataget">
+Search: <input type="text" name="search">  <br />
+Extensie: <input type="text" name="ext"> <br/>
+<input type="submit" value="Cauta"/>
+</form>
+<p id="txtHint">Not row of code</p>
+</div>
+<div class="col-3"></div>
+	</div></div>
+	<script src="/site/jquery-3.2.1.slim.min.js"></script>
+	<script src="/site/popper.min.js"></script>
+	<script src="/site/bootstrap.min.js"></script>
+	</body>
+</html>
