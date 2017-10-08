@@ -1,3 +1,4 @@
+alert("merge site.js");
 function showHint() {
     var xmlhttp = new XMLHttpRequest();
 	var temp=document.getElementById("temp").value;
@@ -64,3 +65,15 @@ function logout()
         xmlhttp.send();
 	 log();
 	}
+function addcom{
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("test").innerHTML = this.responseText;
+			}
+        };
+        xmlhttp.open("POST", "addcomm.php?txt="+document.getElementById("addcom").value, true);
+        xmlhttp.send();
+	showCom();
+	 log();	
+}
