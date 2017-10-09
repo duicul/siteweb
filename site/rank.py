@@ -28,17 +28,10 @@ try:
          q="<br><a href=\"/site/"+row[2]+"/"+aux+".html\">"+row[1]+"</a><br>"
          print q
          count=count+1
-         print "<h1>YESb<br></h1>"
          if count>=10:
             break
 except:
-   print "No DataBase"           
-print "<h1>YESa<br></h1>"     
+   print "No DataBase"             
 db.close()
-print "<h1>YES<br></h1>"
-x={5:"a",6:"b",7:"c",1:"d",2:"e",3:"f"}
-print x,"<br>"
-for i in sorted(x):
-  print i,x[i]
 print "</body>"
 print "</html>"
