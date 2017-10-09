@@ -105,10 +105,10 @@ function artins(){
 
 function link()
 {	    var a ="<ul class=\"navbar-nav mr-auto\"\>";
-	    a+="<li class=\"nav-link\"><a href=\"/site/bus/\">Business </a></li>";
-		a+="<li class=\"nav-link\"><a href=\"/site/div/\">Divertisment </a></li>";
-		a+="<li class=\"nav-link\"><a href=\"/site/spo/\">Sport </a></li>";
-		a+="<li class=\"nav-link\"><a href=\"/site/gen/\">General </a></li>";
+	    a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/bus/\">Business </a></li>";
+		a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/div/\">Divertisment </a></li>";
+		a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/spo/\">Sport </a></li>";
+		a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/gen/\">General </a></li>";
 	    a+="</ul>";
         document.getElementById("link").innerHTML=a;	
 }
