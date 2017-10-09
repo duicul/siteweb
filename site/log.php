@@ -4,10 +4,10 @@
             
                if(isset($_SESSION['name']))
           {echo "<li class=\"nav-link\">  Hello ".$_SESSION['name']." ".$_SESSION['mail']."</li>";
-		   echo "<li class=\"nav-link\"><a href=\"#\" onClick=\"logout();\">Logout</a></li>"; 
+		   echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"#\" onClick=\"logout();\">Logout</a></li>"; 
 		  }
-	      else { echo "<li class=\"nav-link\"><a href=\"/site/login.html\">Login</a></li>";
-	             echo "<li class=\"nav-link\"><a href=\"/site/signup.html\">Signup</a></li>";}
+	      else { echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/login.html\">Login</a></li>";
+	             echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/signup.html\">Signup</a></li>";}
         echo "</ul>";
 
 ?>
