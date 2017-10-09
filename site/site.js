@@ -54,7 +54,7 @@ function log()
                 document.getElementById("log").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("POST", "log.php?", true);
+        xmlhttp.open("POST", "/site/log.php?", true);
         xmlhttp.send();
 	 showuser();
 	}
