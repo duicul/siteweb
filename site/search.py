@@ -63,7 +63,7 @@ for i in range(10) if len(lista)>10 else range(len(lista)):
                   print row[1],row[0][0:3],row[0][3:]
                   aux=row[0]
                   print aux
-                  q="<a href=\"/site/"+aux[0:3]+"/"+aux[3:]+".html\">"+row[1]+"</a><br>"
+                  q="<a href=\"/site/"+row[2]+"/"+aux+".html\">"+row[1]+"</a><br>"
                   print q
                   print "<h1>YESb<br></h1>" 
               except:

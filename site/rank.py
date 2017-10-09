@@ -25,7 +25,7 @@ try:
    for row in results:
       if len(row)!=0:
          aux=row[0]
-         q="<br><a href=\"/site/"+aux[0:3]+"/"+aux[3:]+".html\">"+row[1]+"</a><br>"
+         q="<br><a href=\"/site/"+row[2]+"/"+aux+".html\">"+row[1]+"</a><br>"
          print q
          count=count+1
          print "<h1>YESb<br></h1>"

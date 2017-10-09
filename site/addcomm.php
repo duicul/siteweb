@@ -11,9 +11,11 @@ if(isset($_SESSION['user']))
 {$user=$_SESSION['user'];}
 else {$user="anonymous";}
 	echo $_POST['txt'];
-    echo $_POST['user'];
+    echo $user;
+   $aux=$_POST['txt'];
    echo $_SERVER["REQUEST_URI"];
-$$sql="INSERT INTO user (UID,AID,TYPE,TEXT) VALUES ('".$user."','".basename($_SERVER['PHP_SELF'],".html")."','".$_SERVER["REQUEST_URI"]."','".$_POST['txt']."',".$aux.")";
+$sql="INSERT INTO comment (USERNAME,AID,TYPE,TEXT) VALUES ('".$user."','sport','spo','".$aux."')";
+	/*('".$user."','".basename($_SERVER['PHP_SELF'],".php")."','".$_SERVER["REQUEST_URI"]."','".$_POST['txt']."')";*/
 echo $sql;
 //0-name 1-username 2-password 3-mail
 if ($conn->connect_error) {

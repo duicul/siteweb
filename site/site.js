@@ -1,4 +1,7 @@
-alert("merge site.js");
+var user="0";
+var nam="1";
+var mail="2";
+var aux;
 function showHint() {
     var xmlhttp = new XMLHttpRequest();
 	var temp=document.getElementById("temp").value;
@@ -53,6 +56,7 @@ function log()
         };
         xmlhttp.open("POST", "log.php?", true);
         xmlhttp.send();
+	 showuser();
 	}
 function logout()
 	{var xmlhttp = new XMLHttpRequest();
@@ -65,14 +69,25 @@ function logout()
         xmlhttp.send();
 	 log();
 	}
-function addcom{
+function showuser(){
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("username").innerHTML = this.responseText;
+			}
+        };
+        xmlhttp.open("GET", "logdata.php", true);
+        xmlhttp.send();
+	
+}
+function addcom(){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("test").innerHTML = this.responseText;
 			}
         };
-        xmlhttp.open("POST", "addcomm.php?txt="+document.getElementById("addcom").value, true);
+        xmlhttp.open("GET", "addcomm.php?txt="+document.getElementById("addcom").value, true);
         xmlhttp.send();
 	showCom();
 	 log();	

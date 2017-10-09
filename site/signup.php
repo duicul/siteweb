@@ -7,16 +7,16 @@ $dname="site";
 // Create connection
 //$conn = new mysqli($servername,$username,$password,$dname);
 $conn=new mysqli($servername,$username,$password,$dname);
-echo $_GET['user'];
-echo $_GET['password'];
-echo $_GET['name'];
-echo $_GET['mail'];
+echo $_POST['user'];
+echo $_POST['password'];
+echo $_POST['name'];
+echo $_POST['mail'];
 
 if (!isset($_POST['admin']))
 $aux="0";
 else $aux=$_POST['admin'];
 
-$sql="INSERT INTO user (NAME,USERNAME,PASSWORD,MAIL,ADMIN) VALUES ('".$_GET['name']."','".$_GET['user']."','".$_GET['password']."','".$_GET['mail']."',".$aux.")";
+$sql="INSERT INTO user (NAME,USERNAME,PASSWORD,MAIL,ADMIN) VALUES ('".$_GET['name']."','".$_POST['user']."','".$_POST['password']."','".$_POST['mail']."',".$aux.")";
 // Check connection
 echo $sql;
 //0-name 1-username 2-password 3-mail
