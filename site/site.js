@@ -90,5 +90,31 @@ function addcom(){
         xmlhttp.open("GET", "addcomm.php?txt="+document.getElementById("addcom").value, true);
         xmlhttp.send();
 	showCom();
-	 log();	
+	 log();}
+
+function artins(){
+	var xmlhttp = new XMLHttpRequest();
+	document.getElementById("test").innerHTML="gogu";
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("test").innerHTML = this.responseText+"artins.php?fname="+document.getElementById("fname@art").value+"&title="+document.getElementById("title@art").value+"&type="+document.getElementById("type@art").value;
+			}
+        };
+        xmlhttp.open("GET", "artins.php?fname="+document.getElementById("fname@art").value+"&title="+document.getElementById("title@art").value+"&type="+document.getElementById("type@art").value, true);
+        xmlhttp.send();}
+
+function link()
+{	    var a ="<ul class=\"navbar-nav mr-auto\"\>";
+	    a+="<li class=\"nav-link\"><a href=\"/site/bus/\">Business </a></li>";
+		a+="<li class=\"nav-link\"><a href=\"/site/div/\">Divertisment </a></li>";
+		a+="<li class=\"nav-link\"><a href=\"/site/spo/\">Sport </a></li>";
+		a+="<li class=\"nav-link\"><a href=\"/site/gen/\">General </a></li>";
+	    a+="</ul>";
+        document.getElementById("link").innerHTML=a;	
+}
+function start(){
+	rate();
+	showCom();
+	log();
+	link();
 }
