@@ -33,6 +33,7 @@ if ($conn->connect_error) {
     $_SESSION['user'] = $row['USERNAME'];
     $_SESSION['name'] = $row['NAME'];
     $_SESSION['mail'] = $row['MAIL'];
+	$_SESSION['admin']=$row['ADMIN'];
 	echo "Session<br>";
     echo $_SESSION['user']."<br>";
 	echo $_SESSION['name']."<br>"; 
