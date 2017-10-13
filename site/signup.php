@@ -13,10 +13,10 @@ echo $_POST['name'];
 echo $_POST['mail'];
 
 if (!isset($_POST['admin']))
-$aux="0";
+$aux=0;
 else $aux=$_POST['admin'];
 
-$sql="INSERT INTO user (NAME,USERNAME,PASSWORD,MAIL,ADMIN) VALUES ('".$_GET['name']."','".$_POST['user']."','".$_POST['password']."','".$_POST['mail']."',".$aux.")";
+$sql="INSERT INTO user (NAME,USERNAME,PASSWORD,MAIL,ADMIN) VALUES ('".$_POST['name']."','".$_POST['user']."','".$_POST['password']."','".$_POST['mail']."',".$aux.")";
 // Check connection
 echo $sql;
 //0-name 1-username 2-password 3-mail

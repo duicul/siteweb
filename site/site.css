@@ -1,4 +1,36 @@
 a.linkbutton:hover{
 				background-color: #F30808;
 	            text-decoration: none;
-			}
+	            color: aliceblue;			
+}
+
+a.linkbutton{
+	padding: 0;	
+}
+
+.user_com{
+	padding: 30;
+	margin: 100;
+}
+
+.user_com{
+	  border:outset green;
+	  margin: 100;
+}
+
+.user_com:hover{
+	  border: outset red;
+}
+
+.txt_com{
+	border:outset blue;
+	padding: 20;
+}
+
+.point:hover{
+	cursor:pointer;
+}
+
+div.star1:hover{
+	border: red;
+}
