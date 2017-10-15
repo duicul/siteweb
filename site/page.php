@@ -17,11 +17,43 @@ $dname="site";
 $conn=new mysqli($servername,$username,$password,$dname);
 //echo $_GET['id'];
 //echo $_GET['type'];
+if (isset($_SERVER['HTTP_CLIENT_IP']))
+        $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+    else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    else if(isset($_SERVER['HTTP_X_FORWARDED']))
+        $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+    else if(isset($_SERVER['HTTP_FORWARDED_FOR']))
+        $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+    else if(isset($_SERVER['HTTP_FORWARDED']))
+        $ipaddress = $_SERVER['HTTP_FORWARDED'];
+    else if(isset($_SERVER['REMOTE_ADDR']))
+        $ipaddress = $_SERVER['REMOTE_ADDR'];
+    else
+        $ipaddress = 'UNKNOWN';
+$sql="INSERT INTO visit (AID,IP) VALUES ('".$_GET['id']."','".$ipaddress."')";
+	echo $sql."<br>";
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+     $result = $conn->query($sql);
+	
+$sql="SELECT COUNT(AID) as NUMAR FROM visit WHERE AID='".$_GET['id']."'";
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+     $result = $conn->query($sql);
+	
+	$row = mysqli_fetch_assoc($result);
+	echo $row['NUMAR'];
+	
+$sql="UPDATE article SET RATE='".$row['NUMAR']."' WHERE ID='".$_GET['id']."' AND TYPE='".$_GET['type']."'";
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+     $result = $conn->query($sql);
+	
 $sql="SELECT * FROM article WHERE ID='".$_GET['id']."' AND TYPE='".$_GET['type']."'";
-
-// Check connection
-//echo $sql;
-//0-name 1-username 2-password 3-mail
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -40,21 +72,14 @@ if ($conn->connect_error) {
 	
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
  <a class="nav-link linkbutton" href="/site/">Stiri</a>
-  <form action="search.py" class="navbar-form navbar-left">
-		<div class="input-group">
-		<input type="search" class="form-control" placeholder="Search" name="search">
-		<div class="input-group-btn">
-		<button type="submit" class="btn btn-default">Search</button>
-		</div>
-		</div>
-	</form>
+  <div id="loadsearch"></div>
    <div id="link" class="mr-auto"></div>
-    <p  id="log"></p>   
+    <div  id="log"></div>   
 
 </nav>
 
 
-<div class="container-fluid" style="background:rgba(32,172,208,0.52)">
+<div class="container-fluid">
 <div class="row">
 	<div class="col-2"></div>
 	
@@ -64,7 +89,11 @@ if ($conn->connect_error) {
 
 <p>Articol creat de : <?php echo $row['USERNAME'];?></p>
 
-<img src="/site/img/<?php echo $row['IMG'];?>" width="500" height="200">
+<?php 
+if(strlen($row['IMG'])>0)
+{echo "<img src=\"/site/img/";
+echo $row['IMG']."\" width=\"500\" height=\"200\">";}
+?>
 
 <br>
 <?php echo $row['TXT']; ?>		

@@ -25,7 +25,7 @@ function showHint() {
                 document.getElementById("txtHint").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", "/site/test.py?temp=" + temp+"&humid="+humid+"&heat="+heat, true);
+        xmlhttp.open("GET", "/site/script/test.py?temp=" + temp+"&humid="+humid+"&heat="+heat, true);
         xmlhttp.send();}
 
 function showCom(aid) {
@@ -36,7 +36,7 @@ function showCom(aid) {
             }
         };
 	if(aid!=undefined)
-	{xmlhttp.open("GET", "/site/comment.php?aid="+String(aid), true);
+	{xmlhttp.open("GET", "/site/script/comment.php?aid="+String(aid), true);
         xmlhttp.send();}}
 
 function showstar(aid){
@@ -47,7 +47,7 @@ function showstar(aid){
             }
         };
 	if(aid!=undefined)
-	{xmlhttp.open("GET", "/site/showstar.php?aid="+String(aid), true);
+	{xmlhttp.open("GET", "/site/script/showstar.php?aid="+String(aid), true);
         xmlhttp.send();}
 	
 	
@@ -60,7 +60,7 @@ function search() {
                 document.getElementById("txtHint").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", "/site/search.py?search=" + temp, true);
+        xmlhttp.open("GET", "/site/script/search.py?search=" + temp, true);
         xmlhttp.send();
     }
 
@@ -71,8 +71,7 @@ function rate(tip){
                 document.getElementById("rank").innerHTML = this.responseText;
             }
         };
-	    //alert(tip);
-        xmlhttp.open("GET", "/site/rank.py?tip="+tip, true);
+        xmlhttp.open("GET", "/site/script/rank.py?tip="+tip, true);
         xmlhttp.send();
 	
     }
@@ -84,7 +83,7 @@ function log(){
                 document.getElementById("log").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("POST", "/site/log.php?", true);
+        xmlhttp.open("POST", "/site/script/log.php?", true);
         xmlhttp.send();}
 
 function logout(aid){
@@ -94,12 +93,22 @@ function logout(aid){
                 //document.getElementById("log").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", "/site/logout.php?", true);
+        xmlhttp.open("GET", "/site/script/logout.php?", true);
         xmlhttp.send();
 	 log();
-	 if(len(aid)>0)
+	 if(aid!=undefined)
 	 {showCom(aid);
      showstar(aid);}}
+
+function loadsearch(tip){
+	 var q="<form action=\"/site/script/search.php\" method=\"get\" class=\"navbar-form navbar-left\">";
+	    q+="<div class=\"input-group\">"; 
+		q+="<input type=\"search\" class=\"form-control\" placeholder=\"Search\" name=\"search\">";
+	    q+="<input type=\"hidden\" name=\"tip\" value=\""+tip+"\">";
+		q+="<div class=\"input-group-btn\">";
+		q+="<button type=\"submit\" class=\"btn btn-default\">Search</button>";
+		q+="</div></div></form>";
+	document.getElementById("loadsearch").innerHTML=q;}
 
 function showuser(){
 	var xmlhttp = new XMLHttpRequest();
@@ -108,7 +117,7 @@ function showuser(){
                 document.getElementById("username").innerHTML = this.responseText;
 			}
         };
-        xmlhttp.open("GET", "/site/logdata.php", true);
+        xmlhttp.open("GET", "/site/script/logdata.php", true);
         xmlhttp.send();}
 
 function addcom(user,aid){
@@ -120,7 +129,7 @@ function addcom(user,aid){
         };
 	var q="txt="+document.getElementById("addcom").value+"&user="+user+"&aid="+aid;
 	if(aid!=undefined)
-	{xmlhttp.open("GET", "/site/addcomm.php?"+q, true);
+	{xmlhttp.open("GET", "/site/script/addcomm.php?"+q, true);
         xmlhttp.send();
 	showCom(aid);
 	alert(q);}
@@ -137,30 +146,59 @@ function remcom(cid,aid){
 	var q="cid="+cid;
 	alert(q);
 	if(cid!=undefined)
-	{xmlhttp.open("GET", "/site/remcomm.php?"+q, true);
+	{xmlhttp.open("GET", "/site/script/remcomm.php?"+q, true);
 	 xmlhttp.send();
 	showCom(aid);}
 	 log();}
 
 function artins(){
 	var xmlhttp = new XMLHttpRequest();
-	document.getElementById("test").innerHTML="gogu";
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("test").innerHTML = this.responseText+"artins.php?fname="+document.getElementById("fname@art").value+"&title="+document.getElementById("title@art").value+"&type="+document.getElementById("type@art").value;
 			}
         };
-        xmlhttp.open("GET", "/site/artins.php?fname="+document.getElementById("fname@art").value+"&title="+document.getElementById("title@art").value+"&type="+document.getElementById("type@art").value, true);
+        xmlhttp.open("GET", "/site/script/artins.php?fname="+document.getElementById("fname@art").value+"&title="+document.getElementById("title@art").value+"&type="+document.getElementById("type@art").value, true);
         xmlhttp.send();}
 
+function listdel(){
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("artdel").innerHTML = this.responseText;
+			}
+        };
+        xmlhttp.open("GET", "/site/script/artlistdel.php?", true);
+        xmlhttp.send();}
+
+function artdel(aid){
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("test").innerHTML = this.responseText;
+			}
+        };
+        xmlhttp.open("GET", "/site/script/artdel.php?aid="+aid, true);
+        xmlhttp.send();
+        listdel();}
+
 function link(){
-	    var a ="<ul class=\"navbar-nav mr-auto\"\>";
-	    a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/bus/\">Business </a></li>";
-		a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/div/\">Divertisment </a></li>";
-		a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/spo/\">Sport </a></li>";
-		a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/gen/\">General </a></li>";
-	    a+="</ul>";
+var a="";
+   //a+="<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collink\" aria-controls=\"navbarTogglerDemo01\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"><span class=\"navbar-toggler-icon\"></span></button>";
+   a+="<div id=\"collink\">";
+   a+="<ul class=\"navbar-nav mr-auto\">";
+   a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/pagemain.php?tip=bus\">Business </a></li>";
+   a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/pagemain.php?tip=div\">Divertisment </a></li>";
+   a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/pagemain.php?tip=spo\">Sport </a></li>";
+   a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/pagemain.php?tip=gen\">General </a></li>";
+   a+="</ul></div>";
         document.getElementById("link").innerHTML=a;}
+
+function startmain(tip){
+	rate(tip);
+    log();
+	link();
+	loadsearch(tip);}
 
 function start(tip,aid,user){
 	rate(tip);
@@ -168,6 +206,7 @@ function start(tip,aid,user){
 	getscore(aid);
 	log();
 	link();
+	loadsearch(tip);
     showstar(aid);
     }
     
@@ -178,7 +217,7 @@ function rating(val,aid){
                 document.getElementById("sol").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", "/site/rate.php?val="+val+"&aid="+aid, true);
+        xmlhttp.open("GET", "/site/script/rate.php?val="+val+"&aid="+aid, true);
         xmlhttp.send();
 	 log();
      showCom(aid);
@@ -192,7 +231,7 @@ function getscore(aid){
                 document.getElementById("score").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", "/site/getscore.php?aid="+aid, true);
+        xmlhttp.open("GET", "/site/script/getscore.php?aid="+aid, true);
         xmlhttp.send();
 	 log();
      showCom(aid);
