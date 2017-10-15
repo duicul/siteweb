@@ -31,6 +31,12 @@ a.linkbutton{
 	cursor:pointer;
 }
 
+.alink{text-decoration: none;}
+
 div.star1:hover{
 	border: red;
+}
+
+body{
+	background:rgba(32,172,208,0.52);
 }

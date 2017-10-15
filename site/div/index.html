@@ -6,22 +6,15 @@
     <link rel="stylesheet" href="/site/font-awesome/css/font-awesome.min.css">
 </head>
 
-<body onLoad="start('div')">
+<body onLoad="start('div');" >
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
  <a class="nav-link linkbutton" href="/site/">Stiri</a>
-  <form action="search.py" class="navbar-form navbar-left">
-		<div class="input-group">
-		<input type="search" class="form-control" placeholder="Search" name="search">
-		<div class="input-group-btn">
-		<button type="submit" class="btn btn-default">Search</button>
-		</div>
-		</div>
-	</form>
-   
-	<div id="link" class="mr-auto"></div>
-    <p  id="log"></p>   
+  <div id="loadsearch"></div>
+   <div id="link" class="mr-auto"></div>
+    <div  id="log"></div> 
 
 </nav>
+
 <div class="container-fluid" style="background:rgba(32,172,208,0.52)">
 <div class="row">
 	<div class="col-3" ></div>
