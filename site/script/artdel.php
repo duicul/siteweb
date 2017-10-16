@@ -18,35 +18,12 @@ if(sizeof($row)==0||$row['ADMIN']==0)
 {}
 else
 {print_r($row);
- $sql="DELETE FROM article WHERE ID='".$_GET['aid']."'";
+ $sql="DELETE a.*,c.*,vi.*,vo.* FROM article a INNER JOIN visit vi ON a.ID=vi.AID INNER JOIN vote vo ON vo.AID=a.ID INNER JOIN comment c ON a.ID=c.AID WHERE a.ID='".$_GET['aid']."'";
  echo $sql;
- if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-     $result = $conn->query($sql);
-
- $sql="DELETE FROM visit WHERE AID='".$_GET['aid']."'";
- echo $sql;
- if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-     $result = $conn->query($sql);
- 
-  $sql="DELETE FROM vote WHERE AID='".$_GET['aid']."'";
- echo $sql;
- if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-     $result = $conn->query($sql);
- 
-  $sql="DELETE FROM comment WHERE AID='".$_GET['aid']."'";
- echo $sql;
- if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-     $result = $conn->query($sql);
-
- 
+ $result=$conn->query($sql);
+ if($result)
+ {echo "result"; }
+ else echo"no result";
 }}}}
 $conn->close();
 echo "Connected successfully";
