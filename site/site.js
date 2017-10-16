@@ -76,6 +76,18 @@ function rate(tip){
 	
     }
 
+function score(tip){
+    var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("topscore").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "/site/script/score.php?tip="+tip, true);
+        xmlhttp.send();
+	
+    }
+
 function log(){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -171,6 +183,16 @@ function listdel(){
         xmlhttp.open("GET", "/site/script/artlistdel.php?", true);
         xmlhttp.send();}
 
+function mainlistdel(){
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("maindel").innerHTML = this.responseText;
+			}
+        };
+        xmlhttp.open("GET", "/site/script/mainlistdel.php", true);
+        xmlhttp.send();}
+
 function artdel(aid){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -182,26 +204,38 @@ function artdel(aid){
         xmlhttp.send();
         listdel();}
 
+function maindel(tip){
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("test").innerHTML = this.responseText;
+			}
+        };
+        xmlhttp.open("GET", "/site/script/maindel.php?tip="+tip, true);
+        xmlhttp.send();
+        mainlistdel();
+        link();}
+
 function link(){
-var a="";
-   //a+="<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#collink\" aria-controls=\"navbarTogglerDemo01\" aria-expanded=\"false\" aria-label=\"Toggle navigation\"><span class=\"navbar-toggler-icon\"></span></button>";
-   a+="<div id=\"collink\">";
-   a+="<ul class=\"navbar-nav mr-auto\">";
-   a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/pagemain.php?tip=bus\">Business </a></li>";
-   a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/pagemain.php?tip=div\">Divertisment </a></li>";
-   a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/pagemain.php?tip=spo\">Sport </a></li>";
-   a+="<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/pagemain.php?tip=gen\">General </a></li>";
-   a+="</ul></div>";
-        document.getElementById("link").innerHTML=a;}
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("link").innerHTML = this.responseText;
+			}
+        };
+        xmlhttp.open("GET", "/site/script/category.php", true);
+        xmlhttp.send();}
 
 function startmain(tip){
 	rate(tip);
+	score(tip);
     log();
 	link();
 	loadsearch(tip);}
 
 function start(tip,aid,user){
 	rate(tip);
+	score(tip);
 	showCom(aid);
 	getscore(aid);
 	log();
@@ -222,7 +256,9 @@ function rating(val,aid){
 	 log();
      showCom(aid);
      getscore(aid);
-     showstar(aid);} 
+     showstar(aid);
+     //score();
+} 
 
 function getscore(aid){
 	var xmlhttp = new XMLHttpRequest();

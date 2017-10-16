@@ -25,7 +25,7 @@ if ($conn->connect_error) {
 		$aux=$_SESSION['user'];
 	else $aux='anonymous';
 	?>
-
+<title>Remove article</title>
 </head>
 
 <body onLoad="startmain('none','<?php echo $aux ?>');listdel();">

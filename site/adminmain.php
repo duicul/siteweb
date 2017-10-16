@@ -26,20 +26,15 @@ if ($conn->connect_error) {
 	else $aux='anonymous';
 	print_r($rows);
 ?>
+<title>Add change article</title>
 </head>
-<body onLoad="log(); link();">
+<body onLoad="startmain('none','<?php echo $aux ?>')">
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
  <a class="nav-link linkbutton" href="/site/">Stiri</a>
-  <form action="search.py" class="navbar-form navbar-left">
-		<div class="input-group">
-		<input type="search" class="form-control" placeholder="Search" name="search">
-		<div class="input-group-btn">
-		<button type="submit" class="btn btn-default">Search</button>
-		</div>
-		</div>
-	</form>
+  <div id="loadsearch"></div>
    <div id="link" class="mr-auto"></div>
-    <p  id="log"></p>   
+    <div  id="log"></div>   
+
 </nav>
 
 <div class="container-fluid">
@@ -47,7 +42,7 @@ if ($conn->connect_error) {
 	<div class="col-2"></div>
 	
 	<div class="col-7" style="background: rgba(255,255,255,1.00)">
-<form action="artins.php" method="post" enctype="multipart/form-data">
+<form action="/site/script/artinschange.php" method="post" enctype="multipart/form-data">
 Photo: <input type="file" name="file@art">  <br />
 Title:<input type="text" name="title@art">  <br />
 Type: <select name="type@art">

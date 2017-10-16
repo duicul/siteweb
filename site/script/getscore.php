@@ -23,7 +23,7 @@ if($result=$conn->query($sql))
  }
  echo "<div class=\"progress\" style=\"align:center;width:50%;\"><div class=\"progress-bar\" role=\"progressbar\"";
  echo "aria-valuenow=\"".($medie*20)."\" aria-valuemin=\"0\" aria-valuemax=\"100\"";
- echo "style=\"width:".($medie*20)."%;font-size: 1.5rem;height:2rem;\">".($medie/1)."*</div></div>";
+ echo "style=\"width:".($medie*20)."%;font-size: 1.5rem;height:2rem;\">".($medie/1)."<i class=\"point fa fa-star-o\"></i></div></div>";
 $conn->close();
 //echo "Connected successfully";
 ?> 

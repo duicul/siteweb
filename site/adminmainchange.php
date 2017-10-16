@@ -26,6 +26,7 @@ if ($conn->connect_error) {
 	else $aux='anonymous';
 	print_r($rows);
 ?>
+<title>Change main page</title>
 </head>
 <body onLoad="log(); link();">
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
@@ -50,10 +51,11 @@ if ($conn->connect_error) {
 <form action="/site/script/mainchange.php" method="post" enctype="multipart/form-data">
 Photo: <input type="file" name="file@art">  <br />
 Title:<input type="text" name="title@art">  <br />
-Type: <select name="type@art">
-       <?php foreach($rows as $row)
-	         echo "<option value=\"".$row[0]."\">".$row[1]."</option>";?>
-</select>  <br /> 
+Type: <input type="text" name="type@art">  <br />
+Types: <?php foreach($rows as $row)
+	   echo $row[0]."  ";
+	?>
+	<br/>
 Txt:<br/> <textarea name="txt@art" maxlength="5000" cols="70" rows="20" required ></textarea>  <br /> 
 <input type="submit" value="Submit"/>
 </form>

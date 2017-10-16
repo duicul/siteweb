@@ -20,6 +20,7 @@ try:
    cursor.execute(sql)
    # Fetch all the rows in a list of lists.
    results = cursor.fetchall()
+   #print results
    count=0
    for row in results:
       if len(row)!=0:
@@ -31,10 +32,12 @@ try:
             print "<img align=\"left\" src=\"/site/img/"+row[4]+"\" width=\"100\" height=\"80\"\"></img>"
          print "</a>"
          print row[3][:40]+"...."
-         print "</p><br>"
+         print "</p>"
+         print "Views: "+str(row[6])+"<br>"
          count=count+1
          if count>=10:
             break
 except:
    print "No DataBase"             
 db.close()
+print "<br>"

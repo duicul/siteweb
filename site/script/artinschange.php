@@ -79,7 +79,7 @@ if(sizeof($row)>0)
 else    	
 {$aux=$_POST['txt@art'];
 $aux=preg_replace(".\\n.","<br/>",$aux);
-$sql="INSERT INTO article (TITLE,TYPE,TXT,IMG,USERNAME) VALUES ('".$_POST['title@art']."','".$_POST['type@art']."','".$aux."','".$file."','".$_SESSION['user']."')";
+$sql="INSERT INTO article (TITLE,TYPE,TXT,IMG) VALUES ('".$_POST['title@art']."','".$_POST['type@art']."','".$aux."','".$file."')";
 // 'Check connection
 echo $sql;
 //0-name 1-username 2-password 3-mail

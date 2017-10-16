@@ -1,4 +1,4 @@
- <?php
+<?php
 session_start();
 $servername = "localhost";
 $username = "root";
@@ -6,8 +6,6 @@ $password = "";
 $dname="site";
 if(!isset($_SESSION['user']))
 	header('Location: '.$uri.'/site/');
-// Create connection
-//$conn = new mysqli($servername,$username,$password,$dname);
 $conn=new mysqli($servername,$username,$password,$dname);
 $target_dir=dirname(getcwd())."\img\\";
 $target_file = $target_dir . basename($_FILES["file@art"]["name"]);
@@ -39,6 +37,7 @@ if ($uploadOk == 0) {
 }
 
 $sql="SELECT * FROM mainpage WHERE TYPE='".$_POST['type@art']."'";
+echo $sql."<br>";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -75,6 +74,22 @@ if(sizeof($row)>0)
      $result = $conn->query($sql);}  
 	  echo $_POST['txt@art'];
 }
+else    	
+{$aux=$_POST['txt@art'];
+$aux=preg_replace(".\\n.","<br/>",$aux);
+$sql="INSERT INTO mainpage (TITLE,TYPE,TXT,IMG) VALUES ('".$_POST['title@art']."','".$_POST['type@art']."','".$aux."','".$file."')";
+// 'Check connection
+echo $sql;
+//0-name 1-username 2-password 3-mail
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+if($conn->query($sql)==TRUE)
+echo "User added";
+else {echo "User <b>not</b> added<br>";
+     echo "Error: " . $sql . "<br>" . $conn->error."<br>";}
+ 
 $conn->close();
 echo "Connected successfully";
+}
 ?> 

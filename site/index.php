@@ -25,7 +25,7 @@ if ($conn->connect_error) {
 		$aux=$_SESSION['user'];
 	else $aux='anonymous';
 	?>
-
+   <title><?php echo $row['TITLE']; ?></title>
 </head>
 
 <body onLoad="startmain('none','<?php echo $aux ?>')">
@@ -68,7 +68,10 @@ echo $row['IMG']."\" width=\"500\" height=\"200\">";}
 </div>
 		
 <div class="col-3">
+<h3>Most Visited</h3>
 <p id="rank"></p>
+<h3>Top score</h3>
+<p id="topscore"></p>
 </div>
 </div></div>
    

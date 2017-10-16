@@ -26,6 +26,7 @@ if ($conn->connect_error) {
 	else $aux='anonymous';
 	print_r($rows);
 ?>
+<title>Add change article</title>
 </head>
 <body onLoad="startmain('none','<?php echo $aux ?>')">
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
