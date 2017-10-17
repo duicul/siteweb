@@ -72,7 +72,7 @@ if(sizeof($var)>0)
 	{ //echo $key;
 	 echo "<br>";
 	 //echo $rows[$key][4];
-	 echo "<a href=\"/site/page.php?id=".$rows[$key][0]."&bus=".$rows[$key][0]."\">";
+	 echo "<a href=\"/site/page.php?id=".$rows[$key][0]."&type=".$rows[$key][5]."\">";
 	 if(strlen($rows[$key][4])>0)
 	 {echo "<img src=\"/site/img/".$rows[$key][4]."\" width=\"100\" height=\"80\">";}
 	 echo $rows[$key][2]."</a><br>";		
