@@ -1,5 +1,6 @@
  <?php
-session_start();
+if(session_status()==PHP_SESSION_NONE)
+{session_start();}
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -8,7 +9,10 @@ $dname="site";
 // Create connection
 //$conn = new mysqli($servername,$username,$password,$dname);
 $conn=new mysqli($servername,$username,$password,$dname);
-$sql="SELECT * FROM article";
+if($_GET['tip']=="all")
+	$cond="";
+else $cond="WHERE TYPE='".$_GET['tip']."'";
+$sql="SELECT * FROM article ".$cond;
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }

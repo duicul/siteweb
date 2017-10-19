@@ -15,8 +15,9 @@ echo $_POST['mail'];
 if (!isset($_POST['admin']))
 $aux=0;
 else $aux=$_POST['admin'];
-
-$sql="INSERT INTO user (NAME,USERNAME,PASSWORD,MAIL,ADMIN) VALUES ('".$_POST['name']."','".$_POST['user']."','".$_POST['password']."','".$_POST['mail']."',".$aux.")";
+$password=hash('sha3-512',$_POST['password']);
+echo $password."<br>".strlen($password);
+$sql="INSERT INTO user (NAME,USERNAME,PASSWORD,MAIL,ADMIN) VALUES ('".$_POST['name']."','".$_POST['user']."','".$password."','".$_POST['mail']."',".$aux.")";
 // Check connection
 echo $sql;
 //0-name 1-username 2-password 3-mail
@@ -30,5 +31,5 @@ else {echo "User <b>not</b> added<br>";
    
 $conn->close();
 echo "Connected successfully";
-header('Location: '.$uri.'/site/');
+//header('Location: '.$uri.'/site/');
 ?> 

@@ -32,7 +32,7 @@ if (isset($_SERVER['HTTP_CLIENT_IP']))
     else
         $ipaddress = 'UNKNOWN';
 $sql="INSERT INTO visit (AID,IP) VALUES ('".$_GET['id']."','".$ipaddress."')";
-	echo $sql."<br>";
+	//echo $sql."<br>";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -45,7 +45,7 @@ if ($conn->connect_error) {
      $result = $conn->query($sql);
 	
 	$row = mysqli_fetch_assoc($result);
-	echo $row['NUMAR'];
+	//echo $row['NUMAR'];
 	
 $sql="UPDATE article SET RATE='".$row['NUMAR']."' WHERE ID='".$_GET['id']."' AND TYPE='".$_GET['type']."'";
 if ($conn->connect_error) {
@@ -74,6 +74,7 @@ if ($conn->connect_error) {
  <a class="nav-link linkbutton" href="/site/">Stiri</a>
   <div id="loadsearch"></div>
    <div id="link" class="mr-auto"></div>
+   <span id="logdata"></span>
     <div  id="log"></div>   
 
 </nav>
@@ -91,28 +92,26 @@ if ($conn->connect_error) {
 
 <?php 
 if(strlen($row['IMG'])>0)
-{echo "<img src=\"/site/img/";
-echo $row['IMG']."\" width=\"500\" height=\"200\">";}
+{echo "<img style=\"width:100%;\" src=\"/site/img/";
+echo $row['IMG']."\" height=\"200\">";}
 ?>
 
 <br>
 <?php echo $row['TXT']; ?>		
-<p id="txtHint">Not row of code</p>
+<p id="txtHint"></p>
 <p id="score" align="right"></p>
 <p align="right" id="rate"></p>
-<p id="sol">sfd</p>
+<p id="sol"></p>
 <p align="right" id="star"></p> 
 <br>
 <p id="username"></p>
 <p id="test"></p>
 
 <?php echo $aux;?>
-<br>
-<button onClick="alert('gogu');">Post</button>
-<textarea rows="5"  id="addcom" class="form-control-plaintext" style="height:200;border:outset"></textarea><br>
 <button type="submit" class="btn-outline-success" onClick="addcom('<?php echo $aux;?>','<?php echo $_GET['id']?>');">Post</button>
-
-<p id="resp">hgh</p>
+<br>
+<textarea rows="5"  id="addcom" class="form-control-plaintext" style="height:200;border:outset"></textarea><br>
+<p id="resp"></p>
 <br>
 <br>
 <p id="comm"> Comments</p>

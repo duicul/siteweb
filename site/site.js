@@ -88,6 +88,16 @@ function score(tip){
 	
     }
 
+function logdata(){
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("logdata").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("POST", "/site/script/logdata.php?", true);
+        xmlhttp.send();}
+
 function log(){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -96,7 +106,54 @@ function log(){
             }
         };
         xmlhttp.open("POST", "/site/script/log.php?", true);
-        xmlhttp.send();}
+        xmlhttp.send();
+        logdata();}
+
+function login(){
+	var url =  "/site/script/login.php";
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+				if(this.responseText.length>2)
+				{  document.getElementById("loginresp").className="alert alert-danger";
+				   document.getElementById("loginresp").innerHTML = this.responseText;
+				}
+                else {$("#loginModal").modal("toggle");
+					 logdata();
+                     log();
+					}
+			}};
+	var username = document.getElementById("userlogin").value;
+	var password = document.getElementById("passwordlogin").value;
+    var formData = new FormData();
+    formData.append("password", password);
+	formData.append("user",username);
+    xmlhttp.open("POST",url, true);
+    xmlhttp.send(formData);}
+
+function signup(){
+	var url =  "/site/script/signup.php";
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+			}};
+	var username = document.getElementById("usersignup").value;
+	var password = document.getElementById("passwordsignup").value;
+	var name = document.getElementById("namesignup").value;
+	var mail = document.getElementById("mailsignup").value;
+    var formData = new FormData();
+    formData.append("password", password);
+	formData.append("user",username);
+	formData.append("name",name);
+	formData.append("mail",mail);
+	if(password===document.getElementById("passwordsignup1").value)
+	{$("#signupModal").modal("toggle");
+	log();
+	logdata();
+	xmlhttp.open("POST",url, true);
+    xmlhttp.send(formData);
+	xmlhttp.close();
+	}}
 
 function logout(aid){
 	var xmlhttp = new XMLHttpRequest();
@@ -137,13 +194,13 @@ function addcom(user,aid){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("resp").innerHTML = this.responseText;
+				showCom(aid);
 			}
         };
 	var q="txt="+document.getElementById("addcom").value+"&user="+user+"&aid="+aid;
 	if(aid!=undefined)
 	{xmlhttp.open("GET", "/site/script/addcomm.php?"+q, true);
         xmlhttp.send();
-	showCom(aid);
 	alert(q);}
 	 log();
 	 document.getElementById("addcom").value="";}
@@ -163,24 +220,58 @@ function remcom(cid,aid){
 	showCom(aid);}
 	 log();}
 
+function testpass(){
+	var a=document.getElementById("passwordsignup").value;
+var b=document.getElementById("passwordsignup1").value;
+ if(a!==b&&b.length>=3)
+ {document.getElementById("passresp").innerHTML="Password does not match";}
+ else {document.getElementById("passresp").innerHTML="";}
+	 
+}
+
 function artins(){
+	var url = "/site/script/artinschange.php";
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("test").innerHTML = this.responseText+"artins.php?fname="+document.getElementById("fname@art").value+"&title="+document.getElementById("title@art").value+"&type="+document.getElementById("type@art").value;
-			}
+                alert(this.responseText);			}
         };
-        xmlhttp.open("GET", "/site/script/artins.php?fname="+document.getElementById("fname@art").value+"&title="+document.getElementById("title@art").value+"&type="+document.getElementById("type@art").value, true);
-        xmlhttp.send();}
+	if(document.getElementById("type@art").value.length>0)
+	{var file = document.getElementById("file@art").files[0];
+    var formData = new FormData();
+    formData.append("file@art", file);
+	formData.append("title@art", document.getElementById("title@art").value);
+	formData.append("type@art", document.getElementById("type@art").value);
+	formData.append("txt@art", document.getElementById("txt@art").value);
+    xmlhttp.open("POST",url, true);
+    xmlhttp.send(formData);}}
 
-function listdel(){
+function mainins(){
+	var url = "/site/script/mainchange.php";
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                alert(this.responseText);
+			    link();}
+        };
+	if(document.getElementById("type@main").value.length>0)
+	{var file = document.getElementById("file@main").files[0];
+    var formData = new FormData();
+    formData.append("file@main", file);
+	formData.append("title@main", document.getElementById("title@main").value);
+	formData.append("type@main", document.getElementById("type@main").value);
+	formData.append("txt@main", document.getElementById("txt@main").value);
+    xmlhttp.open("POST",url, true);
+    xmlhttp.send(formData);}}
+
+function listdel(tip){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("artdel").innerHTML = this.responseText;
 			}
         };
-        xmlhttp.open("GET", "/site/script/artlistdel.php?", true);
+        xmlhttp.open("GET", "/site/script/artlistdel.php?tip="+tip, true);
         xmlhttp.send();}
 
 function mainlistdel(){
@@ -202,7 +293,9 @@ function artdel(aid){
         };
         xmlhttp.open("GET", "/site/script/artdel.php?aid="+aid, true);
         xmlhttp.send();
-        listdel();}
+        listdel('all');
+	    score('all');
+        }
 
 function maindel(tip){
 	var xmlhttp = new XMLHttpRequest();

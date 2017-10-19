@@ -46,7 +46,6 @@ if ($conn->connect_error) {
 <div class="container-fluid">
 <div class="row">
 	<div class="col-2"></div>
-	
 	<div class="col-7" style="background: rgba(255,255,255,1.00)">
 <form action="/site/script/mainchange.php" method="post" enctype="multipart/form-data">
 Photo: <input type="file" name="file@art">  <br />

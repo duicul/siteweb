@@ -1,4 +1,4 @@
- <?php
+<?php
 session_start();
 $servername = "localhost";
 $username = "root";
@@ -17,17 +17,18 @@ if($result)
 if(sizeof($row)==0||$row['ADMIN']==0)
 {}
 else
-{print_r($row);
- $sql="DELETE a.*,c.*,m.*,vi.*,vo.* FROM mainpage m INNER JOIN article a ON m.TYPE=a.TYPE INNER JOIN visit vi ON a.ID=vi.AID INNER JOIN vote vo ON vo.AID=a.ID INNER JOIN comment c ON a.ID=c.AID WHERE a.TYPE='".$_GET['tip']."'";
+{//print_r($row);
+ $sql="DELETE a.*,c.*,m.*,vi.*,vo.* FROM mainpage m left JOIN article a ON m.TYPE=a.TYPE left JOIN visit vi ON a.ID=vi.AID left JOIN vote vo ON vo.AID=a.ID left JOIN comment c ON a.ID=c.AID WHERE m.TYPE='".$_GET['tip']."'";
  echo $sql;
  if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
      $result = $conn->query($sql);
     if($result)
-		echo "result";
+	{//print_r(mysqli_fetch_all($result));
+		echo "result";}
   else echo "no result";
 }}}}
 $conn->close();
-echo "Connected successfully";
+echo "Connected successinnery";
 ?> 

@@ -25,7 +25,7 @@ if ($conn->connect_error) {
 	}
 }
 
-$sql="SELECT * FROM comment WHERE CID=".$_GET['cid'];
+$sql="SELECT * FROM comment WHERE CID='".$_GET['cid']."'";
 // Check connection
 echo $sql;
 //0-name 1-username 2-password 3-mail
@@ -36,7 +36,7 @@ if ($conn->connect_error) {
     if($result)
 	{$row=mysqli_fetch_assoc($result);
     if(isset($_SESSION['user'])&&($row['UID']==$_SESSION['user']||$admin==1))
-	{$sql="DELETE FROM comment WHERE CID=".$_GET['cid'];
+	{$sql="DELETE FROM comment WHERE CID='".$_GET['cid']."'";
 echo $sql;
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

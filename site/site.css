@@ -5,7 +5,11 @@ a.linkbutton:hover{
 }
 
 a.linkbutton{
-	padding: 0;	
+	padding: 10px;	
+}
+body .modal-open{
+	width: 1560px;
+    margin-left: -280px;
 }
 
 .user_com{
@@ -29,6 +33,11 @@ a.linkbutton{
 
 .point:hover{
 	cursor:pointer;
+}
+
+.btn_mod:hover{
+	background: rgba(0,0,200,1.00);
+	color:aliceblue;
 }
 
 .alink{text-decoration: none;}

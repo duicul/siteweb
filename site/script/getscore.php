@@ -9,8 +9,8 @@ session_start();
 $medie=0;
 $conn=new mysqli($servername,$username,$password,$dname);
 //echo $_GET['aid'];
-$sql="SELECT AVG(SCORE) AS MEDIE FROM vote WHERE AID=".$_GET['aid'];
-echo $sql;
+$sql="SELECT AVG(SCORE) AS MEDIE FROM vote WHERE AID='".$_GET['aid']."'";
+//echo $sql;
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -19,7 +19,7 @@ if($result=$conn->query($sql))
 
  $row=mysqli_fetch_assoc($result);
  $medie=$row['MEDIE'];
- echo "<br>".$medie."<br>";
+ //echo "<br>".$medie."<br>";
  }
  echo "<div class=\"progress\" style=\"align:center;width:50%;\"><div class=\"progress-bar\" role=\"progressbar\"";
  echo "aria-valuenow=\"".($medie*20)."\" aria-valuemin=\"0\" aria-valuemax=\"100\"";

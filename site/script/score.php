@@ -28,14 +28,14 @@ if ($conn->connect_error) {
    
    //print_r($row);
     echo "<p>";
-    $q="<br><a class=\"alink\" href=\"/site/page.php?id=".$row[0]."&type=".$row[3]."\">".$row[1]."  ";
+    $q="<a class=\"alink\" href=\"/site/page.php?id=".$row[0]."&type=".$row[3]."\">".$row[1]."  ";
      $q.=($row[6]/1)."<i class=\"point fa fa-star-o\"></i><br>";
     echo $q;
     if(strlen($row[4])>0)
     echo "<img align=\"left\" src=\"/site/img/".$row[4]."\" width=\"100\" height=\"80\"\"></img>";
     echo "</a>";
     echo substr($row[2],0,40)."....";
-    echo "</p><br>";
+    echo "</p><br><br>";
 }}else
 	echo "no result";
   $conn->close();

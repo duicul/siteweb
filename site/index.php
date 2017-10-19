@@ -34,6 +34,7 @@ if ($conn->connect_error) {
  <a class="nav-link linkbutton" href="/site/">Stiri</a>
   <div id="loadsearch"></div>
    <div id="link" class="mr-auto"></div>
+   <span id="logdata"></span>
     <div  id="log"></div>   
 
 </nav>
@@ -41,8 +42,11 @@ if ($conn->connect_error) {
 
 <div class="container-fluid">
 <div class="row">
-	<div class="col-2"></div>
-	
+	<div class="col-2">
+<h3>Top score</h3>
+<p id="topscore"></p>
+	</div>
+
 <div class="col-7" style="background: rgba(255,255,255,1.00)">
 
 <h2 align="center"><?php echo $row['TITLE']; ?></h2>
@@ -55,10 +59,10 @@ echo $row['IMG']."\" width=\"500\" height=\"200\">";}
 
 <br>
 <?php echo $row['TXT']; ?>		
-<p id="txtHint">Not row of code</p>
+<p id="txtHint"></p>
 <p id="score" align="right"></p>
 <p align="right" id="rate"></p>
-<p id="sol">sfd</p>
+<p id="sol"></p>
 <p align="right" id="star"></p> 
 <br>
 <p id="username"></p>
@@ -70,8 +74,6 @@ echo $row['IMG']."\" width=\"500\" height=\"200\">";}
 <div class="col-3">
 <h3>Most Visited</h3>
 <p id="rank"></p>
-<h3>Top score</h3>
-<p id="topscore"></p>
 </div>
 </div></div>
    

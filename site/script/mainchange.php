@@ -8,7 +8,7 @@ if(!isset($_SESSION['user']))
 	header('Location: '.$uri.'/site/');
 $conn=new mysqli($servername,$username,$password,$dname);
 $target_dir=dirname(getcwd())."\img\\";
-$target_file = $target_dir . basename($_FILES["file@art"]["name"]);
+$target_file = $target_dir . basename($_FILES["file@main"]["name"]);
 $uploadOk = 1;
 $filename=pathinfo($target_file,PATHINFO_FILENAME);
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
@@ -18,7 +18,7 @@ if (file_exists($target_file)) {
     //$uploadOk = 0;
 }
 // Check file size
-if ($_FILES["file@art"]["size"] > 500000) {
+if ($_FILES["file@main"]["size"] > 500000) {
     echo "Sorry, your file is too large.";
     $uploadOk = 0;
 	header('Location: '.$uri.'/site/');
@@ -27,16 +27,16 @@ if ($uploadOk == 0) {
     echo "Sorry, your file was not uploaded.";
 // if everything is ok, try to upload file
 } else {
-    if (move_uploaded_file($_FILES["file@art"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $_FILES["file@art"]["name"]). " has been uploaded.";
-		$file=basename( $_FILES["file@art"]["name"]);
+    if (move_uploaded_file($_FILES["file@main"]["tmp_name"], $target_file)) {
+        echo "The file ". basename( $_FILES["file@main"]["name"]). " has been uploaded.";
+		$file=basename( $_FILES["file@main"]["name"]);
     } else {
         echo "Sorry, there was an error uploading your file.";
 		$file="";
     }
 }
 
-$sql="SELECT * FROM mainpage WHERE TYPE='".$_POST['type@art']."'";
+$sql="SELECT * FROM mainpage WHERE TYPE='".$_POST['type@main']."'";
 echo $sql."<br>";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -50,34 +50,34 @@ if(sizeof($row)>0)
 {$val="";
 	if(strlen($file)!=0)
 	{$val=" IMG='".$file."'";
-    $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@art']."'";
+    $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@main']."'";
      echo $sql."<br>";
     if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     }
      $result = $conn->query($sql);} 
-    if(isset($_POST['txt@art'])&&strlen($_POST['txt@art'])>2)
-	{$val=" TXT='".$_POST['txt@art']."'";
-     $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@art']."'";
+    if(isset($_POST['txt@main'])&&strlen($_POST['txt@main'])>2)
+	{$val=" TXT='".$_POST['txt@main']."'";
+     $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@main']."'";
      echo $sql."<br>";
       if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     }
       $result = $conn->query($sql);}     
-	 if(isset($_POST['title@art'])&&strlen($_POST['title@art'])!=0)
-	 {$val=" TITLE='".$_POST['title@art']."' ";
-      $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@art']."'";
+	 if(isset($_POST['title@main'])&&strlen($_POST['title@main'])!=0)
+	 {$val=" TITLE='".$_POST['title@main']."' ";
+      $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@main']."'";
      echo $sql."<br>";
      if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
      }
      $result = $conn->query($sql);}  
-	  echo $_POST['txt@art'];
+	  echo $_POST['txt@main'];
 }
 else    	
-{$aux=$_POST['txt@art'];
+{$aux=$_POST['txt@main'];
 $aux=preg_replace(".\\n.","<br/>",$aux);
-$sql="INSERT INTO mainpage (TITLE,TYPE,TXT,IMG) VALUES ('".$_POST['title@art']."','".$_POST['type@art']."','".$aux."','".$file."')";
+$sql="INSERT INTO mainpage (TITLE,TYPE,TXT,IMG) VALUES ('".htmlspecialchars($_POST['title@main'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlspecialchars($_POST['type@main'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlspecialchars($aux,$flags=ENT_QUOTES|ENT_HTML5)."','".$file."')";
 // 'Check connection
 echo $sql;
 //0-name 1-username 2-password 3-mail

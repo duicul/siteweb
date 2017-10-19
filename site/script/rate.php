@@ -11,25 +11,27 @@ if(isset($_SESSION['user']))
 echo $_GET['val'];
 echo $_GET['aid'];
  
-$sql="SELECT * FROM vote WHERE UID='".$_SESSION['user']."' AND AID=".$_GET['aid'];
-echo $sql;  
+$sql="SELECT * FROM vote WHERE UID='".$_SESSION['user']."' AND AID='".$_GET['aid']."'";
+//echo $sql;  
 if ($conn->connect_error) {
 	echo "connect eror <br>";
     die("Connection failed: " . $conn->connect_error);
 	
 }
- echo "a";
+ //echo "a";
  $result=$conn->query($sql);
- echo "b";
-if($result=$conn->query($sql))
-{ echo "pass";
+ //echo "b";
+if($result)
+{ //echo "pass";
 if($result->num_rows>0)
-{echo "update<br>";
+{//echo "update<br>";
 $sql="UPDATE vote SET SCORE='".$_GET['val']."' WHERE UID='".$_SESSION['user']."' AND AID='".$_GET['aid']."'";	
-echo $sql;
+//echo $sql;
  if($conn->query($sql)==TRUE)
-echo "update";
- else "not updated";
+ {//echo "update";
+ }
+ else {//echo "not updated";
+}
 }
 else
 {$sql="INSERT INTO vote (UID,AID,SCORE) VALUES ('".$_SESSION['user']."','".$_GET['aid']."','".$_GET['val']."')";
