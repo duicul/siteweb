@@ -5,7 +5,7 @@ $password = "";
 $dname="site";
 $conn=new mysqli($servername,$username,$password,$dname);
 $password=hash('sha3-512',$_POST['password']);
-$sql="SELECT * FROM user WHERE USERNAME='".$_POST['user']."' AND PASSWORD='".$password."'";
+$sql="SELECT * FROM user WHERE USERNAME='".$_POST['user']."'";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -15,13 +15,16 @@ if ($conn->connect_error) {
     else
 	{if($result->num_rows>0)
     {$row = mysqli_fetch_assoc($result);
-    session_start();
+	if($row['PASSWORD']==$password)
+	{session_start();
     $_SESSION['user'] = $row['USERNAME'];
     $_SESSION['name'] = $row['NAME'];
     $_SESSION['mail'] = $row['MAIL'];
 	$_SESSION['admin']=$row['ADMIN'];}
+	else {echo"Wrong password";}
+	}
 	 else
-	 {echo"Wrong username/password";}
-}
+	 {echo"Wrong username";}
+    }
  $result->close();
 ?> 

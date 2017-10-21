@@ -3,6 +3,7 @@
 <head>
 	<link rel="stylesheet" href="/site/bootstrap.css">
        <link rel="stylesheet" href="/site/site.css">
+       <link rel="stylesheet" href="/site/dist/css/lightbox.css">
         <script src="/site/site.js" type="text/javascript"></script>
         <link rel="stylesheet" href="/site/font-awesome/css/font-awesome.min.css">
 <?php
@@ -53,10 +54,10 @@ if ($conn->connect_error) {
 
 <?php 
 if(strlen($row['IMG'])>0)
-{echo "<img src=\"/site/img/";
-echo $row['IMG']."\" width=\"500\" height=\"200\">";}
+{echo "<a class=\"example-image-link\" href=\"/site/img/".$row['IMG']."\" data-title=\"".$row['TITLE']."\" data-lightbox=\"imag1\">";
+ echo "<img class=\"example-image-link\" alt=\"\" src=\"/site/img/";
+echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 ?>
-
 <br>
 <?php echo $row['TXT']; ?>		
 <p id="txtHint"></p>
@@ -79,6 +80,7 @@ echo $row['IMG']."\" width=\"500\" height=\"200\">";}
    
 	<script src="/site/jquery-3.2.1.slim.min.js"></script>
 	<script src="/site/popper.min.js"></script>
+	<script src="/site/dist/js/lightbox-plus-jquery.js"></script>
 	<script src="/site/bootstrap.min.js"></script>
 	
 	</body>

@@ -137,23 +137,39 @@ function signup(){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
 			}};
-	var username = document.getElementById("usersignup").value;
-	var password = document.getElementById("passwordsignup").value;
-	var name = document.getElementById("namesignup").value;
-	var mail = document.getElementById("mailsignup").value;
+	var username =$("#usersignup").val();//document.getElementById("usersignup").value;
+	var password = $("#passwordsignup").val();//document.getElementById("passwordsignup").value;
+	var name = $("#namesignup").val(); //document.getElementById("namesignup").value;
+	var mail = $("#mailsignup").val(); //document.getElementById("mailsignup").value;
     var formData = new FormData();
+	var pattmail = /.+@.+\..+/;
     formData.append("password", password);
 	formData.append("user",username);
 	formData.append("name",name);
 	formData.append("mail",mail);
-	if(password===document.getElementById("passwordsignup1").value)
+	if( name.length<3)
+	{$("#passresp").html("Enter your name");}
+	else{if(username.length===0 )
+	{$("#passresp").html("Enter Username");}
+    else{
+	if(password.length<5)
+	{$("#passresp").html("Enter longer password : min 5 characters");}
+	else{
+	if(password!=$("#passwordsignup1").val())
+	{$("#passresp").html("Retype password");}
+	else {
+	if(!pattmail.test(mail))
+	{$("#passresp").html("Enter valid e-mail address");}
+	else {
+	if(password===$("#passwordsignup1").val())
 	{$("#signupModal").modal("toggle");
 	log();
 	logdata();
 	xmlhttp.open("POST",url, true);
     xmlhttp.send(formData);
 	xmlhttp.close();
-	}}
+	} } } } } }
+}
 
 function logout(aid){
 	var xmlhttp = new XMLHttpRequest();
@@ -224,8 +240,8 @@ function testpass(){
 	var a=document.getElementById("passwordsignup").value;
 var b=document.getElementById("passwordsignup1").value;
  if(a!==b&&b.length>=3)
- {document.getElementById("passresp").innerHTML="Password does not match";}
- else {document.getElementById("passresp").innerHTML="";}
+ {$("#passresp").html("Password does not match");}
+ else {$("#passresp").html("");}
 	 
 }
 
