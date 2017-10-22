@@ -209,7 +209,7 @@ function addcom(user,aid){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("resp").innerHTML = this.responseText;
+                //document.getElementById("resp").innerHTML = this.responseText;
 				showCom(aid);
 			}
         };
@@ -225,7 +225,7 @@ function remcom(cid,aid){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("resp").innerHTML = this.responseText;
+               // document.getElementById("resp").innerHTML = this.responseText;
 			}
         };
 	var q="cid="+cid;
@@ -252,15 +252,29 @@ function artins(){
             if (this.readyState == 4 && this.status == 200) {
                 alert(this.responseText);			}
         };
-	if(document.getElementById("type@art").value.length>0)
-	{var file = document.getElementById("file@art").files[0];
+	console.log($("#appendart").is(":checked"));
+	if($("#typeart").val().length==3&&($("#titleart").val().length>=3||$("#artbytype").val().length!=0))
+	{var file = document.getElementById("fileart").files[0];
+	 var file1 = document.getElementById("fileart1").files[0];
+	 var file2 = document.getElementById("fileart2").files[0];
+	 var file3 = document.getElementById("fileart3").files[0];
+	 //console.log(file);
+	 var filetxt = document.getElementById("txtfileart").files[0];
     var formData = new FormData();
     formData.append("file@art", file);
-	formData.append("title@art", document.getElementById("title@art").value);
-	formData.append("type@art", document.getElementById("type@art").value);
-	formData.append("txt@art", document.getElementById("txt@art").value);
+	formData.append("file1@art", file1);
+    formData.append("file2@art", file2);
+	formData.append("file3@art", file3);
+	formData.append("txtfile@art", filetxt);
+	formData.append("append@art", $("#appendart").is(":checked")?"1":"0");
+	console.log($("#artbytype").val());
+	formData.append("title@art",$("#artbytype").val().length==0?$("#titleart").val():$("#artbytype").val());
+	formData.append("type@art", $("#typeart").val());
+	formData.append("txt@art", $("#txtart").val());
     xmlhttp.open("POST",url, true);
-    xmlhttp.send(formData);}}
+    xmlhttp.send(formData);
+	$("#artinsModal").modal("toggle");
+	}}
 
 function mainins(){
 	var url = "/site/script/mainchange.php";
@@ -342,6 +356,18 @@ function startmain(tip){
 	link();
 	loadsearch(tip);}
 
+function getartbytype(){
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+				$("#artbytype").html($("#artbytype").html+this.responseText);
+			}
+        };
+	    tip=$("#typeart").val();
+	    if(tip!="none")
+		{xmlhttp.open("GET", "/site/script/getartbytype.php?tip="+tip, true);
+        xmlhttp.send();}}
+
 function start(tip,aid,user){
 	rate(tip);
 	score(tip);
@@ -357,7 +383,7 @@ function rating(val,aid){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("sol").innerHTML = this.responseText;
+               // document.getElementById("sol").innerHTML = this.responseText;
             }
         };
         xmlhttp.open("GET", "/site/script/rate.php?val="+val+"&aid="+aid, true);

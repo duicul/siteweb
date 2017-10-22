@@ -43,12 +43,12 @@ if ($conn->connect_error) {
 
 <div class="container-fluid" >
 <div class="row">
-	<div class="col-2">
+	<div class="col-3 page_left">
 	<h3>Top score</h3>
 <p id="topscore"></p>		
 	</div>
 	
-<div class="col-7" style="background: rgba(255,255,255,1.00)">
+<div class="col-6" style="background: rgba(255,255,255,1.00)">
 
 <h2 align="center"><?php echo $row['TITLE']; ?></h2>
 
@@ -59,7 +59,11 @@ if(strlen($row['IMG'])>0)
 echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 ?>
 <br>
-<?php echo $row['TXT']; ?>		
+<?php  $arrtxt=explode("\n",$row['TXT']);
+	echo "<p class=\"art_txt\" style=\"font-weight: bold;\">".$arrtxt[0]."</p>";
+	for($i=1;$i<sizeof($arrtxt);$i=$i+1)
+		echo "<p class=\"art_txt\" >".$arrtxt[$i]."</p>";
+	?>		
 <p id="txtHint"></p>
 <p id="score" align="right"></p>
 <p align="right" id="rate"></p>
@@ -72,7 +76,7 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 <?php echo $aux;?>
 </div>
 		
-<div class="col-3">
+<div class="col-3" page_right>
 <h3>Most Visited</h3>
 <p id="rank"></p>
 </div>
@@ -81,7 +85,7 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 </div>
 	
   
-	<script src="/site/jquery-3.2.1.slim.min.js"></script>
+	<script src="/site/jquery-3.2.1.js"></script>
 	<script src="/site/popper.min.js"></script>
 	<script src="/site/dist/js/lightbox-plus-jquery.js"></script>
 	<script src="/site/bootstrap.min.js"></script>

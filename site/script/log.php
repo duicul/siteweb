@@ -30,22 +30,30 @@ $conn=new mysqli($servername,$username,$password,$dname);
 			echo "<div class=\"modal-content\" style=\"padding:25px;width:700px;\">";
              echo "<div class=\"container-fluid\" align=\"center\">";
             echo "<h3 align=\"center\">Add/chnage article</h3><br/>";
-			echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#artinschangeModal\">Back</a><br>";
-			echo "Photo: <input type=\"file\" id=\"file@art\"/>  <br />";
-			echo "<input type=\"text\" id=\"title@art\" placeholder=\"Title\"/>  <br />";
-		    echo "<select id=\"type@art\">";
+			echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#artinschangeModal\" onClick=\"artins();\" >Back</a><br>";
+			echo "Main Photo: <input type=\"file\" id=\"fileart\"/>  <br />";
+			echo "Photo1: <input type=\"file\" id=\"fileart1\"/>  <br />";
+			echo "Photo2: <input type=\"file\" id=\"fileart2\"/>  <br />";
+			echo "Photo3: <input type=\"file\" id=\"fileart3\"/>  <br />";
+			echo "<input type=\"text\" id=\"titleart\" placeholder=\"Title\"/>  <br />";
+			echo "<select id=\"artbytype\" >";
+			echo "<option value=\"\">None</option>";
+            echo "</select>  <br />";
+		    echo "<select id=\"typeart\" onChange=\"getartbytype();\" onClick=\"getartbytype();\">";
 			 foreach($rows as $row)
 	         echo "<option value=\"".$row[0]."\">".$row[1]."</option>";
             echo "</select>  <br />";
-			echo "<textarea id=\"txt@art\" placeholder=\"Text\" maxlength=\"2000\" cols=\"60\" rows=\"20\" required required ></textarea>  <br />";
-            echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#artinschangeModal\" onClick=\"artins();\" >Create/Change</a><br>";
+			echo "Append : <input type=\"checkbox\" id=\"appendart\"><br/>";
+			echo "Text File: <input type=\"file\" id=\"txtfileart\"/>  <br />";
+			echo "<textarea id=\"txtart\" placeholder=\"Text\" maxlength=\"2000\" cols=\"60\" rows=\"20\" required required ></textarea>  <br />";
+            echo "<a class=\"btn btn_mod\" href=\"#\" onClick=\"artins();\" >Create/Change</a><br>";
             echo "</div></div></div></div>"; 
 			 
 			echo "<div class=\"modal fade\" id=\"artdelModal\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">";
             echo "<div class=\"modal-dialog\"><div class=\"modal-content\" style=\"padding:25px;\">";
              echo "<div class=\"container-fluid\" align=\"center\">";
             echo "<h3 align=\"center\">Remove article</h3><br/>";
-            echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#artdelModal\">Back</a><br>";
+            echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#artdelModal\">Back</a><br>";
 		    echo "<select onChange=\"listdel(this.value)\" id=\"seltip\">";
 			 foreach($rows as $row)
 	         echo "<option value=\"".$row[0]."\">".$row[1]."</option>";
@@ -58,7 +66,7 @@ $conn=new mysqli($servername,$username,$password,$dname);
 			echo "<div class=\"modal-content\" style=\"padding:25px;width:700px;\">";
              echo "<div class=\"container-fluid\" align=\"center\">";
             echo "<h3 align=\"center\">Create/Change Main Page</h3><br/>";
-			echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#mainchangeModal\">Back</a><br>";
+			echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#mainchangeModal\">Back</a><br>";
 			echo "Photo: <input type=\"file\" id=\"file@main\"/>  <br />";
 			echo "<input type=\"text\" id=\"title@main\" placeholder=\"Title\"/>  <br />";
 			echo "<input type=\"text\" id=\"type@main\" placeholder=\"Type\"/>  <br />";
@@ -66,7 +74,7 @@ $conn=new mysqli($servername,$username,$password,$dname);
 			 foreach($rows as $row)
 	         echo $row[0]." ";
             echo "<br />";
-			echo "<textarea id=\"txt@main\" placeholder=\"Text\" maxlength=\"2000\" cols=\"60\" rows=\"20\" required ></textarea>  <br />";
+			echo "<textarea id=\"txt@main\" placeholder=\"Text\" cols=\"60\" rows=\"20\"></textarea>  <br />";
             echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#mainchangeModal\" onClick=\"mainins();\" >Create/Change</a><br>";
             echo "</div></div></div></div>"; 
 			 
@@ -75,7 +83,7 @@ $conn=new mysqli($servername,$username,$password,$dname);
              echo "<div class=\"container-fluid\" align=\"center\">";
 			 echo "<script >mainlistdel();</script>";
             echo "<h3 align=\"center\">Remove Main Page</h3><br/>";
-            echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#maindelModal\">Back</a><br>";
+            echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#maindelModal\">Back</a><br>";
 		    echo "<p id=\"maindel\">ded</p>";
             echo "</div></div></div></div>";
 			}}

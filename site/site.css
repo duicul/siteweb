@@ -12,6 +12,12 @@ body .modal-open{
     margin-left: -280px;
 }
 
+.art_txt{
+		font-size: 1.2rem;
+        font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
+	
+}
+
 .user_com{
 	padding: 30;
 	margin: 100;
@@ -46,6 +52,15 @@ div.star1:hover{
 	border: red;
 }
 
+.page_left{
+	color:aliceblue;
+}
+.page_right{
+	color:aliceblue;
+}
+
 body{
-	background:rgba(32,172,208,0.52);
+	background-image: url("img/AquaFresh.jpg");
+	background-size: cover;
+	background-repeat: no-repeat
 }

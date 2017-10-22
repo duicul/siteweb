@@ -24,16 +24,15 @@ try:
    count=0
    for row in results:
       if len(row)!=0:
-         aux=row[1]
          print "<p>"
-         q="<br><a class=\"alink\" href=\"/site/page.php?id="+str(row[0])+"&type="+row[5]+"\">"+row[2]+"<br>"
+         q="<br><a class=\"alink\" href=\"/site/page.php?id="+str(row[0])+"&type="+row[4]+"\">"+row[1]+"<br>"
          print q
-         if len(row[4])>0:
-            print "<img align=\"left\" src=\"/site/img/"+row[4]+"\" width=\"100\" height=\"80\"\"></img>"
+         if len(row[3])>0:
+            print "<img align=\"left\" src=\"/site/img/"+row[3]+"\" width=\"100\" height=\"80\"\"></img>"
          print "</a>"
-         print row[3][:40]+"...."
+         print row[2][0:100]+"...."
          print "</p>"
-         print "Views: "+str(row[6])+"<br>"
+         print "Views: "+str(row[5])+"<br>"
          count=count+1
          if count>=10:
             break

@@ -22,6 +22,6 @@ if ($conn->connect_error) {
 		$aux=$_SESSION['user'];
 	else $aux='anonymous';
 	foreach($rows as $row)
-{echo "<span style=\"font-size:2rem\" class=\"point\" onClick=\"artdel('".$row[0]."')\" >".$row[2]."<i  class=\"fa fa-times\"></i></span><br>";
+{echo "<span style=\"font-size:2rem\" class=\"point\" onClick=\"artdel('".$row[0]."')\" >".$row[1]."<i  class=\"fa fa-times\"></i></span><br>";
 }
 ?>

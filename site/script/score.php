@@ -34,7 +34,7 @@ if ($conn->connect_error) {
     if(strlen($row[4])>0)
     echo "<img align=\"left\" src=\"/site/img/".$row[4]."\" width=\"100\" height=\"80\"\"></img>";
     echo "</a>";
-    echo substr($row[2],0,40)."....";
+    echo substr($row[2],0,100)."....";
     echo "</p><br><br>";
 }}else
 	echo "no result";

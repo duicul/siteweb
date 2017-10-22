@@ -83,9 +83,12 @@ if ($conn->connect_error) {
 
 <div class="container-fluid">
 <div class="row">
-	<div class="col-2"></div>
+	<div class="col-3 page_left">
+		<h3>Top score</h3>
+        <p id="topscore"></p>
+	</div>
 	
-<div class="col-7" style="background: rgba(255,255,255,1.00)">
+<div class="col-6" style="background: rgba(255,255,255,1.00)">
 
 <h2 align="center"><?php echo $row['TITLE']; ?></h2>
 
@@ -99,7 +102,33 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 	?>
 
 <br>
-<?php echo $row['TXT']; ?>		
+<?php $arrtxt=preg_split("/\n/",$row['TXT'],-1,PREG_SPLIT_NO_EMPTY);
+	echo "<p class=\"art_txt\" style=\"font-weight:bold\">".$arrtxt[0]."</p>";
+   //$key='IMG'.(string)2;	
+	//print_r($row);
+	//echo "<br>aici badd".$row[$key];
+	echo "<div class=\"sections\">";
+	$mainarttxt=array_slice($arrtxt,1);
+	$sections=array_chunk($mainarttxt,sizeof($mainarttxt)/4+1);
+	for($i=1;$i<sizeof($sections);$i=$i+1)
+	{echo "<div class=\"sections_txt\">";
+	//print "<br>".$i."<br>";
+	if(strlen($row['IMG'.(string)$i])>0)
+    {echo $row['IMG'.(string)$i]."<br>";
+	echo "<a class=\"example-image-link\" href=\"/site/img/";
+	echo $row['IMG'.(string)$i];
+	echo "\" data-title=\"".$row['TITLE']."\" data-lightbox=\"imag1\">";
+    echo "<img class=\"example-image-link\" alt=\"\" align=\"left\" src=\"/site/img/";
+    echo $row['IMG'.(string)$i];
+	echo "\" style=\"width:40%;height:150px;\"></a>";}
+	foreach($sections[$i] as $parag)
+	{
+	if(strlen($parag)>2)
+	{echo "<p class=\"art_txt\" >".$parag."</p>";}
+	}echo "</div>";
+	}
+	echo "</div>";
+	?>		
 <p id="txtHint"></p>
 <p id="score" align="right"></p>
 <p align="right" id="rate"></p>
@@ -120,18 +149,16 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 
 </div>
 		
-<div class="col-3">
+<div class="col-3 page_right">
 <h3>Most Visited</h3>
 <p id="rank"></p>
-<h3>Top score</h3>
-<p id="topscore"></p>
 </div>
 
 </div>
 </div>
 	
   
-	<script src="/site/jquery-3.2.1.slim.min.js"></script>
+	<script src="/site/jquery-3.2.1.js"></script>
 	<script src="/site/popper.min.js"></script>
 	<script src="/site/dist/js/lightbox-plus-jquery.js"></script>
 	<script src="/site/bootstrap.min.js"></script>
