@@ -30,7 +30,8 @@ if ($conn->connect_error) {
 </head>
 
 <body onLoad="startmain('none','<?php echo $aux ?>')">
-	
+<header>
+<div class="headerimag"></div>
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
  <a class="nav-link linkbutton" href="/site/">Stiri</a>
   <div id="loadsearch"></div>
@@ -39,7 +40,7 @@ if ($conn->connect_error) {
     <div  id="log"></div>   
 
 </nav>
-
+	</header>
 
 <div class="container-fluid">
 <div class="row">

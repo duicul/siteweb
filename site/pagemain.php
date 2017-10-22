@@ -30,7 +30,8 @@ if ($conn->connect_error) {
 <title><?php echo $row['TITLE'];?></title>
 </head>
 <body onLoad="startmain('<?php echo $row['TYPE'] ?>','<?php echo $aux ?>')">
-	
+<header>
+<div class="headerimag"></div>	
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
  <a class="nav-link linkbutton" href="/site/">Stiri</a>
   <div id="loadsearch"></div>
@@ -39,7 +40,7 @@ if ($conn->connect_error) {
     <div  id="log"></div>   
 
 </nav>
-
+</header>
 
 <div class="container-fluid" >
 <div class="row">
@@ -76,7 +77,7 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 <?php echo $aux;?>
 </div>
 		
-<div class="col-3" page_right>
+<div class="col-3 page_right">
 <h3>Most Visited</h3>
 <p id="rank"></p>
 </div>
