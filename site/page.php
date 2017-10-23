@@ -75,7 +75,7 @@ if ($conn->connect_error) {
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
  <a class="nav-link linkbutton" href="/site/">Stiri</a>
   <div id="loadsearch"></div>
-   <div id="link" class="mr-auto"></div>
+   <div class="mr-auto link"></div>
    <span id="logdata"></span>
     <div  id="log"></div>   
 
@@ -157,7 +157,18 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 
 </div>
 </div>
-	
+	<hr>
+	<footer class="footer">
+	<nav class="navbar navbar-expand-lg navbar-light bg-faded">
+	<span>
+	<div class="link"></div>
+	</span>
+    <span style="text-align:right;text-decoration: none;width:100%">
+    <a href="https://www.facebook.com" ><i class="fa fa-2x fa-facebook-official" aria-hidden="true"></i></a>
+	<a href="https://github.com/duicul/siteweb"><i class="fa fa-2x fa-github" aria-hidden="true"></i></a>
+    </span>	
+	</nav>
+</footer>	
   
 	<script src="/site/jquery-3.2.1.js"></script>
 	<script src="/site/popper.min.js"></script>

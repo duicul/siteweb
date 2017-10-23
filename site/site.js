@@ -343,7 +343,7 @@ function link(){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("link").innerHTML = this.responseText;
+                $(".link").html(this.responseText);
 			}
         };
         xmlhttp.open("GET", "/site/script/category.php", true);

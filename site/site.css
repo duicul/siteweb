@@ -24,6 +24,10 @@ body .modal-open{
 	background-size: cover;
 }
 
+.page_footer{
+	background-color: antiquewhite;
+	height:80px;
+}
 
 .user_com{
 	padding: 30;
