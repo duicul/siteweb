@@ -31,10 +31,14 @@ $conn=new mysqli($servername,$username,$password,$dname);
              echo "<div class=\"container-fluid\" align=\"center\">";
             echo "<h3 align=\"center\">Add/chnage article</h3><br/>";
 			echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#artinschangeModal\" onClick=\"artins();\" >Back</a><br>";
-			echo "Main Photo: <input type=\"file\" id=\"fileart\"/>  <br />";
-			echo "Photo1: <input type=\"file\" id=\"fileart1\"/>  <br />";
-			echo "Photo2: <input type=\"file\" id=\"fileart2\"/>  <br />";
-			echo "Photo3: <input type=\"file\" id=\"fileart3\"/>  <br />";
+			echo "<p align=\"center\">Main Photo: <label for=\"fileart\"><i class=\"fa fa-cloud-upload fa-2x\"></i></label>";
+			echo "<input type=\"file\" id=\"fileart\" style=\"visibility: hidden\"/>";
+			echo "Photo1: <label for=\"fileart1\"><i class=\"fa fa-cloud-upload fa-2x\"></i></label>";
+			echo "<input type=\"file\" id=\"fileart1\" style=\"visibility: hidden\"/></p>";
+			echo "<p align=\"center\">Photo2: <label for=\"fileart2\"><i class=\"fa fa-cloud-upload fa-2x\"></i></label>";
+			echo "<input type=\"file\" id=\"fileart2\" style=\"visibility: hidden\"/>";
+			echo "Photo3: <label for=\"fileart3\"><i class=\"fa fa-cloud-upload fa-2x\"></i></label>";
+			echo "<input type=\"file\" id=\"fileart3\" style=\"visibility: hidden\"/></p>";
 			echo "<input type=\"text\" id=\"titleart\" placeholder=\"Title\"/>  <br />";
 			echo "<select id=\"artbytype\" >";
 			echo "<option value=\"\">None</option>";
@@ -107,20 +111,24 @@ $conn=new mysqli($servername,$username,$password,$dname);
             echo "<input type=\"password\" id=\"passwordsignup\" placeholder=\"Password\" class=\"form-control\" id=\"pass1\"><br/>";
             echo "<input type=\"password\" id=\"passwordsignup1\" placeholder=\"Retype Password\" class=\"form-control\" id=\"pass2\" onKeyUp=\"testpass()\"><br/>";
             echo "<p id=\"passresp\" style=\"color:red;\"></p>";
-            echo "<input type=\"email\" id=\"mailsignup\" placeholder=\"E-mail\" class=\"form-control\"><br/>";          
-            echo "<a href=\"#\" class=\"btn btn_mod\" onClick=\"signup();\"/> Login </a> ";
+            echo "<input type=\"email\" id=\"mailsignup\" placeholder=\"E-mail\" class=\"form-control\"><br/>";
+			echo "NewsLetter : <input type=\"checkbox\" id=\"newsmail\"><br/>";
+            echo "<a href=\"#\" class=\"btn btn_mod\" onClick=\"signup();\"/> Signup </a> ";
             echo "</div></div></div></div>";}
 			
 
             echo "<ul class=\"nav navbar-nav navbar-right mr-auto\">";            
                if(isset($_SESSION['name']))
           { if($_SESSION['admin']==1)
-		   {echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"#\" data-toggle=\"modal\" data-target=\"#adminModal\">Admin</a></li>";
+		   {echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"#\" data-toggle=\"modal\" data-target=\"#adminModal\"><i class=\"fa fa-unlock-alt\" aria-hidden=\"true\">
+Admin</i></a></li>";
 		   }
-		   echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/script/logout.php\" >Logout</a></li>"; 
+		   echo "<li class=\"nav-link\"><a class=\"linkbutton\" onClick=\"logout();\" href=\"#\"><i class=\"fa fa-sign-out\" aria-hidden=\"true\">Logout</i></a></li>"; 
 		  }
-	      else { echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"#\" data-toggle=\"modal\" data-target=\"#loginModal\">Login</a></li>";
-	             echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"#\" data-toggle=\"modal\" data-target=\"#signupModal\">Signup</a></li>";}
+	      else { echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"#\" data-toggle=\"modal\" data-target=\"#loginModal\"><i class=\"fa fa-sign-in\" aria-hidden=\"true\">
+Login</a></i></li>";
+	             echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"#\" data-toggle=\"modal\" data-target=\"#signupModal\"><i class=\"fa fa-cloud\" aria-hidden=\"true\">
+Signup</i></a></li>";}
         echo "</ul>";
 
 ?>

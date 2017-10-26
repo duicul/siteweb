@@ -15,7 +15,7 @@
     foreach($rows as $row)
 	{echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/pagemain.php?tip=";
 	 echo $row[0];
-	 echo "\">".$row[1]." </a></li>";	
+	 echo "\"><i class=\"fa\" aria-hidden=\"true\">".$row[1]."</i></a></li>";	
 	}
     echo "</ul>";
       ?>

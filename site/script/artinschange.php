@@ -4,7 +4,7 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dname="site";
-if(!isset($_SESSION['user']))
+if(!($_SESSION['user'])&&isset($_SESSION['user'])&&$_SESSION['admin']==1)
 	header('Location: '.$uri.'/site/');
 // Create connection
 //$conn = new mysqli($servername,$username,$password,$dname);

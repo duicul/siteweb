@@ -1,5 +1,5 @@
  <?php
 session_start();
 session_destroy();
-header('Location: '.$uri.'/site/');
+//header('Location: '.$uri.'/site/');
 ?> 

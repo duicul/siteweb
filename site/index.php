@@ -36,6 +36,7 @@ if ($conn->connect_error) {
  <a class="nav-link linkbutton" href="/site/">Stiri</a>
   <div id="loadsearch"></div>
    <div class="mr-auto link"></div>
+   <span id="newsletter"></span>
    <span id="logdata"></span>
     <div  id="log"></div>   
 

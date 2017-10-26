@@ -35,14 +35,15 @@ if ($conn->connect_error) {
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
  <a class="nav-link linkbutton" href="/site/">Stiri</a>
   <div id="loadsearch"></div>
-   <div class="mr-auto link"></div>
+   <span class="mr-auto link"></span>
+   <span id="newsletter"></span>
    <span id="logdata"></span>
-    <div  id="log"></div>   
-
+    <span  id="log"></span>   
+   
 </nav>
 </header>
 
-<div class="container-fluid" >
+<div class="container-fluid">
 <div class="row">
 	<div class="col-3 page_left">
 	<h3>Top score</h3>

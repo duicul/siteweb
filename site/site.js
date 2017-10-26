@@ -28,6 +28,43 @@ function showHint() {
         xmlhttp.open("GET", "/site/script/test.py?temp=" + temp+"&humid="+humid+"&heat="+heat, true);
         xmlhttp.send();}
 
+function mail(mess,subj){
+	var url = "/site/script/mail.php";
+	var formData = new FormData();
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+	    formData.append("subj", subj);
+	formData.append("mess",mess);
+	xmlhttp.open("POST",url, true);
+    xmlhttp.send(formData);
+	xmlhttp.close();
+}
+
+function newsletterins(name,mail){
+	var url = "/site/script/newsletterins.php";
+	var formData = new FormData();
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+	    formData.append("name",name);
+	formData.append("mail",mail);
+	xmlhttp.open("POST",url, true);
+    xmlhttp.send(formData);
+	xmlhttp.close();
+}
+
+function newsletter() {
+	q="<a class=\"linkbutton\" href=\"#\"><i class=\"fa fa-newspaper-o\" aria-hidden=\"true\">Newsletter</i></a>";
+	$("#newsletter").html(q);
+        }
+
 function showCom(aid) {
     var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
@@ -116,11 +153,13 @@ function login(){
             if (this.readyState == 4 && this.status == 200) {
 				if(this.responseText.length>2)
 				{  document.getElementById("loginresp").className="alert alert-danger";
-				   document.getElementById("loginresp").innerHTML = this.responseText;
+				   document.getElementById("loginresp").innerHTML = this.responseText;  					 
 				}
                 else {$("#loginModal").modal("toggle");
 					 logdata();
                      log();
+					  window.location.reload();
+					  //window.location.replace("http://localhost/site/");
 					}
 			}};
 	var username = document.getElementById("userlogin").value;
@@ -137,6 +176,8 @@ function signup(){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
 			}};
+	
+	
 	var username =$("#usersignup").val();//document.getElementById("usersignup").value;
 	var password = $("#passwordsignup").val();//document.getElementById("passwordsignup").value;
 	var name = $("#namesignup").val(); //document.getElementById("namesignup").value;
@@ -165,18 +206,20 @@ function signup(){
 	{$("#signupModal").modal("toggle");
 	log();
 	logdata();
-	xmlhttp.open("POST",url, true);
+	if($("#newsmail").is(":checked"))
+		{newsletterins(name,mail);}
+	 xmlhttp.open("POST",url, true);
     xmlhttp.send(formData);
 	xmlhttp.close();
 	} } } } } }
 }
 
-function logout(aid){
+function logout(){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 //document.getElementById("log").innerHTML = this.responseText;
-            }
+								  window.location.reload();            }
         };
         xmlhttp.open("GET", "/site/script/logout.php?", true);
         xmlhttp.send();
@@ -250,7 +293,9 @@ function artins(){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                alert(this.responseText);			}
+                alert(this.responseText);
+			    mail($("#txtart").val(),$("#artbytype").val().length==0?$("#titleart").val():$("#artbytype").val()); 
+			}
         };
 	console.log($("#appendart").is(":checked"));
 	if($("#typeart").val().length==3&&($("#titleart").val().length>=3||$("#artbytype").val().length!=0))
@@ -354,6 +399,7 @@ function startmain(tip){
 	score(tip);
     log();
 	link();
+	newsletter();
 	loadsearch(tip);}
 
 function getartbytype(){
@@ -373,6 +419,7 @@ function start(tip,aid,user){
 	score(tip);
 	showCom(aid);
 	getscore(aid);
+	newsletter();
 	log();
 	link();
 	loadsearch(tip);
@@ -384,14 +431,15 @@ function rating(val,aid){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                // document.getElementById("sol").innerHTML = this.responseText;
-            }
-        };
-        xmlhttp.open("GET", "/site/script/rate.php?val="+val+"&aid="+aid, true);
-        xmlhttp.send();
-	 log();
+             log();
      showCom(aid);
      getscore(aid);
      showstar(aid);
+			}
+        };
+        xmlhttp.open("GET", "/site/script/rate.php?val="+val+"&aid="+aid, true);
+        xmlhttp.send();
+	
      //score();
 } 
 
