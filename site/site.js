@@ -1,6 +1,6 @@
 var a="point fa fa-star";
 var b="point fa fa-star-o";
-
+var elPos ;
 function showscore(a){if(a<=0)
 {str5b();}
  else {if(a==1)
@@ -51,17 +51,35 @@ function newsletterins(name,mail){
 	xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("txtHint").innerHTML = this.responseText;
+				$("#newsletterModal").modal("toggle");
             }
         };
-	    formData.append("name",name);
+	pattmail = /.+@.+\..+/;
+	if(mail==undefined)
+	mail=$("#mailnewsletter").val();
+	if(name==undefined)
+	name=$("#namenewsletter").val();
+	if(!pattmail.test(mail))
+	{$("#newsletterresp").html("Enter valid e-mail address");}
+	else {
+	formData.append("name",name);
 	formData.append("mail",mail);
 	xmlhttp.open("POST",url, true);
     xmlhttp.send(formData);
-	xmlhttp.close();
+	xmlhttp.close();}
 }
 
 function newsletter() {
-	q="<a class=\"linkbutton\" href=\"#\"><i class=\"fa fa-newspaper-o\" aria-hidden=\"true\">Newsletter</i></a>";
+	q="<a class=\"linkbutton\" href=\"#\" data-toggle=\"modal\" data-target=\"#newsletterModal\"><i class=\"fa fa-newspaper-o\" aria-hidden=\"true\">Newsletter</i></a>";
+	q+="<div class=\"modal fade\" id=\"newsletterModal\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">";
+    q+="<div class=\"modal-dialog\"><div class=\"modal-content\" style=\"padding:25px;\">";
+    q+="<div class=\"container-fluid\" align=\"center\">";
+    q+="<h3 align=\"center\">News Letter</h3><br/>";
+    q+="<input type=\"text\" id=\"namenewsletter\" placeholder=\"Name\" class=\"form-control\">  <br />";
+    q+="<input type=\"email\" id=\"mailnewsletter\" placeholder=\"E-mail\" class=\"form-control\"><br/>";
+	q+="<p id=\"newsletterresp\" style=\"color:red\"></p>";
+	q+="<a href=\"#\" class=\"btn btn_mod\" onClick=\"newsletterins();\">Join</a> ";
+    q+="</div></div></div></div>";
 	$("#newsletter").html(q);
         }
 
@@ -228,14 +246,33 @@ function logout(){
 	 {showCom(aid);
      showstar(aid);}}
 
+function search(tip){
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+				console.log(this.responseText);
+				//console.log(document.getElementById("articlemain").innerHTML);
+				document.getElementById("articlemain").innerHTML=this.responseText;
+				//$("#articlemain").html("ceva"+this.resoponseText);
+			}};
+	//var formData = new FormData();
+	searchitem=$("#search").val();
+	console.log(searchitem);
+    //formData.append("tip", tip);
+	//formData.append("search", searchitem);
+	xmlhttp.open("GET", "/site/script/search.php?search="+searchitem+"&tip="+tip, true);
+    xmlhttp.send();
+	//xmlhttp.close();
+}
+
 function loadsearch(tip){
-	 var q="<form action=\"/site/script/search.php\" method=\"get\" class=\"navbar-form navbar-left\">";
+	 var q="<div class=\"navbar-form navbar-left\">";
 	    q+="<div class=\"input-group\">"; 
-		q+="<input type=\"search\" class=\"form-control\" placeholder=\"Search\" name=\"search\">";
-	    q+="<input type=\"hidden\" name=\"tip\" value=\""+tip+"\">";
+		q+="<input type=\"search\" class=\"form-control\" placeholder=\"Search\" id=\"search\"  onKeyUp=\"search('"+tip+"')\">";
+	    //q+="<input type=\"hidden\" name=\"tip\" value=\""+tip+"\">";
 		q+="<div class=\"input-group-btn\">";
-		q+="<button type=\"submit\" class=\"btn btn-default\">Search</button>";
-		q+="</div></div></form>";
+		q+="<button class=\"btn btn-default\" onClick=\"search('"+tip+"')\">Search</button>";
+		q+="</div></div></div>";
 	document.getElementById("loadsearch").innerHTML=q;}
 
 function showuser(){
@@ -248,12 +285,32 @@ function showuser(){
         xmlhttp.open("GET", "/site/script/logdata.php", true);
         xmlhttp.send();}
 
+function newcomm(tip){
+    var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("newcomm").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "/site/script/newcomm.php?tip="+tip, true);
+        xmlhttp.send();}
+
+function adjpos(){
+	$(window).scroll(function(){
+        if($(window).scrollTop() > elPos.top){
+              $('#newcomm').css('position','fixed').css('top','0');
+        } else {
+            $('#newcomm').css('position','static');
+        }
+	console.log($("#newcomm").offset());
+});}
+
 function addcom(user,aid){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                //document.getElementById("resp").innerHTML = this.responseText;
 				showCom(aid);
+				newcomm();
 			}
         };
 	var q="txt="+document.getElementById("addcom").value+"&user="+user+"&aid="+aid;
@@ -284,8 +341,7 @@ function testpass(){
 var b=document.getElementById("passwordsignup1").value;
  if(a!==b&&b.length>=3)
  {$("#passresp").html("Password does not match");}
- else {$("#passresp").html("");}
-	 
+ else {$("#passresp").html("");}	 
 }
 
 function artins(){
@@ -384,23 +440,41 @@ function maindel(tip){
         mainlistdel();
         link();}
 
+function newarticlestart(){
+	$("#newarticle").css({"bottom":$(".footer").height()+"px"});
+	console.log($("#newarticle").css({"z-index":"100"}));	
+	console.log($(".footer").height());
+	
+}
+
+function closenewarticle(){
+	$("#newarticle").html("");
+	$("#newarticle").css({});
+}
+
 function link(){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 $(".link").html(this.responseText);
+				
 			}
         };
         xmlhttp.open("GET", "/site/script/category.php", true);
         xmlhttp.send();}
 
 function startmain(tip){
+	//elPos= $("#newcomm").offset();
+    //console.log(elPos);
 	rate(tip);
 	score(tip);
-    log();
+	newcomm(tip);
+	log();
 	link();
+	newarticlestart();
 	newsletter();
-	loadsearch(tip);}
+	loadsearch(tip);
+    }
 
 function getartbytype(){
 	var xmlhttp = new XMLHttpRequest();
@@ -415,15 +489,21 @@ function getartbytype(){
         xmlhttp.send();}}
 
 function start(tip,aid,user){
+	//elPos= $("#newcomm").offset();
+    //console.log(elPos);
 	rate(tip);
 	score(tip);
 	showCom(aid);
 	getscore(aid);
 	newsletter();
+	newcomm(tip);
+	adjpos();
 	log();
 	link();
+	newarticlestart();
 	loadsearch(tip);
     showstar(aid);
+	
     }
     
 function rating(val,aid){
@@ -438,10 +518,7 @@ function rating(val,aid){
 			}
         };
         xmlhttp.open("GET", "/site/script/rate.php?val="+val+"&aid="+aid, true);
-        xmlhttp.send();
-	
-     //score();
-} 
+        xmlhttp.send();} 
 
 function getscore(aid){
 	var xmlhttp = new XMLHttpRequest();
@@ -453,8 +530,7 @@ function getscore(aid){
         xmlhttp.open("GET", "/site/script/getscore.php?aid="+aid, true);
         xmlhttp.send();
 	 log();
-     showCom(aid);
-     } 
+     showCom(aid);} 
 
 function str1a(){
 	document.getElementById("star1").className=a;

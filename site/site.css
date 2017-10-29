@@ -1,3 +1,51 @@
+#newarticle{
+	position: fixed;
+	bottom: 0px;
+    left:10%;
+	width:70%;
+
+	
+}
+#newarticletxt{
+	background: #FFF;
+	padding: 10px;
+	border: 2px ridge rgba(15,90,241,0.55);
+	border-radius: 10px;
+	margin:20px;
+	margin-color:red; 
+		height:200px;
+	
+}
+
+#newcomm{
+	position: sticky; 
+	top: 0px;  
+	width: 100%;
+	height: 20px;
+	font-size: 14px;
+	
+}
+.panel{
+    margin: 13px;	
+    border: 1px ridge rgba(21,72,176,0.56);
+	border-radius: 10px;
+	width: 75%;
+}
+
+.panel-newcomm{
+	margin: 13px;	
+    border: 1px ridge rgba(21,72,176,0.56);
+	border-radius: 10px;
+	width: 75%;
+}
+.panel-head{
+	background-color:rgba(196,196,196,0.53);
+	padding: 10px;
+}
+.panel-body{
+	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+	text-align: left;
+}
 a.linkbutton:hover{
 				background-color: #F30808;
 	            text-decoration: none;

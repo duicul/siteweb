@@ -25,7 +25,11 @@ if ($conn->connect_error) {
 	if(isset($_SESSION['user']))
 		$aux=$_SESSION['user'];
 	else $aux='anonymous';
-?>
+$sql="SELECT * FROM article a WHERE TYPE='".$_GET['tip']."' ORDER BY DATE LIMIT 1";
+	$result = $conn->query($sql);
+	$newart = mysqli_fetch_assoc($result);
+    
+	?>
 
 <title><?php echo $row['TITLE'];?></title>
 </head>
@@ -34,7 +38,6 @@ if ($conn->connect_error) {
 <div class="headerimag"></div>	
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
  <a class="nav-link linkbutton" href="/site/">Stiri</a>
-  <div id="loadsearch"></div>
    <span class="mr-auto link"></span>
    <span id="newsletter"></span>
    <span id="logdata"></span>
@@ -43,14 +46,34 @@ if ($conn->connect_error) {
 </nav>
 </header>
 
+<div id="newarticle">
+<div style="width: 100%">
+</div>
+<i class="fa fa-times point fa-2x" onclick="closenewarticle();" href="#">Close<br></i>
+<div id="newarticletxt">
+<div align="center">
+<?php
+echo "<a style=\"text-decoration:none;color:#000;\" href=\"/site/page.php?id=".$newart['ID']."&type=".$newart['TYPE']."\">";
+	?>
+  <br>
+  <h3>
+	<?php echo $newart['TITLE']; ?>
+	</h3>
+	</div>
+	<?php  if(isset($newart['IMG']))
+{echo "<img align=\"left\" src=\"/site/img/".$newart['IMG']."\"/ width=200 height=80>";}
+	if(isset($newart['TXT'])){echo substr($newart["TXT"],0,400)."....";}
+	echo "</a>";?>	
+	</div>	
+</div>
+
 <div class="container-fluid">
 <div class="row">
 	<div class="col-3 page_left">
-	<h3>Top score</h3>
-<p id="topscore"></p>		
+	<div id="newcomm" >AAnaare mere <?php echo $row['TYPE'] ?> </div>
 	</div>
 	
-<div class="col-6" style="background: rgba(255,255,255,1.00)">
+<div class="col-6" style="background: rgba(255,255,255,1.00)" id="articlemain">
 
 <h2 align="center"><?php echo $row['TITLE']; ?></h2>
 
@@ -79,6 +102,9 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 </div>
 		
 <div class="col-3 page_right">
+<div id="loadsearch"></div>
+<h3>Top score</h3>
+<p id="topscore"></p>
 <h3>Most Visited</h3>
 <p id="rank"></p>
 </div>

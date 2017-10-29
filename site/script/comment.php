@@ -35,23 +35,18 @@ if ($conn->connect_error) {
 	}
 	else
 	{//echo $result->num_rows."comments<br>";
-    echo "<ul class=\"list-group\">";
 	 $rows = mysqli_fetch_all($result);
 	//print_r($rows);
 	for($i=0;$i<sizeof($rows);$i=$i+1)
-	{ echo "<li class=\"list-group-item list-group-item-";
-		if($i%2==0)
-			echo "success";
-	    else echo "info";
-		echo "\">";
-      echo $rows[$i][1]."<br>".$rows[$i][4]."<br>";
-      echo $rows[$i][3]."<br>";
+	{ echo "<div class=\"panel\">"."<div class=\"panel-head\">".$rows[$i][1]."  ".$rows[$i][4]."</div>";
+      echo "<div class=\"panel-body\">".$rows[$i][3]."<br>";
       //echo "<span class=\"point\"><i class=\"fa fa-thumbs-o-up\">up</i></span><span class=\"point\"> <i class=\"fa fa-thumbs-down\">down</i></span>";
       if (isset($_SESSION['user'])&&($_SESSION['user']==$rows[$i][1]||($admin==1&&"anonymous"==$rows[$i][1])))
 	  {echo "<span class=\"point\" align=\"right\"><i class=\"fa fa-times\" onClick=\"remcom('".$rows[$i][0]."','".$rows[$i][2]."')\">remove</i></span>";}
-      echo "</li>";}
-	 echo "</ul>";
-}
+	echo  "</div></div>";
+	}
+
+	}
  $result->close();
 }
 ?> 
