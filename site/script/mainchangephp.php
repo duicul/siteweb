@@ -7,7 +7,7 @@ $dname="site";
 if(!($_SESSION['user']&&isset($_SESSION['user'])&&$_SESSION['admin']==1))
 	header('Location: '.$uri.'/site/');
 else {$conn=new mysqli($servername,$username,$password,$dname);
-$target_dir=dirname(getcwd())."\img\\";
+/*$target_dir=dirname(getcwd())."\img\\";
 $target_file = $target_dir . basename($_FILES["file@main"]["name"]);
 $uploadOk = 1;
 $filename=pathinfo($target_file,PATHINFO_FILENAME);
@@ -35,7 +35,7 @@ if ($uploadOk == 0) {
 		$file="";
     }
 }
-
+*/
 $sql="SELECT * FROM mainpage WHERE TYPE='".$_POST['type@main']."'";
 echo $sql."<br>";
 if ($conn->connect_error) {
@@ -48,48 +48,38 @@ if ($conn->connect_error) {
 print_r($row);
 if(sizeof($row)>0)
 {$val="";
-	if(strlen($file)!=0)
+	/*if(strlen($file)!=0)
 	{$val=" IMG='".$file."'";
     $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@main']."'";
      echo $sql."<br>";
     if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     }
-     $result = $conn->query($sql);} 
+     $result = $conn->query($sql);} */
+ 
     if(isset($_POST['txt@main'])&&strlen($_POST['txt@main'])>2)
-	{$val=" TXT='".$_POST['txt@main']."'";
+	{$txt=$_POST['txt@main'];
+	 $txt=preg_replace('/<br(\s+)?\/?>/i', "\n",$txt);
+	 echo $txt."<br>";
+	 $val=" TXT='".htmlentities(htmlspecialchars($txt,$flags=ENT_QUOTES|ENT_HTML5))."'";
      $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@main']."'";
      echo $sql."<br>";
       if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     }
       $result = $conn->query($sql);}     
+ 
 	 if(isset($_POST['title@main'])&&strlen($_POST['title@main'])!=0)
-	 {$val=" TITLE='".$_POST['title@main']."' ";
+	 {$txt=$_POST['title@main'];
+	 $txt=preg_replace('/<br(\s+)?\/?>/i', "\n",$txt);
+	 echo $txt."<br>";
+	 $val=" TITLE='".htmlentities(htmlspecialchars($txt,$flags=ENT_QUOTES|ENT_HTML5))."'";
       $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@main']."'";
      echo $sql."<br>";
      if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
      }
      $result = $conn->query($sql);}  
-	  echo $_POST['txt@main'];
-}
-else    	
-{$aux=$_POST['txt@main'];
-$aux=preg_replace(".\\n.","<br/>",$aux);
-$sql="INSERT INTO mainpage (TITLE,TYPE,TXT,IMG) VALUES ('".htmlspecialchars($_POST['title@main'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlspecialchars($_POST['type@main'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlspecialchars($aux,$flags=ENT_QUOTES|ENT_HTML5)."','".$file."')";
-// 'Check connection
-echo $sql;
-//0-name 1-username 2-password 3-mail
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-if($conn->query($sql)==TRUE)
-echo "User added";
-else {echo "User <b>not</b> added<br>";
-     echo "Error: " . $sql . "<br>" . $conn->error."<br>";}
- 
-$conn->close();
-echo "Connected successfully";
-}}
+	  echo $_POST['txt@main'];}
+	 }
 ?> 

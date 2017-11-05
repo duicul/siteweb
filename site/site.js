@@ -1,6 +1,63 @@
 var a="point fa fa-star";
 var b="point fa fa-star-o";
 var elPos ;
+var caid;
+var page=0;
+var comm=0;
+
+function showpag(init){
+	$("#sectart"+page).css("display","none");
+	$("#sectart"+init).css("display","block");
+	$(".pageno"+page).css("background","none");
+	$(".pageno"+page).removeClass("linkbutton");
+	$(".pageno"+page).addClass("linkbutton");
+	$(".pageno"+init).css("background-color","rgba(196,196,196,0.53)");
+	page=init;}
+
+function showprev(){
+	if($("#sectart"+(page-1)).length)
+	{showpag(page-1);}}
+
+function shownext(){
+	if($("#sectart"+(page+1)).length)
+	{showpag(page+1);}}
+
+function showcomm(init){
+	$("#sectcomm"+comm).css("display","none");
+	$("#sectcomm"+init).css("display","block");
+	$(".commno"+comm).css("background","none");
+	$(".commno"+comm).removeClass("linkbutton");
+	$(".commno"+comm).addClass("linkbutton");
+	$(".commno"+init).css("background-color","rgba(196,196,196,0.53)");
+	comm=init;}
+
+function showprevcomm(){
+	if($("#sectcomm"+(comm-1)).length)
+	{showcomm(comm-1);}}
+
+function shownextcomm(){
+	if($("#sectcomm"+(comm+1)).length)
+	{showcomm(comm+1);}}
+
+
+function artchange(aid){
+$("#artchangbutt").html("<a class=\"btn btn_mod\" href=\"#\" onClick=\"artchangephp('"+aid+"');\" >Create/Change</a><br>");
+$(".art_txt").each(function(index){
+console.log($( this ).prop('contenteditable',true));
+	//$( this ).keyup(function(){console.log($( this ).html());});
+});
+$("#arttitle").prop('contenteditable',true);
+}
+
+function mainchange(tip){
+$("#artchangbutt").html("<a class=\"btn btn_mod\" href=\"#\" onClick=\"mainchangephp('"+tip+"');\" >Create/Change</a><br>");
+$(".art_txt").each(function(index){
+console.log($( this ).prop('contenteditable',true));
+$("#maintitle").prop('contenteditable',true);
+	//$( this ).keyup(function(){console.log($( this ).html());});
+});
+}
+
 function showscore(a){if(a<=0)
 {str5b();}
  else {if(a==1)
@@ -88,6 +145,7 @@ function showCom(aid) {
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("comm").innerHTML = this.responseText;
+				showcomm(0);
             }
         };
 	if(aid!=undefined)
@@ -285,15 +343,21 @@ function showuser(){
         xmlhttp.open("GET", "/site/script/logdata.php", true);
         xmlhttp.send();}
 
-function newcomm(tip){
+function newcomm(tip,aid){
+	var url = "/site/script/newcomm.php";
     var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("newcomm").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", "/site/script/newcomm.php?tip="+tip, true);
-        xmlhttp.send();}
+	var formData = new FormData();
+	if(tip!=undefined&&tip.length!=0) 
+	formData.append("tip",tip);
+	if(aid!=undefined&&aid.length!=0)
+	 formData.append("aid", aid);
+		xmlhttp.open("POST", url, true);
+        xmlhttp.send(formData);}
 
 function adjpos(){
 	$(window).scroll(function(){
@@ -302,7 +366,7 @@ function adjpos(){
         } else {
             $('#newcomm').css('position','static');
         }
-	console.log($("#newcomm").offset());
+	//console.log($("#newcomm").offset());
 });}
 
 function addcom(user,aid){
@@ -310,14 +374,17 @@ function addcom(user,aid){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
 				showCom(aid);
-				newcomm();
+				newcomm('',aid);
 			}
         };
-	var q="txt="+document.getElementById("addcom").value+"&user="+user+"&aid="+aid;
+	var url = "/site/script/addcomm.php";
 	if(aid!=undefined)
-	{xmlhttp.open("GET", "/site/script/addcomm.php?"+q, true);
-        xmlhttp.send();
-	alert(q);}
+	{var formData = new FormData();
+	 formData.append("txt", document.getElementById("addcom").value);
+	 formData.append("user", user);
+	formData.append("aid", aid);
+		xmlhttp.open("POST", url, true);
+        xmlhttp.send(formData);}
 	 log();
 	 document.getElementById("addcom").value="";}
 
@@ -326,6 +393,9 @@ function remcom(cid,aid){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                // document.getElementById("resp").innerHTML = this.responseText;
+			newcomm('',aid);
+				showCom(aid);
+				showcomm(comm);
 			}
         };
 	var q="cid="+cid;
@@ -344,13 +414,65 @@ var b=document.getElementById("passwordsignup1").value;
  else {$("#passresp").html("");}	 
 }
 
-function artins(){
+function mainchangephp(tip){
+var url = "/site/script/mainchangephp.php";
+ txt="";
+	i=0;
+ $(".art_txt").each(function(index){
+	txt+=$( this ).html()+"\n";
+	 i++;
+});
+	console.log(txt);
+ title=$("#maintitle").html();
+	console.log(title);
+ console.log("Number parag "+i);
+ var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+				window.location.reload();
+			}};
+	console.log(txt);
+    var formData = new FormData();
+    formData.append("txt@main",txt);
+	formData.append("type@main",tip);
+	formData.append("title@main",title);
+    xmlhttp.open("POST",url, true);
+    xmlhttp.send(formData);
+}
+
+function artchangephp(aid){
+var url = "/site/script/artchange.php";
+ txt="";
+	i=0;
+ $(".art_txt").each(function(index){
+	txt+=$( this ).html()+"\n";
+	 i++;
+});
+	title=$("#arttitle").html();
+ console.log("Number parag "+i);
+ var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+				window.location.reload();
+			}};
+	console.log(txt);
+    var formData = new FormData();
+    formData.append("txt@art",txt);
+	formData.append("aid",aid);
+	formData.append("title@art",title);
+    xmlhttp.open("POST",url, true);
+    xmlhttp.send(formData);
+}
+
+function artins(txt){
 	var url = "/site/script/artinschange.php";
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 alert(this.responseText);
-			    mail($("#txtart").val(),$("#artbytype").val().length==0?$("#titleart").val():$("#artbytype").val()); 
+			    //mail($("#txtart").val(),$("#artbytype").val().length==0?$("#titleart").val():$("#artbytype").val()); 
 			}
         };
 	console.log($("#appendart").is(":checked"));
@@ -488,23 +610,21 @@ function getartbytype(){
 		{xmlhttp.open("GET", "/site/script/getartbytype.php?tip="+tip, true);
         xmlhttp.send();}}
 
-function start(tip,aid,user){
-	//elPos= $("#newcomm").offset();
-    //console.log(elPos);
+function start(tip,aid,user,aid){
+	caid=aid;
 	rate(tip);
 	score(tip);
 	showCom(aid);
 	getscore(aid);
 	newsletter();
 	newcomm(tip);
-	adjpos();
+	showpag(0);
+	showcomm(0);
 	log();
 	link();
 	newarticlestart();
 	loadsearch(tip);
-    showstar(aid);
-	
-    }
+    showstar(aid);}
     
 function rating(val,aid){
 	var xmlhttp = new XMLHttpRequest();

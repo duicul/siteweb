@@ -5,9 +5,20 @@ $username = "root";
 $password = "";
 $dname="site";
 $conn=new mysqli($servername,$username,$password,$dname);
-if(isset($_GET['tip'])&&strlen($_GET['tip'])>0&&$_GET['tip']!="none")
-$cond="WHERE TYPE='".$_GET['tip']."'";
+if(isset($_POST['aid'])&&strlen($_POST['aid'])>0&&$_POST['aid']!="none")
+{$sql="SELECT * FROM article WHERE ID='".$_POST['aid']."'";
+$result = $conn->query($sql);
+    if($result)
+	{$i=0;
+ 
+	 $row=mysqli_fetch_assoc($result);}
+$cond="WHERE TYPE='".$row['TYPE']."'";
+}
+else {if(isset($_POST['tip'])&&strlen($_POST['tip'])>0&&$_POST['tip']!="none")
+$cond="WHERE TYPE='".$_POST['tip']."'";
 else $cond="";
+}
+ 
 $sql="SELECT c.*,a.TYPE FROM comment c LEFT JOIN article a ON c.AID=a.ID ".$cond." ORDER BY DATE DESC LIMIT 6";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

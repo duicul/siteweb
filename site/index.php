@@ -43,7 +43,9 @@ if ($conn->connect_error) {
    <span id="newsletter"></span>
    <span id="logdata"></span>
     <div  id="log"></div>   
-
+<?php if(isset($_SESSION['admin'])&&$_SESSION['admin']==1)
+    echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"#\" ><i class=\"fa fa-unlock-alt\" aria-hidden=\"true\" onClick=\"mainchange('".$row['TYPE']."');\">Change this page</i></a></li>";	
+	?>
 </nav>
 	</header>
 	
@@ -57,7 +59,7 @@ if ($conn->connect_error) {
 echo "<a style=\"text-decoration:none;color:#000;\" href=\"/site/page.php?id=".$newart['ID']."&type=".$newart['TYPE']."\">";
 	?>
   <br>
-  <h3>
+  <h3 >
 	<?php echo $newart['TITLE']; ?>
 	</h3>
 	</div>
@@ -76,7 +78,7 @@ echo "<a style=\"text-decoration:none;color:#000;\" href=\"/site/page.php?id=".$
 
 <div class="col-6" style="background: rgba(255,255,255,1.00)" id="articlemain">
 
-<h2 align="center"><?php echo $row['TITLE']; ?></h2>
+<h2 align="center" id="maintitle"><?php echo $row['TITLE']; ?></h2>
 
 <?php 
 if(strlen($row['IMG'])>0)
@@ -85,21 +87,40 @@ if(strlen($row['IMG'])>0)
 echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 ?>
 <br>
-<?php  $arrtxt=explode("\n",$row['TXT']);
-	echo "<p class=\"art_txt\" style=\"font-weight: bold;\">".$arrtxt[0]."</p>";
-	for($i=1;$i<sizeof($arrtxt);$i=$i+1)
-		echo "<p class=\"art_txt\" >".$arrtxt[$i]."</p>";
-	?>		
+<?php $arrtxt=preg_split("/\n/",$row['TXT'],-1,PREG_SPLIT_NO_EMPTY);
+	echo "<p class=\"art_txt\" style=\"font-weight:bold\">".$arrtxt[0]."</p>";
+	$mainarttxt=array_slice($arrtxt,1);
+	for($i=0;$i<3;$i=$i+1)
+	{	$inter=(int)(sizeof($mainarttxt)/3)==0?1:(int)(sizeof($mainarttxt)/3+1);
+	echo "<div class=\"sections\">";
+		//echo $i."<br>";
+	if(isset($row['IMG'.(string)($i+1)])&&strlen($row['IMG'.(string)($i+1)])>0)
+    {echo $row['IMG'.(string)($i+1)]."<br>";
+	echo "<a class=\"example-image-link\" href=\"/site/img/";
+	echo $row['IMG'.(string)($i+1)];
+	echo "\" data-title=\"".$row['TITLE']."\" data-lightbox=\"imag1\">";
+    echo "<img class=\"example-image-link\" alt=\"\" align=\"left\" src=\"/site/img/";
+    echo $row['IMG'.(string)($i+1)];
+	echo "\" style=\"width:40%;height:150px;\"></a>";}
+	 for($j=$i*$inter;$j<($i+1)*$inter&&$j<sizeof($mainarttxt);$j=$j+1)
+	{//print_r($mainarttxt[$j]);
+	if(strlen($mainarttxt[$j])>2&&isset($mainarttxt[$j]))
+	{echo "<p class=\"art_txt\" >".$mainarttxt[$j]."</p>";}
+	}echo "</div>";
+	}	
+	?>
 <p id="txtHint"></p>
 <p id="score" align="right"></p>
 <p align="right" id="rate"></p>
 <p id="sol"></p>
 <p align="right" id="star"></p> 
+<div id="artchangbutt"></div>
 <br>
 <p id="username"></p>
 <p id="test"></p>
 
 <?php echo $aux;?>
+	
 </div>
 <div class="col-3 page_right">
 <div id="loadsearch"></div>

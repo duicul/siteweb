@@ -1,6 +1,7 @@
  <?php
 session_start();
-if(isset($_POST['subj']))
+if(isset($_SESSION['admin']))
+{if(isset($_POST['subj']))
 $subj=$_POST['subj'];
 else $subj="";
 
@@ -33,7 +34,7 @@ $conn=new mysqli($servername,$username,$password,$dname);
  { print_r($row);
   $to=$row[1];
   echo "<br>".$to." ".$subject." ".$message." ".$headers."<br>";
-  //mail($to, $subject, $message, $headers);
- }}
+  mail($to, $subject, $message, $headers);
+ }}}
 echo "</body></html>";
 ?> 

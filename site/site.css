@@ -1,9 +1,35 @@
+.sections{
+display:none;
+}
+
+.commbox{
+    margin:10px;
+    border:none;
+	padding: 15px;
+	width:90%;
+	height:180px
+}
+
+.commhead{
+	background-color:rgba(196,196,196,0.53);
+	padding: 10px;
+	margin:5px;
+	border-radius: 15px;
+}
+.commpanel{
+	border: 1px ridge rgba(21,72,176,0.56);
+	border-radius: 15px;
+	width: 50%;
+    margin: 13px;	
+}
+
 #newarticle{
 	position: fixed;
 	bottom: 0px;
     left:10%;
 	width:70%;
-
+	z-index: 200;
+    
 	
 }
 #newarticletxt{
@@ -13,7 +39,7 @@
 	border-radius: 10px;
 	margin:20px;
 	margin-color:red; 
-		height:200px;
+	height:200px;
 	
 }
 

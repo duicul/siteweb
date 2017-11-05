@@ -6,10 +6,11 @@ $password = "";
 $dname="site";
 if(!($_SESSION['user']&&isset($_SESSION['user'])&&$_SESSION['admin']==1))
 	header('Location: '.$uri.'/site/');
+else{
 // Create connection
 //$conn = new mysqli($servername,$username,$password,$dname);
-else {$conn=new mysqli($servername,$username,$password,$dname);
-$target_dir=dirname(getcwd())."\img\\";
+$conn=new mysqli($servername,$username,$password,$dname);
+/*$target_dir=dirname(getcwd())."\img\\";
 $target_file = $target_dir . basename($_FILES["file@art"]["name"]);
 $uploadOk = 1;
 $filename=pathinfo($target_file,PATHINFO_FILENAME);
@@ -31,7 +32,7 @@ $filename3=pathinfo($target_file3,PATHINFO_FILENAME);
 $imageFileType3 = pathinfo($target_file3,PATHINFO_EXTENSION);
 
 $filetxt="";
-if($_FILES['txtfile@art']['error'] == UPLOAD_ERR_OK&& is_uploaded_file($_FILES['txtfile@art']['tmp_name']))
+if(isset($_FILES['txtfile@art'])&&$_FILES['txtfile@art']['error'] == UPLOAD_ERR_OK&& is_uploaded_file($_FILES['txtfile@art']['tmp_name']))
 {$filetxt=file_get_contents($_FILES['txtfile@art']['tmp_name']);
  echo $filetxt;
 }
@@ -92,45 +93,37 @@ if ($uploadOk3 == 0) {
         echo "Sorry, there was an error uploading your file.";
 		$file3="";}}
 
-
-$sql="SELECT * FROM article WHERE TITLE='".$_POST['title@art']."' AND TYPE='".$_POST['type@art']."'";
+*/
+$sql="SELECT * FROM article WHERE ID='".$_POST['aid']."'";
 echo $sql."<br>";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
      $result = $conn->query($sql);
 	if($result)
-	{$row = mysqli_fetch_assoc($result);
-        if($_POST['append@art']=="1")
-		$txt=$row['TXT'];
-	    else $txt="";}
+	{$row = mysqli_fetch_assoc($result);}
     else $row=[];
 print_r($row);
 if(sizeof($row)>0)
 {$val="";
-	if(strlen($file)!=0)
-	{$val=" IMG='".$file."'";
-    $sql="UPDATE article SET ".$val." WHERE TYPE='".$_POST['type@art']."'";
-     echo $sql."<br>";
-    if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-    }
-     $result = $conn->query($sql);} 
- 
     if(isset($_POST['txt@art'])&&strlen($_POST['txt@art'])>2||strlen($filetxt)>0)
-	{  $aux=$_POST['txt@art'];
-		$txt=$txt.$filetxt.$aux;
-	 //htmlentities(htmlspecialchars($txt,$flags=ENT_QUOTES|ENT_HTML5))
-	 $val=" TXT='".$txt."'";
-     $sql="UPDATE article SET ".$val." WHERE TYPE='".$_POST['type@art']."'";
-     echo $sql."<br>";
+	{  $txt=$_POST['txt@art'];
+	   $txt=preg_replace('/<br(\s+)?\/?>/i', "\n",$txt);
+	 echo $txt."<br>";
+	 //
+	 $val=" TXT='".htmlentities(htmlspecialchars($txt,$flags=ENT_QUOTES|ENT_HTML5))."'";
+     $sql="UPDATE article SET ".$val." WHERE ID='".$_POST['aid']."'";
+     //echo $sql."<br>";
       if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     }
       $result = $conn->query($sql);}  
  
 	 if(isset($_POST['title@art'])&&strlen($_POST['title@art'])!=0)
-	 {$val=" TITLE='".$_POST['title@art']."' ";
+	 {$txt=$_POST['title@art'];
+	 $txt=preg_replace('/<br(\s+)?\/?>/i', "\n",$txt);
+	 echo $txt."<br>";
+	 $val=" TITLE='".htmlentities(htmlspecialchars($txt,$flags=ENT_QUOTES|ENT_HTML5))."'";
       $sql="UPDATE article SET ".$val." WHERE TYPE='".$_POST['type@art']."'";
      echo $sql."<br>";
      if ($conn->connect_error) {
@@ -138,23 +131,18 @@ if(sizeof($row)>0)
      }
      $result = $conn->query($sql);}  
 	  echo $_POST['txt@art'];
-}
-else    	
-{
-$aux=$filetxt.$_POST['txt@art'];
-$sql="INSERT INTO article (ID,TITLE,TYPE,TXT,IMG,USERNAME,IMG1,IMG2,IMG3) VALUES (UUID(),'".htmlspecialchars($_POST['title@art'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlspecialchars($_POST['type@art'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlentities(htmlspecialchars($aux,$flags=ENT_QUOTES|ENT_HTML5))."','".$file."','".$_SESSION['user']."','".$file1."','".$file2."','".$file3."')";
-// 'Check connection
-echo $sql;
-//0-name 1-username 2-password 3-mail
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-if($conn->query($sql)==TRUE)
-echo "User added";
-else {echo "User <b>not</b> added<br>";
-     echo "Error: " . $sql . "<br>" . $conn->error."<br>";}
  
-$conn->close();
-echo "Connected successfully";
+     if(isset($_POST['title@art'])&&strlen($_POST['txt@art'])>2||strlen($filetxt)>0)
+	{  $txt=$_POST['title@art'];
+	   $txt=preg_replace('/<br(\s+)?\/?>/i', "\n",$txt);
+	 echo $txt."<br>";
+	 //
+	 $val=" TITLE='".htmlentities(htmlspecialchars($txt,$flags=ENT_QUOTES|ENT_HTML5))."'";
+     $sql="UPDATE article SET ".$val." WHERE ID='".$_POST['aid']."'";
+     //echo $sql."<br>";
+      if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+    }
+      $result = $conn->query($sql);} 
 }}
 ?> 

@@ -72,7 +72,7 @@ $sql="SELECT * FROM article a WHERE TYPE='".$_GET['type']."' ORDER BY DATE LIMIT
 
 <title><?php echo $row['TITLE'];?></title>
 </head>
-<body onLoad="start('<?php echo $row['TYPE'] ?>','<?php echo $row['ID'] ?>','<?php echo $aux ?>')">
+<body onLoad="start('<?php echo $row['TYPE'] ?>','<?php echo $row['ID'] ?>','<?php echo $aux ?>','<?php echo $_GET['id'] ?>');">
 <header>
 <div class="headerimag"></div>	
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
@@ -82,7 +82,9 @@ $sql="SELECT * FROM article a WHERE TYPE='".$_GET['type']."' ORDER BY DATE LIMIT
    <span id="newsletter"></span>
    <span id="logdata"></span>
     <div  id="log"></div>   
-
+    <?php if(isset($_SESSION['admin'])&&$_SESSION['admin']==1)
+    echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"#\" ><i class=\"fa fa-unlock-alt\" aria-hidden=\"true\" onClick=\"artchange('".$_GET['id']."');\">Change this page</i></a></li>";	
+	?>
 </nav>
 </header>
 
@@ -96,7 +98,7 @@ $sql="SELECT * FROM article a WHERE TYPE='".$_GET['type']."' ORDER BY DATE LIMIT
 echo "<a style=\"text-decoration:none;color:#000;\" href=\"/site/page.php?id=".$newart['ID']."&type=".$newart['TYPE']."\">";
 	?>
   <br>
-  <h3>
+  <h3 >
 	<?php echo $newart['TITLE']; ?>
 	</h3>
 	</div>
@@ -115,7 +117,7 @@ echo "<a style=\"text-decoration:none;color:#000;\" href=\"/site/page.php?id=".$
 	
 <div class="col-6" style="background: rgba(255,255,255,1.00)" id="articlemain">
 
-<h2 align="center"><?php echo $row['TITLE']; ?></h2>
+<h2 align="center" id="arttitle"><?php echo $row['TITLE']; ?></h2>
 
 <p>Articol creat de : <?php echo $row['USERNAME'];?></p>
 
@@ -125,53 +127,73 @@ if(strlen($row['IMG'])>0)
  echo "<img class=\"example-image-link\" alt=\"\" src=\"/site/img/";
 echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 	?>
-
 <br>
 <?php $arrtxt=preg_split("/\n/",$row['TXT'],-1,PREG_SPLIT_NO_EMPTY);
 	echo "<p class=\"art_txt\" style=\"font-weight:bold\">".$arrtxt[0]."</p>";
-   //$key='IMG'.(string)2;	
-	//print_r($row);
-	//echo "<br>aici badd".$row[$key];
-	echo "<div class=\"sections\">";
-	$mainarttxt=array_slice($arrtxt,1);
-	$sections=array_chunk($mainarttxt,sizeof($mainarttxt)/4+1);
-	for($i=1;$i<sizeof($sections);$i=$i+1)
-	{echo "<div class=\"sections_txt\">";
-	//print "<br>".$i."<br>";
-	if(strlen($row['IMG'.(string)$i])>0)
-    {echo $row['IMG'.(string)$i]."<br>";
+	$mainarttxt=array();
+	for($i=1;$i<sizeof($arrtxt);$i=$i+1)
+	{if(strlen($arrtxt[$i])>3)
+	array_push($mainarttxt,$arrtxt[$i]);}
+	$sect=array_chunk($mainarttxt,3);
+	function showpagin($sect){
+	echo "<span class=\"pagin\" id=\"#toppagin\">";
+	echo "<a class=\"linkbutton point\" onClick=\"showpag(0);\"><i class=\"fa fa-fast-backward\" ></i></a>";
+    echo "<a class=\"linkbutton point\" onClick=\"showprev();\"><i class=\"fa fa-step-backward\" ></i></a>";
+	for($i=0;$i<sizeof($sect);$i=$i+1)
+	echo "<a class=\"pageno".$i." linkbutton point\" onClick=\"showpag(".$i.");\"><i class=\"fa\">".($i+1)."</i></a>";
+	echo "<a class=\"linkbutton point\" onClick=\"shownext();\"><i class=\"fa fa-step-forward\" ></i></a>";
+	echo "<a class=\"linkbutton point\" onClick=\"showpag(".(sizeof($sect)-1).");\"><i class=\"fa fa-fast-forward\" ></i></a>";
+    echo "</span>";}
+	showpagin($sect);
+	for($i=0;$i<sizeof($sect);$i=$i+1)
+	{echo "<div class=\"sections\" style=\"".($i==0?"display:block":"")."\" id=\"sectart".$i."\">";
+		for($j=0;$j<sizeof($sect[$i]);$j=$j+1)
+	{	//$inter=(int)(sizeof($mainarttxt)/3)==0?1:(int)(sizeof($mainarttxt)/3+1);
+	echo "<div class=\"sectpart\" style=\"text-align:left;\">";
+	if(isset($row['IMG'.(string)($j+1)])&&strlen($row['IMG'.(string)($j+1)])>0)
+    {echo $row['IMG'.(string)($j+1)]."<br>";
 	echo "<a class=\"example-image-link\" href=\"/site/img/";
-	echo $row['IMG'.(string)$i];
+	echo $row['IMG'.(string)($j+1)];
 	echo "\" data-title=\"".$row['TITLE']."\" data-lightbox=\"imag1\">";
-    echo "<img class=\"example-image-link\" alt=\"\" align=\"left\" src=\"/site/img/";
-    echo $row['IMG'.(string)$i];
+    echo "<img class=\"example-image-link\" alt=\"\" align=\"right\" src=\"/site/img/";
+    echo $row['IMG'.(string)($j+1)];
 	echo "\" style=\"width:40%;height:150px;\"></a>";}
-	foreach($sections[$i] as $parag)
-	{
-	if(strlen($parag)>2)
-	{echo "<p class=\"art_txt\" >".$parag."</p>";}
+	 /*for($j=$i*$inter;$j<($i+1)*$inter&&$j<sizeof($mainarttxt);$j=$j+1)
+	{//print_r($mainarttxt[$j]);
+	if(strlen($mainarttxt[$j])>2&&isset($mainarttxt[$j]))
+	{*/echo "<p class=\"art_txt\">".$sect[$i][$j]."</p>";//}}
+		echo "</div>";
+		echo "<br>";
 	}echo "</div>";
-	}
-	echo "</div>";
-	?>		
+	}	
+	?>
+<span class="pagin">
+<?php
+	showpagin($sect);
+
+	?>
+</span>
 <p id="txtHint"></p>
 <p id="score" align="right"></p>
 <p align="right" id="rate"></p>
 <p id="sol"></p>
 <p align="right" id="star"></p> 
+<div id="artchangbutt"></div>
 <br>
 <p id="username"></p>
 <p id="test"></p>
-
-<?php echo $aux;?>
-<button type="submit" class="btn-outline-success" onClick="addcom('<?php echo $aux;?>','<?php echo $_GET['id']?>');">Post</button>
+<hr>
 <br>
-<textarea rows="5"  id="addcom" class="form-control-plaintext" style="height:200;border:outset"></textarea><br>
+<div class="commpanel">
+<textarea id="addcom" class="commbox"></textarea><br>
+<div class="commhead"><?php echo $aux;?> 
+<button type="submit" class="btn-outline-success" onClick="addcom('<?php echo $aux;?>','<?php echo $_GET['id']?>');">Post</button>
+	</div>
+	</div>
 <p id="resp"></p>
 <br>
 <br>
 <p id="comm"> Comments</p>
-
 </div>
 		
 <div class="col-3 page_right">
