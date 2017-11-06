@@ -36,7 +36,14 @@ if ($uploadOk == 0) {
     }
 }
 
-$sql="SELECT * FROM mainpage WHERE TYPE='".$_POST['type@main']."'";
+$filetxt="";
+if($_FILES['txtfile@main']['error'] == UPLOAD_ERR_OK&& is_uploaded_file($_FILES['txtfile@main']['tmp_name']))
+{$filetxt=file_get_contents($_FILES['txtfile@main']['tmp_name']);
+ echo $filetxt;
+}	  
+	  
+if($_POST['type@main']!=-1)
+{$sql="SELECT * FROM mainpage WHERE TYPE=".$_POST['type@main'];
 echo $sql."<br>";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -50,15 +57,17 @@ if(sizeof($row)>0)
 {$val="";
 	if(strlen($file)!=0)
 	{$val=" IMG='".$file."'";
-    $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@main']."'";
+    $sql="UPDATE mainpage SET ".$val." WHERE TYPE=".$_POST['type@main'];
      echo $sql."<br>";
     if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     }
      $result = $conn->query($sql);} 
-    if(isset($_POST['txt@main'])&&strlen($_POST['txt@main'])>2)
-	{$val=" TXT='".$_POST['txt@main']."'";
-     $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@main']."'";
+    if(isset($_POST['txt@main'])&&strlen($_POST['txt@main'])>2||isset($filetxt)&&strlen($filetxt)>2)
+	{$aux=$_POST['txt@main'].$filetxt;
+     $aux=htmlspecialchars($aux,$flags=ENT_QUOTES|ENT_HTML5);
+		$val=" TXT='".$aux."'";
+     $sql="UPDATE mainpage SET ".$val." WHERE TYPE=".$_POST['type@main'];
      echo $sql."<br>";
       if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -66,18 +75,18 @@ if(sizeof($row)>0)
       $result = $conn->query($sql);}     
 	 if(isset($_POST['title@main'])&&strlen($_POST['title@main'])!=0)
 	 {$val=" TITLE='".$_POST['title@main']."' ";
-      $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@main']."'";
+      $sql="UPDATE mainpage SET ".$val." WHERE TYPE=".$_POST['type@main'];
      echo $sql."<br>";
      if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
      }
      $result = $conn->query($sql);}  
 	  echo $_POST['txt@main'];
-}
+}}
 else    	
-{$aux=$_POST['txt@main'];
-$aux=preg_replace(".\\n.","<br/>",$aux);
-$sql="INSERT INTO mainpage (TITLE,TYPE,TXT,IMG) VALUES ('".htmlspecialchars($_POST['title@main'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlspecialchars($_POST['type@main'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlspecialchars($aux,$flags=ENT_QUOTES|ENT_HTML5)."','".$file."')";
+{$aux=$_POST['txt@main'].$filetxt;
+$aux=preg_replace(".\\n.","<br>",$aux);
+$sql="INSERT INTO mainpage (TITLE,TXT,IMG) VALUES ('".htmlspecialchars($_POST['title@main'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlspecialchars($aux,$flags=ENT_QUOTES|ENT_HTML5)."','".$file."')";
 // 'Check connection
 echo $sql;
 //0-name 1-username 2-password 3-mail

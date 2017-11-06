@@ -37,7 +37,7 @@ if ($uploadOk == 0) {
 }
 $aux=$_POST['txt@art'];
 $aux=preg_replace(".\\n.","<br/>",$aux);
-$sql="INSERT INTO article (TITLE,TYPE,TXT,IMG,USERNAME) VALUES ('".$_POST['title@art']."','".$_POST['type@art']."','".$aux."','".$filename.".".$imageFileType."','".$_SESSION['user']."')";
+$sql="INSERT INTO article (TITLE,TYPE,TXT,IMG,USERNAME) VALUES ('".$_POST['title@art']."',".$_POST['type@art'].",'".$aux."','".$filename.".".$imageFileType."','".$_SESSION['user']."')";
 // 'Check connection
 echo $sql;
 //0-name 1-username 2-password 3-mail

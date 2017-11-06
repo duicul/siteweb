@@ -4,9 +4,9 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dname="site";
-if($_GET['tip']=="none")
+if($_GET['tip']==1)
 {$cond="";}
-else{$cond="WHERE TYPE='".$_GET['tip']."'";}
+else{$cond="WHERE TYPE=".$_GET['tip'];}
 $conn=new mysqli($servername,$username,$password,$dname);
 $sql="SELECT a.ID,a.TITLE,a.TXT,a.TYPE,a.IMG,v.AID,AVG(v.SCORE) as SCOR FROM (SELECT * FROM article ".$cond.") a,vote v WHERE a.ID=v.AID GROUP BY AID ORDER BY SCOR DESC ";
 //echo $sql;

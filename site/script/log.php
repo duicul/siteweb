@@ -73,11 +73,17 @@ $conn=new mysqli($servername,$username,$password,$dname);
 			echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#mainchangeModal\">Back</a><br>";
 			echo "Photo: <input type=\"file\" id=\"file@main\"/>  <br />";
 			echo "<input type=\"text\" id=\"title@main\" placeholder=\"Title\"/>  <br />";
-			echo "<input type=\"text\" id=\"type@main\" placeholder=\"Type\"/>  <br />";
+			echo "<select id=\"type@main\" onChange=\"getartbytype();\" onClick=\"getartbytype();\">";
+			 echo "<option value=\"-1\">None</option>";
+			 foreach($rows as $row)
+	         if($row[0]!=0)
+				 echo "<option value=\"".$row[0]."\">".$row[1]."</option>";
+            echo "</select>  <br />";
 		    echo "Types: ";
 			 foreach($rows as $row)
 	         echo $row[0]." ";
             echo "<br />";
+			 echo "Text File: <input type=\"file\" id=\"txtfilemain\"/>  <br />";
 			echo "<textarea id=\"txt@main\" placeholder=\"Text\" cols=\"60\" rows=\"20\"></textarea>  <br />";
             echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#mainchangeModal\" onClick=\"mainins();\" >Create/Change</a><br>";
             echo "</div></div></div></div>"; 

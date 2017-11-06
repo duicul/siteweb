@@ -18,7 +18,7 @@ if(sizeof($row)==0||$row['ADMIN']==0)
 {}
 else
 {//print_r($row);
- $sql="DELETE a.*,c.*,m.*,vi.*,vo.* FROM mainpage m left JOIN article a ON m.TYPE=a.TYPE left JOIN visit vi ON a.ID=vi.AID left JOIN vote vo ON vo.AID=a.ID left JOIN comment c ON a.ID=c.AID WHERE m.TYPE='".$_GET['tip']."'";
+ $sql="DELETE a.*,c.*,m.*,vi.*,vo.* FROM mainpage m left JOIN article a ON m.TYPE=a.TYPE left JOIN visit vi ON a.ID=vi.AID left JOIN vote vo ON vo.AID=a.ID left JOIN comment c ON a.ID=c.AID WHERE m.TYPE=".$_GET['tip'];
  echo $sql;
  if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

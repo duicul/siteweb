@@ -476,7 +476,7 @@ function artins(txt){
 			}
         };
 	console.log($("#appendart").is(":checked"));
-	if($("#typeart").val().length==3&&($("#titleart").val().length>=3||$("#artbytype").val().length!=0))
+	if($("#titleart").val().length>=3||$("#artbytype").val().length!=0)
 	{var file = document.getElementById("fileart").files[0];
 	 var file1 = document.getElementById("fileart1").files[0];
 	 var file2 = document.getElementById("fileart2").files[0];
@@ -496,8 +496,9 @@ function artins(txt){
 	formData.append("txt@art", $("#txtart").val());
     xmlhttp.open("POST",url, true);
     xmlhttp.send(formData);
-	$("#artinsModal").modal("toggle");
-	}}
+	}
+$("#artinsModal").modal("toggle");
+}
 
 function mainins(){
 	var url = "/site/script/mainchange.php";
@@ -509,8 +510,10 @@ function mainins(){
         };
 	if(document.getElementById("type@main").value.length>0)
 	{var file = document.getElementById("file@main").files[0];
+	 var filetxt = document.getElementById("txtfilemain").files[0];
     var formData = new FormData();
     formData.append("file@main", file);
+	 formData.append("txtfile@main", filetxt);
 	formData.append("title@main", document.getElementById("title@main").value);
 	formData.append("type@main", document.getElementById("type@main").value);
 	formData.append("txt@main", document.getElementById("txt@main").value);
@@ -586,13 +589,12 @@ function link(){
         xmlhttp.send();}
 
 function startmain(tip){
-	//elPos= $("#newcomm").offset();
-    //console.log(elPos);
 	rate(tip);
 	score(tip);
 	newcomm(tip);
 	log();
 	link();
+	showpag(0);
 	newarticlestart();
 	newsletter();
 	loadsearch(tip);

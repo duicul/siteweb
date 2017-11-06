@@ -9,12 +9,12 @@ tip =form.getvalue('tip')
 
 db = MySQLdb.connect("localhost","root","","site")
 cursor = db.cursor()
-
-if tip=="none":
+if tip=="1":
    cond=""
 else:
-   cond="WHERE TYPE='"+tip+"'"
-sql="SELECT * FROM article "+cond+"ORDER BY RATE DESC "
+   cond="WHERE TYPE="+tip
+#print cond
+sql="SELECT * FROM article "+cond+" ORDER BY RATE DESC "
 try:
    # Execute the SQL command
    cursor.execute(sql)
@@ -23,9 +23,9 @@ try:
    #print results
    count=0
    for row in results:
-      if len(row)!=0:
          print "<p>"
-         q="<br><a class=\"alink\" href=\"/site/page.php?id="+str(row[0])+"&type="+row[4]+"\">"+row[1]+"<br>"
+         q=""
+         q="<br><a class=\"alink\" href=\"/site/page.php?id="+row[0]+"&type="+str(row[4])+"\">"+row[1]+"<br>"
          print q
          if len(row[3])>0:
             print "<img align=\"left\" src=\"/site/img/"+row[3]+"\" width=\"100\" height=\"80\"\"></img>"

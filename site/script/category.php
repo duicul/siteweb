@@ -5,12 +5,13 @@
     $password = "";
     $dname="site";
     $conn=new mysqli($servername,$username,$password,$dname);
-    $sql="SELECT * FROM mainpage WHERE TYPE!='all'";
+    $sql="SELECT * FROM mainpage";
     if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     }
     $result = $conn->query($sql);
 	$rows = mysqli_fetch_all($result);
+
     echo "<ul class=\"navbar-nav mr-auto\">";
     foreach($rows as $row)
 	{echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"/site/pagemain.php?tip=";

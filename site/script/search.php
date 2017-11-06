@@ -6,7 +6,7 @@ $dname="site";
 $conn=new mysqli($servername,$username,$password,$dname);
 if($_GET['tip']=="all"||$_GET['tip']=="none"||strlen($_GET['tip'])==0)
 $val="";
-	else $val="WHERE TYPE='".$_GET['tip']."'";;
+	else $val="WHERE TYPE=".$_GET['tip'];;
 $sql="SELECT * FROM article ".$val;
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);}

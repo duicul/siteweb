@@ -1,4 +1,4 @@
-<?php
+typ<?php
 session_start();
 $servername = "localhost";
 $username = "root";
@@ -36,7 +36,7 @@ if ($uploadOk == 0) {
     }
 }
 */
-$sql="SELECT * FROM mainpage WHERE TYPE='".$_POST['type@main']."'";
+$sql="SELECT * FROM mainpage WHERE TYPE=".$_POST['type@main'];
 echo $sql."<br>";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -48,21 +48,21 @@ if ($conn->connect_error) {
 print_r($row);
 if(sizeof($row)>0)
 {$val="";
-	/*if(strlen($file)!=0)
+	if(strlen($file)!=0)
 	{$val=" IMG='".$file."'";
-    $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@main']."'";
+    $sql="UPDATE mainpage SET ".$val." WHERE TYPE=".$_POST['type@main'];
      echo $sql."<br>";
     if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     }
-     $result = $conn->query($sql);} */
+     $result = $conn->query($sql);} 
  
     if(isset($_POST['txt@main'])&&strlen($_POST['txt@main'])>2)
 	{$txt=$_POST['txt@main'];
 	 $txt=preg_replace('/<br(\s+)?\/?>/i', "\n",$txt);
 	 echo $txt."<br>";
 	 $val=" TXT='".htmlentities(htmlspecialchars($txt,$flags=ENT_QUOTES|ENT_HTML5))."'";
-     $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@main']."'";
+     $sql="UPDATE mainpage SET ".$val." WHERE TYPE=".$_POST['type@main'];
      echo $sql."<br>";
       if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -74,7 +74,7 @@ if(sizeof($row)>0)
 	 $txt=preg_replace('/<br(\s+)?\/?>/i', "\n",$txt);
 	 echo $txt."<br>";
 	 $val=" TITLE='".htmlentities(htmlspecialchars($txt,$flags=ENT_QUOTES|ENT_HTML5))."'";
-      $sql="UPDATE mainpage SET ".$val." WHERE TYPE='".$_POST['type@main']."'";
+      $sql="UPDATE mainpage SET ".$val." WHERE TYPE=".$_POST['type@main'];
      echo $sql."<br>";
      if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -82,4 +82,5 @@ if(sizeof($row)>0)
      $result = $conn->query($sql);}  
 	  echo $_POST['txt@main'];}
 	 }
+	
 ?> 

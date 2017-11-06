@@ -8,7 +8,7 @@ session_start();
 //$conn = new mysqli($servername,$username,$password,$dname);
 if(isset($_SESSION['user']))
 {$conn=new mysqli($servername,$username,$password,$dname);
-$sql="SELECT * FROM article WHERE TYPE='".$_GET['tip']."'";
+$sql="SELECT * FROM article WHERE TYPE=".$_GET['tip'];
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }

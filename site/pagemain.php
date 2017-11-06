@@ -28,16 +28,23 @@ if ($conn->connect_error) {
 $sql="SELECT * FROM article a WHERE TYPE='".$_GET['tip']."' ORDER BY DATE LIMIT 1";
 	$result = $conn->query($sql);
 	$newart = mysqli_fetch_assoc($result);
-    
+   function showpagin($sect){
+	echo "<span class=\"pagin\" id=\"#toppagin\">";
+	echo "<a class=\"linkbutton point\" onClick=\"showpag(0);\"><i class=\"fa fa-fast-backward\" ></i></a>";
+    echo "<a class=\"linkbutton point\" onClick=\"showprev();\"><i class=\"fa fa-step-backward\" ></i></a>";
+	for($i=0;$i<sizeof($sect);$i=$i+1)
+	echo "<a class=\"pageno".$i." linkbutton point\" onClick=\"showpag(".$i.");\"><i class=\"fa\">".($i+1)."</i></a>";
+	echo "<a class=\"linkbutton point\" onClick=\"shownext();\"><i class=\"fa fa-step-forward\" ></i></a>";
+	echo "<a class=\"linkbutton point\" onClick=\"showpag(".(sizeof($sect)-1).");\"><i class=\"fa fa-fast-forward\" ></i></a>";
+    echo "</span>";}
 	?>
 
 <title><?php echo $row['TITLE'];?></title>
 </head>
-<body onLoad="startmain('<?php echo $row['TYPE'] ?>','<?php echo $aux ?>')">
+<body onLoad="startmain(<?php echo $row['TYPE'] ?>,'<?php echo $aux ?>')">
 <header>
 <div class="headerimag"></div>	
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
- <a class="nav-link linkbutton" href="/site/">Stiri</a>
    <span class="mr-auto link"></span>
    <span id="newsletter"></span>
    <span id="logdata"></span>
@@ -92,26 +99,24 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 	echo "....";
 	else echo $arrtxt[0];
 	echo "</p>";
-	$mainarttxt=array_slice($arrtxt,1);
-	for($i=0;$i<3;$i=$i+1)
-	{	$inter=(int)(sizeof($mainarttxt)/3)==0?1:(int)(sizeof($mainarttxt)/3+1);
-	echo "<div class=\"sections\">";
-		//echo $i."<br>";
-	if(isset($row['IMG'.(string)($i+1)])&&strlen($row['IMG'.(string)($i+1)])>0)
-    {echo $row['IMG'.(string)($i+1)]."<br>";
-	echo "<a class=\"example-image-link\" href=\"/site/img/";
-	echo $row['IMG'.(string)($i+1)];
-	echo "\" data-title=\"".$row['TITLE']."\" data-lightbox=\"imag1\">";
-    echo "<img class=\"example-image-link\" alt=\"\" align=\"left\" src=\"/site/img/";
-    echo $row['IMG'.(string)($i+1)];
-	echo "\" style=\"width:40%;height:150px;\"></a>";}
-	 for($j=$i*$inter;$j<($i+1)*$inter&&$j<sizeof($mainarttxt);$j=$j+1)
-	{//print_r($mainarttxt[$j]);
-	if(strlen($mainarttxt[$j])>2&&isset($mainarttxt[$j]))
-	{echo "<p class=\"art_txt\" >".$mainarttxt[$j]."</p>";}
-	}echo "</div>";
-	}	
-	?>	
+	$mainarttxt=array();
+	for($i=1;$i<sizeof($arrtxt);$i=$i+1)
+	{if(strlen($arrtxt[$i])>3)
+	array_push($mainarttxt,$arrtxt[$i]);}
+	$sect=array_chunk($mainarttxt,4);
+	showpagin($sect);
+		for($i=0;$i<sizeof($sect);$i=$i+1)
+	{echo "<div class=\"sections\" style=\"".($i==0?"display:block":"")."\" id=\"sectart".$i."\">";
+		for($j=0;$j<sizeof($sect[$i]);$j=$j+1)
+	{echo "<div class=\"sectpart\">";
+    echo "<p class=\"art_txt\">".$sect[$i][$j]."</p>";
+		echo "</div>";
+	}echo "</div>";}
+?>
+<br>
+<span class="pagin">
+<?php showpagin($sect);?>
+	</span>	
 <p id="txtHint"></p>
 <p id="score" align="right"></p>
 <p align="right" id="rate"></p>

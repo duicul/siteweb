@@ -11,7 +11,7 @@ $dname="site";
 $conn=new mysqli($servername,$username,$password,$dname);
 if($_GET['tip']=="all")
 	$cond="";
-else $cond="WHERE TYPE='".$_GET['tip']."'";
+else $cond="WHERE TYPE=".$_GET['tip'];
 $sql="SELECT * FROM article ".$cond;
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

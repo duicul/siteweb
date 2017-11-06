@@ -8,7 +8,7 @@ $dname="site";
 // Create connection
 //$conn = new mysqli($servername,$username,$password,$dname);
 $conn=new mysqli($servername,$username,$password,$dname);
-$sql="SELECT * FROM mainpage WHERE TYPE!='all'";
+$sql="SELECT * FROM mainpage WHERE TYPE!=1";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }

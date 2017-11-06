@@ -48,13 +48,13 @@ if ($conn->connect_error) {
 	$row = mysqli_fetch_assoc($result);
 	//echo $row['NUMAR'];
 	
-$sql="UPDATE article SET RATE='".$row['NUMAR']."' WHERE ID='".$_GET['id']."' AND TYPE='".$_GET['type']."'";
+$sql="UPDATE article SET RATE='".$row['NUMAR']."' WHERE ID='".$_GET['id']."' AND TYPE=".$_GET['type'];
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
      $result = $conn->query($sql);
 	
-$sql="SELECT * FROM article WHERE ID='".$_GET['id']."' AND TYPE='".$_GET['type']."'";
+$sql="SELECT * FROM article WHERE ID='".$_GET['id']."' AND TYPE=".$_GET['type'];
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -65,25 +65,33 @@ if ($conn->connect_error) {
 	if(isset($_SESSION['user']))
 		$aux=$_SESSION['user'];
 	else $aux='anonymous';
-$sql="SELECT * FROM article a WHERE TYPE='".$_GET['type']."' ORDER BY DATE LIMIT 1";
+$sql="SELECT * FROM article a WHERE TYPE=".$_GET['type']." ORDER BY DATE LIMIT 1";
 	$result = $conn->query($sql);
 	$newart = mysqli_fetch_assoc($result);
 ?>
 
 <title><?php echo $row['TITLE'];?></title>
 </head>
-<body onLoad="start('<?php echo $row['TYPE'] ?>','<?php echo $row['ID'] ?>','<?php echo $aux ?>','<?php echo $_GET['id'] ?>');">
+<body onLoad="start(<?php echo $row['TYPE'] ?>,'<?php echo $row['ID'] ?>','<?php echo $aux ?>','<?php echo $_GET['id'] ?>');">
 <header>
 <div class="headerimag"></div>	
 <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
- <a class="nav-link linkbutton" href="/site/">Stiri</a>
-  
    <div class="mr-auto link"></div>
    <span id="newsletter"></span>
    <span id="logdata"></span>
     <div  id="log"></div>   
     <?php if(isset($_SESSION['admin'])&&$_SESSION['admin']==1)
-    echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"#\" ><i class=\"fa fa-unlock-alt\" aria-hidden=\"true\" onClick=\"artchange('".$_GET['id']."');\">Change this page</i></a></li>";	
+    echo "<li class=\"nav-link\"><a class=\"linkbutton\" href=\"#\" ><i class=\"fa fa-unlock-alt\" aria-hidden=\"true\" onClick=\"artchange('".$_GET['id']."');\">Change this page</i></a></li>";
+	  
+	function showpagin($sect){
+	echo "<span class=\"pagin\" id=\"#toppagin\">";
+	echo "<a class=\"linkbutton point\" onClick=\"showpag(0);\"><i class=\"fa fa-fast-backward\" ></i></a>";
+    echo "<a class=\"linkbutton point\" onClick=\"showprev();\"><i class=\"fa fa-step-backward\" ></i></a>";
+	for($i=0;$i<sizeof($sect);$i=$i+1)
+	echo "<a class=\"pageno".$i." linkbutton point\" onClick=\"showpag(".$i.");\"><i class=\"fa\">".($i+1)."</i></a>";
+	echo "<a class=\"linkbutton point\" onClick=\"shownext();\"><i class=\"fa fa-step-forward\" ></i></a>";
+	echo "<a class=\"linkbutton point\" onClick=\"showpag(".(sizeof($sect)-1).");\"><i class=\"fa fa-fast-forward\" ></i></a>";
+    echo "</span>";}
 	?>
 </nav>
 </header>
@@ -112,7 +120,7 @@ echo "<a style=\"text-decoration:none;color:#000;\" href=\"/site/page.php?id=".$
 <div class="container-fluid">
 <div class="row">
 	<div class="col-3 page_left">
-		<div id="newcomm">AAnaare mere <?php echo $row['TYPE'] ?> </div>
+		<div id="newcomm"><?php echo $row['TYPE'] ?> </div>
 	</div>
 	
 <div class="col-6" style="background: rgba(255,255,255,1.00)" id="articlemain">
@@ -125,7 +133,7 @@ echo "<a style=\"text-decoration:none;color:#000;\" href=\"/site/page.php?id=".$
 if(strlen($row['IMG'])>0)
 {echo "<a class=\"example-image-link\" href=\"/site/img/".$row['IMG']."\" data-title=\"".$row['TITLE']."\" data-lightbox=\"imag1\">";
  echo "<img class=\"example-image-link\" alt=\"\" src=\"/site/img/";
-echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
+echo $row['IMG']."\" style=\"width:100%;height:200px;display:block;\"></a>";}
 	?>
 <br>
 <?php $arrtxt=preg_split("/\n/",$row['TXT'],-1,PREG_SPLIT_NO_EMPTY);
@@ -135,29 +143,20 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 	{if(strlen($arrtxt[$i])>3)
 	array_push($mainarttxt,$arrtxt[$i]);}
 	$sect=array_chunk($mainarttxt,3);
-	function showpagin($sect){
-	echo "<span class=\"pagin\" id=\"#toppagin\">";
-	echo "<a class=\"linkbutton point\" onClick=\"showpag(0);\"><i class=\"fa fa-fast-backward\" ></i></a>";
-    echo "<a class=\"linkbutton point\" onClick=\"showprev();\"><i class=\"fa fa-step-backward\" ></i></a>";
-	for($i=0;$i<sizeof($sect);$i=$i+1)
-	echo "<a class=\"pageno".$i." linkbutton point\" onClick=\"showpag(".$i.");\"><i class=\"fa\">".($i+1)."</i></a>";
-	echo "<a class=\"linkbutton point\" onClick=\"shownext();\"><i class=\"fa fa-step-forward\" ></i></a>";
-	echo "<a class=\"linkbutton point\" onClick=\"showpag(".(sizeof($sect)-1).");\"><i class=\"fa fa-fast-forward\" ></i></a>";
-    echo "</span>";}
 	showpagin($sect);
 	for($i=0;$i<sizeof($sect);$i=$i+1)
 	{echo "<div class=\"sections\" style=\"".($i==0?"display:block":"")."\" id=\"sectart".$i."\">";
 		for($j=0;$j<sizeof($sect[$i]);$j=$j+1)
 	{	//$inter=(int)(sizeof($mainarttxt)/3)==0?1:(int)(sizeof($mainarttxt)/3+1);
-	echo "<div class=\"sectpart\" style=\"text-align:left;\">";
+	echo "<div class=\"sectpart\">";
 	if(isset($row['IMG'.(string)($j+1)])&&strlen($row['IMG'.(string)($j+1)])>0)
     {echo $row['IMG'.(string)($j+1)]."<br>";
-	echo "<a class=\"example-image-link\" href=\"/site/img/";
+	echo "<span style=\"display:block;text-align:right;\"><a class=\"example-image-link\" href=\"/site/img/";
 	echo $row['IMG'.(string)($j+1)];
-	echo "\" data-title=\"".$row['TITLE']."\" data-lightbox=\"imag1\">";
-    echo "<img class=\"example-image-link\" alt=\"\" align=\"right\" src=\"/site/img/";
+	echo "\" data-title=\"".$row['TITLE']."\" data-lightbox=\"imag".($i+1)."\">";
+    echo "<img class=\"example-image-link\" alt=\"\"  src=\"/site/img/";
     echo $row['IMG'.(string)($j+1)];
-	echo "\" style=\"width:40%;height:150px;\"></a>";}
+	echo "\" style=\"width:40%;height:150px;display:block;\"></a></span>";}
 	 /*for($j=$i*$inter;$j<($i+1)*$inter&&$j<sizeof($mainarttxt);$j=$j+1)
 	{//print_r($mainarttxt[$j]);
 	if(strlen($mainarttxt[$j])>2&&isset($mainarttxt[$j]))

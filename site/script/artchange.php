@@ -124,7 +124,7 @@ if(sizeof($row)>0)
 	 $txt=preg_replace('/<br(\s+)?\/?>/i', "\n",$txt);
 	 echo $txt."<br>";
 	 $val=" TITLE='".htmlentities(htmlspecialchars($txt,$flags=ENT_QUOTES|ENT_HTML5))."'";
-      $sql="UPDATE article SET ".$val." WHERE TYPE='".$_POST['type@art']."'";
+      $sql="UPDATE article SET ".$val." WHERE TYPE=".$_POST['type@art'];
      echo $sql."<br>";
      if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

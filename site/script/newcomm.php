@@ -12,10 +12,10 @@ $result = $conn->query($sql);
 	{$i=0;
  
 	 $row=mysqli_fetch_assoc($result);}
-$cond="WHERE TYPE='".$row['TYPE']."'";
+$cond="WHERE TYPE=".$row['TYPE'];
 }
-else {if(isset($_POST['tip'])&&strlen($_POST['tip'])>0&&$_POST['tip']!="none")
-$cond="WHERE TYPE='".$_POST['tip']."'";
+else {if(isset($_POST['tip'])&&strlen($_POST['tip'])>0&&$_POST['tip']!=1)
+$cond="WHERE TYPE=".$_POST['tip'];
 else $cond="";
 }
  

@@ -1,9 +1,10 @@
- <?php
+typ <?php
 session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dname="site";
+echo "change";
 if(!($_SESSION['user']&&isset($_SESSION['user'])&&$_SESSION['admin']==1))
 	header('Location: '.$uri.'/site/');
 // Create connection
@@ -93,7 +94,7 @@ if ($uploadOk3 == 0) {
 		$file3="";}}
 
 
-$sql="SELECT * FROM article WHERE TITLE='".$_POST['title@art']."' AND TYPE='".$_POST['type@art']."'";
+$sql="SELECT * FROM article WHERE TITLE='".$_POST['title@art']."' AND TYPE=".$_POST['type@art'];
 echo $sql."<br>";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -110,7 +111,7 @@ if(sizeof($row)>0)
 {$val="";
 	if(strlen($file)!=0)
 	{$val=" IMG='".$file."'";
-    $sql="UPDATE article SET ".$val." WHERE TYPE='".$_POST['type@art']."'";
+    $sql="UPDATE article SET ".$val." WHERE TYPE=".$_POST['type@art'];
      echo $sql."<br>";
     if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -122,7 +123,7 @@ if(sizeof($row)>0)
 		$txt=$txt.$filetxt.$aux;
 	 //htmlentities(htmlspecialchars($txt,$flags=ENT_QUOTES|ENT_HTML5))
 	 $val=" TXT='".$txt."'";
-     $sql="UPDATE article SET ".$val." WHERE TYPE='".$_POST['type@art']."'";
+     $sql="UPDATE article SET ".$val." WHERE TYPE=".$_POST['type@art'];
      echo $sql."<br>";
       if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -131,7 +132,7 @@ if(sizeof($row)>0)
  
 	 if(isset($_POST['title@art'])&&strlen($_POST['title@art'])!=0)
 	 {$val=" TITLE='".$_POST['title@art']."' ";
-      $sql="UPDATE article SET ".$val." WHERE TYPE='".$_POST['type@art']."'";
+      $sql="UPDATE article SET ".$val." WHERE TYPE=".$_POST['type@art'];
      echo $sql."<br>";
      if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -142,7 +143,7 @@ if(sizeof($row)>0)
 else    	
 {
 $aux=$filetxt.$_POST['txt@art'];
-$sql="INSERT INTO article (ID,TITLE,TYPE,TXT,IMG,USERNAME,IMG1,IMG2,IMG3) VALUES (UUID(),'".htmlspecialchars($_POST['title@art'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlspecialchars($_POST['type@art'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlentities(htmlspecialchars($aux,$flags=ENT_QUOTES|ENT_HTML5))."','".$file."','".$_SESSION['user']."','".$file1."','".$file2."','".$file3."')";
+$sql="INSERT INTO article (ID,TITLE,TYPE,TXT,IMG,USERNAME,IMG1,IMG2,IMG3) VALUES (UUID(),'".htmlspecialchars($_POST['title@art'],$flags=ENT_QUOTES|ENT_HTML5)."',".$_POST['type@art'].",'".htmlentities(htmlspecialchars($aux,$flags=ENT_QUOTES|ENT_HTML5))."','".$file."','".$_SESSION['user']."','".$file1."','".$file2."','".$file3."')";
 // 'Check connection
 echo $sql;
 //0-name 1-username 2-password 3-mail
