@@ -1,4 +1,4 @@
-typ<?php
+<?php
 session_start();
 $servername = "localhost";
 $username = "root";
