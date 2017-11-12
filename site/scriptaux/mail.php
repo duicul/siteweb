@@ -4,14 +4,11 @@ if(isset($_SESSION['admin']))
 {if(isset($_POST['subj']))
 $subj=$_POST['subj'];
 else $subj="";
-
 if(isset($_POST['mess']))
 $mess=$_POST['mess'];
 else $mess="";
-
 echo "<html><body>";
 echo "hello";
-//if(isset($_SESSION['user'])&&isset($_SESSION['user'])&&$_SESSION['admin']==1)
 {$servername = "localhost";
 $username = "root";
 $password = "";
@@ -24,7 +21,6 @@ $conn=new mysqli($servername,$username,$password,$dname);
      $result = $conn->query($sql);
  if(!$result)
 	 echo "no result";
-  echo $sql."<br>"."lol<br>";
  $rows=mysqli_fetch_all($result);
  $subject="!!!!Breaking news ".substr($subj,0,20);
   $message = wordwrap(substr($mess,0,70), 70, "\r\n");

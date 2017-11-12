@@ -6,13 +6,9 @@ $dname="site";
 if(isset($_GET['aid']))
 {$conn=new mysqli($servername,$username,$password,$dname);
 	session_start();
-
 $admin=0;
 if(isset($_SESSION['user']))
 {$sql="SELECT * FROM user WHERE USERNAME='".$_SESSION['user']."'";
-// Check connection
-//echo $sql;
-//0-name 1-username 2-password 3-mail
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -20,25 +16,17 @@ if ($conn->connect_error) {
     if($result)
 	{$row=mysqli_fetch_assoc($result);
      $admin=$row['ADMIN'];
-	 //echo $admin."admin";
 	}} 
- 
-//echo $_GET['aid'];
 $sql="SELECT * FROM comment WHERE AID='".$_GET['aid']."' ORDER BY DATE DESC ";
-//echo $sql;
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
      $result = $conn->query($sql);
     if(!$result)
-	{	//echo "No comments";
-	}
+	{	}
 	else
-	{//echo $result->num_rows."comments<br>";
-	 $rows = mysqli_fetch_all($result);
-	//print_r($rows);
+	{$rows = mysqli_fetch_all($result);
 	$comms=array_chunk($rows,6);
-	//print_r($comms);
 	function showcomm($comms){
 	echo "<span  id=\"#topcomm\">";
 	echo "<a class=\"linkbutton point\" onClick=\"showcomm(0);\"><i class=\"fa fa-fast-backward\" ></i></a>";

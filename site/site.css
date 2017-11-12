@@ -16,6 +16,7 @@ display:none;
 	margin:5px;
 	border-radius: 15px;
 }
+
 .commpanel{
 	border: 1px ridge rgba(21,72,176,0.56);
 	border-radius: 15px;
@@ -29,9 +30,8 @@ display:none;
     left:10%;
 	width:70%;
 	z-index: 200;
-    
-	
 }
+
 #newarticletxt{
 	background: #FFF;
 	padding: 10px;
@@ -39,8 +39,7 @@ display:none;
 	border-radius: 10px;
 	margin:20px;
 	margin-color:red; 
-	height:200px;
-	
+	height:200px;	
 }
 
 #newcomm{
@@ -49,8 +48,8 @@ display:none;
 	width: 100%;
 	height: 20px;
 	font-size: 14px;
-	
 }
+
 .panel{
     margin: 13px;	
     border: 1px ridge rgba(21,72,176,0.56);
@@ -64,14 +63,17 @@ display:none;
 	border-radius: 10px;
 	width: 75%;
 }
+
 .panel-head{
 	background-color:rgba(196,196,196,0.53);
 	padding: 10px;
 }
+
 .panel-body{
 	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
 	text-align: left;
 }
+
 a.linkbutton:hover{
 				background-color: #F30808;
 	            text-decoration: none;
@@ -81,6 +83,7 @@ a.linkbutton:hover{
 a.linkbutton{
 	padding: 10px;	
 }
+
 body .modal-open{
 	width: 1560px;
     margin-left: -280px;
@@ -89,8 +92,8 @@ body .modal-open{
 .art_txt{
 		font-size: 1.2rem;
         font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
-	
 }
+
 .headerimag{
 	width: 100%;
 	height: 80px;
@@ -131,7 +134,10 @@ body .modal-open{
 	color:aliceblue;
 }
 
-.alink{text-decoration: none;}
+.alink{
+text-decoration: none;
+color:#ff3e9f;
+}
 
 div.star1:hover{
 	border: red;
@@ -140,6 +146,7 @@ div.star1:hover{
 .page_left{
 	color:aliceblue;
 }
+
 .page_right{
 	color:aliceblue;
 }
@@ -147,5 +154,6 @@ div.star1:hover{
 body{
 	background-image: url("img/AquaFresh.jpg");
 	background-size: cover;
-	background-repeat: no-repeat
+	background-repeat: no-repeat;
+    background-attachment: fixed;
 }

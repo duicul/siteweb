@@ -4,8 +4,6 @@ $username = "root";
 $password = "";
 $dname="site";
 session_start();
-// Create connection
-//$conn = new mysqli($servername,$username,$password,$dname);
 if(isset($_SESSION['user']))
 {$conn=new mysqli($servername,$username,$password,$dname);
 $sql="SELECT * FROM article WHERE TYPE=".$_GET['tip'];

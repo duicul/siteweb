@@ -4,9 +4,6 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dname="site";
-
-// Create connection
-//$conn = new mysqli($servername,$username,$password,$dname);
 $conn=new mysqli($servername,$username,$password,$dname);
 $sql="SELECT * FROM mainpage WHERE TYPE!=1";
 if ($conn->connect_error) {

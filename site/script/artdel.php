@@ -17,16 +17,9 @@ if($result)
 if(sizeof($row)==0||$row['ADMIN']==0)
 {}
 else
-{//print_r($row);
+{
  $sql="DELETE a.*,vi.*,vo.*,c.* FROM article a LEFT JOIN visit vi ON a.ID=vi.AID LEFT JOIN vote vo ON vo.AID=a.ID LEFT JOIN comment c ON a.ID=c.AID WHERE a.ID='".$_GET['aid']."'";
- //$sql="DELETE FROM visit WHERE AID='".$_GET['aid']."'";
- echo $sql."<br>";
  $result=$conn->query($sql);
- if($result)
- {//print_r(mysqli_fetch_all($result));
- echo "result";}
- else echo"no result";
 }}}}
 $conn->close();
-echo "Connected successfully";
 ?> 

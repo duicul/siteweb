@@ -1,6 +1,7 @@
 <?php
 session_start();
-$aux=$_GET['aid'];
+if(isset($_POST['aid']))
+{$aux=$_POST['aid'];
 if(isset($_SESSION['user']))
 {
 $servername = "localhost";
@@ -10,7 +11,6 @@ $dname="site";
 $conn=new mysqli($servername,$username,$password,$dname);
 
 $sql="SELECT * FROM vote WHERE UID='".$_SESSION['user']."' AND AID='".$aux."'";
-//echo $sql."ceva<br>";
 	$vote=0;
 if ($conn->connect_error) 
 	$conn->close();
@@ -31,4 +31,5 @@ echo $aux."');\">4 </i>";
 echo "<i id=\"star5\" class=\"point fa fa-star-o\"  onClick=\"rating(5,'";
 echo $aux."');\">5 </i>";
 echo "</div>";
+}
 }?>

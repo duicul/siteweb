@@ -5,9 +5,6 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dname="site";
-
-// Create connection
-//$conn = new mysqli($servername,$username,$password,$dname);
 $conn=new mysqli($servername,$username,$password,$dname);
 if($_GET['tip']=="all")
 	$cond="";

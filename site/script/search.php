@@ -32,4 +32,4 @@ if(sizeof($var)>0){
 	 echo $rows[$key][1]."</a><br>";		
 	echo substr($rows[$key][2],0,100);
 	}}
-	?>
+?>

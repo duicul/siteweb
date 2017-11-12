@@ -83,6 +83,15 @@ echo "<a style=\"text-decoration:none;color:#000;\" href=\"/site/page.php?id=".$
 	</div>
 	
 <div class="col-6" style="background: rgba(255,255,255,1.00)" id="articlemain">
+<div id="google_translate_element"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'ro'}, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <h2 align="center" id="maintitle"><?php echo $row['TITLE']; ?></h2>
 
@@ -143,9 +152,7 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 	<hr>
 	<footer class="footer">
 	<nav class="navbar navbar-expand-lg navbar-light bg-faded">
-	<span>
-	<div class="link"></div>
-	</span>
+	<span class="mr-auto link"></span>
     <span style="text-align:right;text-decoration: none;width:100%">
     <a href="https://www.facebook.com" ><i class="fa fa-2x fa-facebook-official" aria-hidden="true"></i></a>
 	<a href="https://github.com/duicul/siteweb"><i class="fa fa-2x fa-github" aria-hidden="true"></i></a>

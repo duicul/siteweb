@@ -4,29 +4,33 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dname="site";
-if($_GET['tip']==1)
-{$cond="";}
-else{$cond="WHERE TYPE=".$_GET['tip'];}
 $conn=new mysqli($servername,$username,$password,$dname);
+if(isset($_GET['aid']))
+{$sql="SELECT * FROM article WHERE ID='".$_GET['aid']."'";
+   $result = $conn->query($sql);
+    if($result)
+	{$row = mysqli_fetch_assoc($result);
+    $type=$row['TYPE'];}
+}
+$type=isset($type)?$type:$_GET['tip'];
+
+if($type==1)
+{$cond="";}
+else{$cond="WHERE TYPE=".$type;}
 $sql="SELECT a.ID,a.TITLE,a.TXT,a.TYPE,a.IMG,v.AID,AVG(v.SCORE) as SCOR FROM (SELECT * FROM article ".$cond.") a,vote v WHERE a.ID=v.AID GROUP BY AID ORDER BY SCOR DESC ";
-//echo $sql;
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
      $result = $conn->query($sql);
-	
-    if($result)
+	  if($result)
 	{$rows = mysqli_fetch_all($result);
-    //print_r($rows);
 	 echo "<br>";
 	 $i=0;
 	if(sizeof($rows)>0)
 	foreach($rows as $row)
-{ if($i>10)
+{ if($i>5)
 	break;
     $i++;
-   
-   //print_r($row);
     echo "<p>";
     $q="<a class=\"alink\" href=\"/site/page.php?id=".$row[0]."&type=".$row[3]."\">".$row[1]."  ";
      $q.=($row[6]/1)."<i class=\"point fa fa-star-o\"></i><br>";

@@ -7,8 +7,6 @@ $dname="site";
 echo "change";
 if(!($_SESSION['user']&&isset($_SESSION['user'])&&$_SESSION['admin']==1))
 	header('Location: '.$uri.'/site/');
-// Create connection
-//$conn = new mysqli($servername,$username,$password,$dname);
 else {$conn=new mysqli($servername,$username,$password,$dname);
 $target_dir=dirname(getcwd())."\img\\";
 $target_file = $target_dir . basename($_FILES["file@art"]["name"]);
@@ -38,10 +36,7 @@ if($_FILES['txtfile@art']['error'] == UPLOAD_ERR_OK&& is_uploaded_file($_FILES['
 }
 if (file_exists($target_file)) {
     echo "Sorry, file already exists.";
-	//header('Location: '.$uri.'/site/');
-    //$uploadOk = 0;
 }
-// Check file size
 if ($_FILES["file@art"]["size"] > 500000) {
     echo "Sorry, your file is too large.";
     $uploadOk = 0;
@@ -49,7 +44,6 @@ if ($_FILES["file@art"]["size"] > 500000) {
 }
 if ($uploadOk == 0) {
     echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["file@art"]["tmp_name"], $target_file)) {
         echo "The file ". basename( $_FILES["file@art"]["name"]). " has been uploaded.";
@@ -62,7 +56,6 @@ if ($uploadOk == 0) {
 
 if ($uploadOk1 == 0) {
     echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["file1@art"]["tmp_name"], $target_file1)) {
         echo "The file ". basename( $_FILES["file1@art"]["name"]). " has been uploaded.";
@@ -73,7 +66,6 @@ if ($uploadOk1 == 0) {
 
 if ($uploadOk2 == 0) {
     echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["file2@art"]["tmp_name"], $target_file)) {
         echo "The file ". basename( $_FILES["file2@art"]["name"]). " has been uploaded.";
@@ -84,7 +76,6 @@ if ($uploadOk2 == 0) {
 
 if ($uploadOk3 == 0) {
     echo "Sorry, your file was not uploaded.";
-// if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["file3@art"]["tmp_name"], $target_file)) {
         echo "The file ". basename( $_FILES["file3@art"]["name"]). " has been uploaded.";
@@ -95,7 +86,6 @@ if ($uploadOk3 == 0) {
 
 
 $sql="SELECT * FROM article WHERE TITLE='".$_POST['title@art']."' AND TYPE=".$_POST['type@art'];
-echo $sql."<br>";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -106,13 +96,11 @@ if ($conn->connect_error) {
 		$txt=$row['TXT'];
 	    else $txt="";}
     else $row=[];
-print_r($row);
 if(sizeof($row)>0)
 {$val="";
 	if(strlen($file)!=0)
 	{$val=" IMG='".$file."'";
     $sql="UPDATE article SET ".$val." WHERE TYPE=".$_POST['type@art'];
-     echo $sql."<br>";
     if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     }
@@ -121,10 +109,8 @@ if(sizeof($row)>0)
     if(isset($_POST['txt@art'])&&strlen($_POST['txt@art'])>2||strlen($filetxt)>0)
 	{  $aux=$_POST['txt@art'];
 		$txt=$txt.$filetxt.$aux;
-	 //htmlentities(htmlspecialchars($txt,$flags=ENT_QUOTES|ENT_HTML5))
 	 $val=" TXT='".$txt."'";
      $sql="UPDATE article SET ".$val." WHERE TYPE=".$_POST['type@art'];
-     echo $sql."<br>";
       if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     }
@@ -133,28 +119,21 @@ if(sizeof($row)>0)
 	 if(isset($_POST['title@art'])&&strlen($_POST['title@art'])!=0)
 	 {$val=" TITLE='".$_POST['title@art']."' ";
       $sql="UPDATE article SET ".$val." WHERE TYPE=".$_POST['type@art'];
-     echo $sql."<br>";
      if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
      }
      $result = $conn->query($sql);}  
-	  echo $_POST['txt@art'];
 }
 else    	
 {
 $aux=$filetxt.$_POST['txt@art'];
 $sql="INSERT INTO article (ID,TITLE,TYPE,TXT,IMG,USERNAME,IMG1,IMG2,IMG3) VALUES (UUID(),'".htmlspecialchars($_POST['title@art'],$flags=ENT_QUOTES|ENT_HTML5)."',".$_POST['type@art'].",'".htmlentities(htmlspecialchars($aux,$flags=ENT_QUOTES|ENT_HTML5))."','".$file."','".$_SESSION['user']."','".$file1."','".$file2."','".$file3."')";
-// 'Check connection
-echo $sql;
-//0-name 1-username 2-password 3-mail
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 if($conn->query($sql)==TRUE)
 echo "User added";
-else {echo "User <b>not</b> added<br>";
-     echo "Error: " . $sql . "<br>" . $conn->error."<br>";}
- 
+else {echo "User <b>not</b> added<br>";}
 $conn->close();
 echo "Connected successfully";
 }}

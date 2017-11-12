@@ -23,6 +23,7 @@ $conn=new mysqli($servername,$username,$password,$dname);
 			echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#artdelModal\" onClick=\"listdel('all')\">Remove article</a><br>"; 
 			echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#mainchangeModal\">Add/Change main page</a><br>";
 			echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#maindelModal\" onClick=\"mainlistdel();\">Delete main page</a><br>";
+         //echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#transchangeModal\">Add translation</a><br>";
             echo "</form></div></div></div></div>";
 			
 			echo "<div class=\"modal fade\" id=\"artinschangeModal\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">";
@@ -96,6 +97,29 @@ $conn=new mysqli($servername,$username,$password,$dname);
             echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#maindelModal\">Back</a><br>";
 		    echo "<p id=\"maindel\">ded</p>";
             echo "</div></div></div></div>";
+            
+            /*echo "<div class=\"modal fade\" id=\"transchangeModal\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">";
+            echo "<div class=\"modal-dialog\" style=\"width:700px;\">";
+			echo "<div class=\"modal-content\" style=\"padding:25px;width:700px;\">";
+             echo "<div class=\"container-fluid\" align=\"center\">";
+            echo "<h3 align=\"center\">Create/Change Main Page</h3><br/>";
+			echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#transchangeModal\">Back</a><br>";
+			echo "<input type=\"text\" id=\"title@trans\" placeholder=\"Title\"/>  <br />";
+         echo "<input type=\"text\" id=\"lang@trans\" placeholder=\"Lang\"/>  <br />";
+			echo "<select id=\"type@trans\" onChange=\"getartbytype();\" onClick=\"getartbytype();\">";
+			 echo "<option value=\"-1\">None</option>";
+			 foreach($rows as $row)
+	         if($row[0]!=0)
+				 echo "<option value=\"".$row[0]."\">".$row[1]."</option>";
+            echo "</select>  <br />";
+		    echo "Types: ";
+			 foreach($rows as $row)
+	         echo $row[0]." ";
+            echo "<br />";
+			 echo "Text File: <input type=\"file\" id=\"txtfiletrans\"/>  <br />";
+			echo "<textarea id=\"txt@trans\" placeholder=\"Text\" cols=\"60\" rows=\"20\"></textarea>  <br />";
+            echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#transchangeModal\" onClick=\"transins();\" >Create/Change</a><br>";
+            echo "</div></div></div></div>";*/
 			}}
 			else
 			{echo "<div class=\"modal fade\" id=\"loginModal\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">";

@@ -12,9 +12,6 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dname="site";
-
-// Create connection
-//$conn = new mysqli($servername,$username,$password,$dname);
 $conn=new mysqli($servername,$username,$password,$dname);
 $sql="SELECT * FROM mainpage WHERE TYPE=1";
 if ($conn->connect_error) {
@@ -25,7 +22,7 @@ if ($conn->connect_error) {
 	if(isset($_SESSION['user']))
 		$aux=$_SESSION['user'];
 	else $aux='anonymous';
-	$sql="SELECT * FROM article a ORDER BY DATE LIMIT 1";
+$sql="SELECT * FROM article a ORDER BY DATE LIMIT 1";
 	$result = $conn->query($sql);
 	$newart = mysqli_fetch_assoc($result);
     
@@ -38,9 +35,20 @@ if ($conn->connect_error) {
 	echo "<a class=\"linkbutton point\" onClick=\"shownext();\"><i class=\"fa fa-step-forward\" ></i></a>";
 	echo "<a class=\"linkbutton point\" onClick=\"showpag(".(sizeof($sect)-1).");\"><i class=\"fa fa-fast-forward\" ></i></a>";
     echo "</span>";}
+
+if(isset($_GET['lang']))
+{$sql="SELECT * FROM txttrans WHERE TYPE=1 AND LANG='".$_GET['lang']."'";
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+     $result = $conn->query($sql);
+   if($result&&$result->num_rows>0)
+   {$trans = mysqli_fetch_assoc($result);} 
+}
+
 	
 	?>
-   <title><?php echo $row['TITLE']; ?></title>
+   <title><?php echo isset($trans['TITLE'])?$trans['TITLE']:$row['TITLE']; ?></title>
 </head>
 
 <body onLoad="startmain(1,'<?php echo $aux ?>')">
@@ -85,17 +93,30 @@ echo "<a style=\"text-decoration:none;color:#000;\" href=\"/site/page.php?id=".$
 	</div>
 
 <div class="col-6" style="background: rgba(255,255,255,1.00)" id="articlemain">
+<div id="google_translate_element"></div>
 
-<h2 align="center" id="maintitle"><?php echo $row['TITLE']; ?></h2>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'ro'}, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<br>
+<img src="/site/img/ro.png" style="width:50px;height:50px" onClick="window.location.replace('/site/');" class="point">
+
+<img src="/site/img/eng.jpg" style="width:50px;height:50px" onClick="window.location.replace('/site/?lang=eng');" class="point">
+
+<h2 align="center" id="maintitle"><?php echo isset($trans['TITLE'])?$trans['TITLE']:$row['TITLE']; ?></h2>
 
 <?php 
 if(strlen($row['IMG'])>0)
-{echo "<a class=\"example-image-link\" href=\"/site/img/".$row['IMG']."\" data-title=\"".$row['TITLE']."\" data-lightbox=\"imag1\">";
+{echo "<a class=\"example-image-link\" href=\"/site/img/".$row['IMG']."\" data-title=\"".isset($trans['TITLE'])?$trans['TITLE']:$row['TITLE']."\" data-lightbox=\"imag1\">";
  echo "<img class=\"example-image-link\" alt=\"\" src=\"/site/img/";
 echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 ?>
 <br>
-<?php $arrtxt=preg_split("/\n/",$row['TXT'],-1,PREG_SPLIT_NO_EMPTY);
+<?php $arrtxt=preg_split("/\n/",isset($trans['TXT'])?$trans['TXT']:$row['TXT'],-1,PREG_SPLIT_NO_EMPTY);
 	echo "<p class=\"art_txt\" style=\"font-weight:bold\">";
 	if(!isset($arrtxt[0])||strlen($arrtxt[0])<=2)
 	echo "....";
@@ -143,9 +164,7 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 	<hr>
 	<footer class="footer">
 	<nav class="navbar navbar-expand-lg navbar-light bg-faded">
-	<span>
-	<div class="link"></div>
-	</span>
+	<span class="mr-auto link"></span>
     <span style="text-align:right;text-decoration: none;width:100%">
     <a href="https://www.facebook.com" ><i class="fa fa-2x fa-facebook-official" aria-hidden="true"></i></a>
 	<a href="https://github.com/duicul/siteweb"><i class="fa fa-2x fa-github" aria-hidden="true"></i></a>

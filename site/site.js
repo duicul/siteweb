@@ -4,6 +4,26 @@ var elPos ;
 var caid;
 var page=0;
 var comm=0;
+var cat=0;
+
+function changelang(lang){
+	console.log(lang);
+	console.log(window.location+"?lang="+lang);
+	
+}
+
+function showcat(init){
+	$(".sectcat"+cat).css("display","none");
+	$(".sectcat"+init).css("display","block");
+	cat=init;}
+	
+function prevcat(){
+	if($(".sectcat"+(cat-1)).length)
+	{showcat(cat-1);}}
+	
+function nextcat(){
+	if($(".sectcat"+(cat+1)).length)
+	{showcat(cat+1);}}
 
 function showpag(init){
 	$("#sectart"+page).css("display","none");
@@ -39,11 +59,10 @@ function shownextcomm(){
 	if($("#sectcomm"+(comm+1)).length)
 	{showcomm(comm+1);}}
 
-
 function artchange(aid){
 $("#artchangbutt").html("<a class=\"btn btn_mod\" href=\"#\" onClick=\"artchangephp('"+aid+"');\" >Create/Change</a><br>");
 $(".art_txt").each(function(index){
-console.log($( this ).prop('contenteditable',true));
+$( this ).prop('contenteditable',true);
 	//$( this ).keyup(function(){console.log($( this ).html());});
 });
 $("#arttitle").prop('contenteditable',true);
@@ -52,7 +71,7 @@ $("#arttitle").prop('contenteditable',true);
 function mainchange(tip){
 $("#artchangbutt").html("<a class=\"btn btn_mod\" href=\"#\" onClick=\"mainchangephp('"+tip+"');\" >Create/Change</a><br>");
 $(".art_txt").each(function(index){
-console.log($( this ).prop('contenteditable',true));
+//console.log($( this ).prop('contenteditable',true));
 $("#maintitle").prop('contenteditable',true);
 	//$( this ).keyup(function(){console.log($( this ).html());});
 });
@@ -76,30 +95,29 @@ function showHint() {
 	var temp=document.getElementById("temp").value;
 	var humid=document.getElementById("humid").value;
 	var heat=document.getElementById("heat").value;
-	document.getElementById("txtHint").innerHTML = temp+" "+humid+" "+heat;
+	//document.getElementById("txtHint").innerHTML = temp+" "+humid+" "+heat;
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("txtHint").innerHTML = this.responseText;
+                //document.getElementById("txtHint").innerHTML = this.responseText;
             }
         };
         xmlhttp.open("GET", "/site/script/test.py?temp=" + temp+"&humid="+humid+"&heat="+heat, true);
         xmlhttp.send();}
 
-function mail(mess,subj){
+/*function mail(mess,subj){
 	var url = "/site/script/mail.php";
 	var formData = new FormData();
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("txtHint").innerHTML = this.responseText;
+                console.log(this.responseText);
             }
         };
 	    formData.append("subj", subj);
 	formData.append("mess",mess);
 	xmlhttp.open("POST",url, true);
     xmlhttp.send(formData);
-	xmlhttp.close();
-}
+}*/
 
 function newsletterins(name,mail){
 	var url = "/site/script/newsletterins.php";
@@ -107,7 +125,7 @@ function newsletterins(name,mail){
 	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("txtHint").innerHTML = this.responseText;
+                //document.getElementById("txtHint").innerHTML = this.responseText;
 				$("#newsletterModal").modal("toggle");
             }
         };
@@ -153,6 +171,7 @@ function showCom(aid) {
         xmlhttp.send();}}
 
 function showstar(aid){
+    var url="/site/script/showstar.php?";
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -160,10 +179,12 @@ function showstar(aid){
             }
         };
 	if(aid!=undefined)
-	{xmlhttp.open("GET", "/site/script/showstar.php?aid="+String(aid), true);
-        xmlhttp.send();}
-	
-	
+	{var aid= String(aid);
+    var formData = new FormData();
+    formData.append("aid",aid);
+    xmlhttp.open("POST",url, true);
+    xmlhttp.send(formData);
+	}
 }
 
 function search() {
@@ -189,14 +210,23 @@ function rate(tip){
 	
     }
 
-function score(tip){
+function score(tip,aid){
     var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("topscore").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", "/site/script/score.php?tip="+tip, true);
+        q="";
+        if(tip!=undefined)
+        q="tip="+tip;
+        if(aid!=undefined)
+        {if(tip!=undefined)
+        	q+="&";
+        	q+="aid="+aid;
+        }
+        //console.log(q);
+        xmlhttp.open("GET", "/site/script/score.php?"+q, true);
         xmlhttp.send();
 	
     }
@@ -252,12 +282,10 @@ function signup(){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
 			}};
-	
-	
-	var username =$("#usersignup").val();//document.getElementById("usersignup").value;
-	var password = $("#passwordsignup").val();//document.getElementById("passwordsignup").value;
-	var name = $("#namesignup").val(); //document.getElementById("namesignup").value;
-	var mail = $("#mailsignup").val(); //document.getElementById("mailsignup").value;
+	var username =$("#usersignup").val();
+	var password = $("#passwordsignup").val();
+	var name = $("#namesignup").val(); 
+	var mail = $("#mailsignup").val(); 
     var formData = new FormData();
 	var pattmail = /.+@.+\..+/;
     formData.append("password", password);
@@ -287,14 +315,18 @@ function signup(){
 	 xmlhttp.open("POST",url, true);
     xmlhttp.send(formData);
 	xmlhttp.close();
-	} } } } } }
+	} 
+	} 
+	}
+	}
+	}
+   }
 }
 
 function logout(){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                //document.getElementById("log").innerHTML = this.responseText;
 								  window.location.reload();            }
         };
         xmlhttp.open("GET", "/site/script/logout.php?", true);
@@ -309,18 +341,12 @@ function search(tip){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
 				console.log(this.responseText);
-				//console.log(document.getElementById("articlemain").innerHTML);
 				document.getElementById("articlemain").innerHTML=this.responseText;
-				//$("#articlemain").html("ceva"+this.resoponseText);
 			}};
-	//var formData = new FormData();
 	searchitem=$("#search").val();
 	console.log(searchitem);
-    //formData.append("tip", tip);
-	//formData.append("search", searchitem);
 	xmlhttp.open("GET", "/site/script/search.php?search="+searchitem+"&tip="+tip, true);
     xmlhttp.send();
-	//xmlhttp.close();
 }
 
 function loadsearch(tip){
@@ -366,7 +392,6 @@ function adjpos(){
         } else {
             $('#newcomm').css('position','static');
         }
-	//console.log($("#newcomm").offset());
 });}
 
 function addcom(user,aid){
@@ -392,7 +417,6 @@ function remcom(cid,aid){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-               // document.getElementById("resp").innerHTML = this.responseText;
 			newcomm('',aid);
 				showCom(aid);
 				showcomm(comm);
@@ -429,7 +453,6 @@ var url = "/site/script/mainchangephp.php";
  var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
 				window.location.reload();
 			}};
 	console.log(txt);
@@ -454,10 +477,8 @@ var url = "/site/script/artchange.php";
  var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
 				window.location.reload();
 			}};
-	console.log(txt);
     var formData = new FormData();
     formData.append("txt@art",txt);
 	formData.append("aid",aid);
@@ -471,17 +492,15 @@ function artins(txt){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                alert(this.responseText);
-			    //mail($("#txtart").val(),$("#artbytype").val().length==0?$("#titleart").val():$("#artbytype").val()); 
+            $("#artinsModal").modal("toggle");
+             //mail(filetxt+$("#txtart").val(),$("#artbytype").val().length==0?$("#titleart").val():$("#artbytype").val());
 			}
         };
-	console.log($("#appendart").is(":checked"));
 	if($("#titleart").val().length>=3||$("#artbytype").val().length!=0)
 	{var file = document.getElementById("fileart").files[0];
 	 var file1 = document.getElementById("fileart1").files[0];
 	 var file2 = document.getElementById("fileart2").files[0];
 	 var file3 = document.getElementById("fileart3").files[0];
-	 //console.log(file);
 	 var filetxt = document.getElementById("txtfileart").files[0];
     var formData = new FormData();
     formData.append("file@art", file);
@@ -497,15 +516,35 @@ function artins(txt){
     xmlhttp.open("POST",url, true);
     xmlhttp.send(formData);
 	}
-$("#artinsModal").modal("toggle");
+
 }
+
+function googleTranslateElementInit(lang) {
+new google.translate.TranslateElement({pageLanguage: lang}, 'google_translate_element');
+}
+function transins(){
+	var url = "/site/script/transchange.php";
+	var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+			    link();}
+        };
+	if(document.getElementById("type@trans").value>=0)
+	{var filetxt = document.getElementById("txtfiletrans").files[0];
+    var formData = new FormData();
+	 formData.append("txtfile@trans", filetxt);
+	 formData.append("lang@trans", document.getElementById("lang@trans").value);
+	formData.append("title@trans", document.getElementById("title@trans").value);
+	formData.append("type@trans", document.getElementById("type@trans").value);
+	formData.append("txt@trans", document.getElementById("txt@trans").value);
+    xmlhttp.open("POST",url, true);
+    xmlhttp.send(formData);}}
 
 function mainins(){
 	var url = "/site/script/mainchange.php";
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                alert(this.responseText);
 			    link();}
         };
 	if(document.getElementById("type@main").value.length>0)
@@ -544,7 +583,7 @@ function artdel(aid){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("test").innerHTML = this.responseText;
+                //document.getElementById("test").innerHTML = this.responseText;
 			}
         };
         xmlhttp.open("GET", "/site/script/artdel.php?aid="+aid, true);
@@ -557,7 +596,7 @@ function maindel(tip){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("test").innerHTML = this.responseText;
+                //document.getElementById("test").innerHTML = this.responseText;
 			}
         };
         xmlhttp.open("GET", "/site/script/maindel.php?tip="+tip, true);
@@ -567,8 +606,8 @@ function maindel(tip){
 
 function newarticlestart(){
 	$("#newarticle").css({"bottom":$(".footer").height()+"px"});
-	console.log($("#newarticle").css({"z-index":"100"}));	
-	console.log($(".footer").height());
+	$("#newarticle").css({"z-index":"100"});
+	$(".footer").height();
 	
 }
 
@@ -594,6 +633,7 @@ function startmain(tip){
 	newcomm(tip);
 	log();
 	link();
+	showcat(0);
 	showpag(0);
 	newarticlestart();
 	newsletter();
@@ -621,6 +661,7 @@ function start(tip,aid,user,aid){
 	newsletter();
 	newcomm(tip);
 	showpag(0);
+	showcat(0);
 	showcomm(0);
 	log();
 	link();
@@ -632,11 +673,11 @@ function rating(val,aid){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-               // document.getElementById("sol").innerHTML = this.responseText;
              log();
      showCom(aid);
      getscore(aid);
      showstar(aid);
+     score(undefined,aid);
 			}
         };
         xmlhttp.open("GET", "/site/script/rate.php?val="+val+"&aid="+aid, true);

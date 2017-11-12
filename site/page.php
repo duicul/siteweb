@@ -46,7 +46,6 @@ if ($conn->connect_error) {
      $result = $conn->query($sql);
 	
 	$row = mysqli_fetch_assoc($result);
-	//echo $row['NUMAR'];
 	
 $sql="UPDATE article SET RATE='".$row['NUMAR']."' WHERE ID='".$_GET['id']."' AND TYPE=".$_GET['type'];
 if ($conn->connect_error) {
@@ -69,7 +68,6 @@ $sql="SELECT * FROM article a WHERE TYPE=".$_GET['type']." ORDER BY DATE LIMIT 1
 	$result = $conn->query($sql);
 	$newart = mysqli_fetch_assoc($result);
 ?>
-
 <title><?php echo $row['TITLE'];?></title>
 </head>
 <body onLoad="start(<?php echo $row['TYPE'] ?>,'<?php echo $row['ID'] ?>','<?php echo $aux ?>','<?php echo $_GET['id'] ?>');">
@@ -124,6 +122,15 @@ echo "<a style=\"text-decoration:none;color:#000;\" href=\"/site/page.php?id=".$
 	</div>
 	
 <div class="col-6" style="background: rgba(255,255,255,1.00)" id="articlemain">
+<div id="google_translate_element"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'ro'}, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <h2 align="center" id="arttitle"><?php echo $row['TITLE']; ?></h2>
 
@@ -145,7 +152,7 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;display:block;\"></a>";}
 	$sect=array_chunk($mainarttxt,3);
 	showpagin($sect);
 	for($i=0;$i<sizeof($sect);$i=$i+1)
-	{echo "<div class=\"sections\" style=\"".($i==0?"display:block":"")."\" id=\"sectart".$i."\">";
+	{echo "<div class=\"sections\" style=\"".($i==0?"display:block":"display:none")."\" id=\"sectart".$i."\">";
 		for($j=0;$j<sizeof($sect[$i]);$j=$j+1)
 	{	//$inter=(int)(sizeof($mainarttxt)/3)==0?1:(int)(sizeof($mainarttxt)/3+1);
 	echo "<div class=\"sectpart\">";
@@ -208,9 +215,7 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;display:block;\"></a>";}
 	<hr>
 	<footer class="footer">
 	<nav class="navbar navbar-expand-lg navbar-light bg-faded">
-	<span>
-	<div class="link"></div>
-	</span>
+	<span class="mr-auto link"></span>
     <span style="text-align:right;text-decoration: none;width:100%">
     <a href="https://www.facebook.com" ><i class="fa fa-2x fa-facebook-official" aria-hidden="true"></i></a>
 	<a href="https://github.com/duicul/siteweb"><i class="fa fa-2x fa-github" aria-hidden="true"></i></a>
