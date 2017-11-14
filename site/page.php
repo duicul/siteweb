@@ -122,15 +122,6 @@ echo "<a style=\"text-decoration:none;color:#000;\" href=\"/site/page.php?id=".$
 	</div>
 	
 <div class="col-6" style="background: rgba(255,255,255,1.00)" id="articlemain">
-<div id="google_translate_element"></div>
-
-<script type="text/javascript">
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({pageLanguage: 'ro'}, 'google_translate_element');
-}
-</script>
-
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <h2 align="center" id="arttitle"><?php echo $row['TITLE']; ?></h2>
 
