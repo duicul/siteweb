@@ -31,7 +31,7 @@ $conn=new mysqli($servername,$username,$password,$dname);
 			echo "<div class=\"modal-content\" style=\"padding:25px;width:700px;\">";
              echo "<div class=\"container-fluid\" align=\"center\">";
             echo "<h3 align=\"center\">Add/chnage article</h3><br/>";
-			echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#artinschangeModal\" onClick=\"artins();\" >Back</a><br>";
+			echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#artinschangeModal\" >Back</a><br>";
 			echo "<p align=\"center\">Main Photo: <label for=\"fileart\"><i class=\"fa fa-cloud-upload fa-2x\"></i></label>";
 			echo "<input type=\"file\" id=\"fileart\" style=\"visibility: hidden\"/>";
 			echo "Photo1: <label for=\"fileart1\"><i class=\"fa fa-cloud-upload fa-2x\"></i></label>";
@@ -51,7 +51,7 @@ $conn=new mysqli($servername,$username,$password,$dname);
 			echo "Append : <input type=\"checkbox\" id=\"appendart\"><br/>";
 			echo "Text File: <input type=\"file\" id=\"txtfileart\"/>  <br />";
 			echo "<textarea id=\"txtart\" placeholder=\"Text\" maxlength=\"2000\" cols=\"60\" rows=\"20\" required required ></textarea>  <br />";
-            echo "<a class=\"btn btn_mod\" href=\"#\" onClick=\"artins();\" >Create/Change</a><br>";
+            echo "<a class=\"btn btn_mod\" href=\"#\" data-toggle=\"modal\" data-target=\"#artinschangeModal\"  onClick=\"artins();\" >Create/Change</a><br>";
             echo "</div></div></div></div>"; 
 			 
 			echo "<div class=\"modal fade\" id=\"artdelModal\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">";

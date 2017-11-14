@@ -494,6 +494,7 @@ function artins(txt){
             if (this.readyState == 4 && this.status == 200) {
             $("#artinsModal").modal("toggle");
              //mail(filetxt+$("#txtart").val(),$("#artbytype").val().length==0?$("#titleart").val():$("#artbytype").val());
+             window.location.reload();
 			}
         };
 	if($("#titleart").val().length>=3||$("#artbytype").val().length!=0)
@@ -584,12 +585,13 @@ function artdel(aid){
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 //document.getElementById("test").innerHTML = this.responseText;
+       listdel('all');
+	    score('all');
 			}
         };
         xmlhttp.open("GET", "/site/script/artdel.php?aid="+aid, true);
         xmlhttp.send();
-        listdel('all');
-	    score('all');
+
         }
 
 function maindel(tip){
