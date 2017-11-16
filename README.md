@@ -1,9 +1,9 @@
 # siteweb
-WebProgramming
-Site Stiri
-Diferite Categorii
-Login User/Admin
-Adaugare comentarii
-Rating articole
-Adaugare/Schimbare articole
-Adaugare/Schimbare categorii
+<b>WebProgramming</b><br>
+<b><i><h2>Site Stiri</h2></i></b><br>
+Diferite Categorii<br>
+Login User/Admin<br>
+Adaugare comentarii<br>
+Rating articole<br>
+Adaugare/Schimbare <ul> <li>articole</li>
+ <li> categorii</li></ul>
