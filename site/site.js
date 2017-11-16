@@ -187,7 +187,7 @@ function showstar(aid){
 	}
 }
 
-function search() {
+function search(temp) {
     var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -487,14 +487,15 @@ var url = "/site/script/artchange.php";
     xmlhttp.send(formData);
 }
 
-function artins(txt){
+function artins(){
 	var url = "/site/script/artinschange.php";
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
             $("#artinsModal").modal("toggle");
              //mail(filetxt+$("#txtart").val(),$("#artbytype").val().length==0?$("#titleart").val():$("#artbytype").val());
-             window.location.reload();
+            // window.location.reload();
+            //console.log(this.responseText);
 			}
         };
 	if($("#titleart").val().length>=3||$("#artbytype").val().length!=0)
@@ -510,8 +511,10 @@ function artins(txt){
 	formData.append("file3@art", file3);
 	formData.append("txtfile@art", filetxt);
 	formData.append("append@art", $("#appendart").is(":checked")?"1":"0");
-	console.log($("#artbytype").val());
+	//console.log($("#artbytype").val());
 	formData.append("title@art",$("#artbytype").val().length==0?$("#titleart").val():$("#artbytype").val());
+	formData.append("newtitle@art",$("#titleart").val());
+	//console.log($("#titleart").val()+"SOMETHING");
 	formData.append("type@art", $("#typeart").val());
 	formData.append("txt@art", $("#txtart").val());
     xmlhttp.open("POST",url, true);

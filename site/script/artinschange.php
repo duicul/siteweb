@@ -4,7 +4,7 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dname="site";
-echo "change";
+//echo "change";
 if(!($_SESSION['user']&&isset($_SESSION['user'])&&$_SESSION['admin']==1))
 	header('Location: '.$uri.'/site/');
 else {$conn=new mysqli($servername,$username,$password,$dname);
@@ -32,56 +32,56 @@ $imageFileType3 = pathinfo($target_file3,PATHINFO_EXTENSION);
 $filetxt="";
 if($_FILES['txtfile@art']['error'] == UPLOAD_ERR_OK&& is_uploaded_file($_FILES['txtfile@art']['tmp_name']))
 {$filetxt=file_get_contents($_FILES['txtfile@art']['tmp_name']);
- echo $filetxt;
+ //echo $filetxt;
 }
 if (file_exists($target_file)) {
-    echo "Sorry, file already exists.";
+   // echo "Sorry, file already exists.";
 }
 if ($_FILES["file@art"]["size"] > 500000) {
-    echo "Sorry, your file is too large.";
+    //echo "Sorry, your file is too large.";
     $uploadOk = 0;
 	header('Location: '.$uri.'/site/');
 }
 if ($uploadOk == 0) {
-    echo "Sorry, your file was not uploaded.";
+    //echo "Sorry, your file was not uploaded.";
 } else {
     if (move_uploaded_file($_FILES["file@art"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $_FILES["file@art"]["name"]). " has been uploaded.";
+       // echo "The file ". basename( $_FILES["file@art"]["name"]). " has been uploaded.";
 		$file=basename( $_FILES["file@art"]["name"]);
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        //echo "Sorry, there was an error uploading your file.";
 		$file="";
     }
 }
 
 if ($uploadOk1 == 0) {
-    echo "Sorry, your file was not uploaded.";
+    //echo "Sorry, your file was not uploaded.";
 } else {
     if (move_uploaded_file($_FILES["file1@art"]["tmp_name"], $target_file1)) {
-        echo "The file ". basename( $_FILES["file1@art"]["name"]). " has been uploaded.";
+        //echo "The file ". basename( $_FILES["file1@art"]["name"]). " has been uploaded.";
 		$file1=basename( $_FILES["file1@art"]["name"]);
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        //echo "Sorry, there was an error uploading your file.";
 		$file1="";}}
 
 if ($uploadOk2 == 0) {
-    echo "Sorry, your file was not uploaded.";
+    //echo "Sorry, your file was not uploaded.";
 } else {
     if (move_uploaded_file($_FILES["file2@art"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $_FILES["file2@art"]["name"]). " has been uploaded.";
+        //echo "The file ". basename( $_FILES["file2@art"]["name"]). " has been uploaded.";
 		$file2=basename( $_FILES["file2@art"]["name"]);
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        //echo "Sorry, there was an error uploading your file.";
 		$file2="";}}
 
 if ($uploadOk3 == 0) {
-    echo "Sorry, your file was not uploaded.";
+    //echo "Sorry, your file was not uploaded.";
 } else {
     if (move_uploaded_file($_FILES["file3@art"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $_FILES["file3@art"]["name"]). " has been uploaded.";
+        //echo "The file ". basename( $_FILES["file3@art"]["name"]). " has been uploaded.";
 		$file3=basename( $_FILES["file3@art"]["name"]);
     } else {
-        echo "Sorry, there was an error uploading your file.";
+        //echo "Sorry, there was an error uploading your file.";
 		$file3="";}}
 
 
@@ -96,11 +96,13 @@ if ($conn->connect_error) {
 		$txt=$row['TXT'];
 	    else $txt="";}
     else $row=[];
+//echo $_POST['newtitle@art'];
+//echo $sql;
 if(sizeof($row)>0)
 {$val="";
 	if(strlen($file)!=0)
 	{$val=" IMG='".$file."'";
-    $sql="UPDATE article SET ".$val." WHERE TYPE=".$_POST['type@art'];
+    $sql="UPDATE article SET ".$val." WHERE ID='".$row['ID']."'";
     if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     }
@@ -110,15 +112,16 @@ if(sizeof($row)>0)
 	{  $aux=$_POST['txt@art'];
 		$txt=$txt.$filetxt.$aux;
 	 $val=" TXT='".$txt."'";
-     $sql="UPDATE article SET ".$val." WHERE TYPE=".$_POST['type@art'];
+     $sql="UPDATE article SET ".$val." WHERE ID='".$row['ID']."'";
       if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
     }
       $result = $conn->query($sql);}  
- 
-	 if(isset($_POST['title@art'])&&strlen($_POST['title@art'])!=0)
-	 {$val=" TITLE='".$_POST['title@art']."' ";
-      $sql="UPDATE article SET ".$val." WHERE TYPE=".$_POST['type@art'];
+   echo $_POST['newtitle@art'];
+	 if(isset($_POST['newtitle@art'])&&strlen($_POST['newtitle@art'])!=0)
+	 {$val=" TITLE='".$_POST['newtitle@art']."' ";
+      $sql="UPDATE article SET ".$val." WHERE ID='".$row['ID']."'";
+      //echo $sql;
      if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
      }

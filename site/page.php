@@ -123,19 +123,19 @@ echo "<a style=\"text-decoration:none;color:#000;\" href=\"/site/page.php?id=".$
 	
 <div class="col-6" style="background: rgba(255,255,255,1.00)" id="articlemain">
 
-<h2 align="center" id="arttitle"><?php echo $row['TITLE']; ?></h2>
+<h2 align="center" id="arttitle"><?php if(sizeof($row>0)) {echo $row['TITLE'];} ?></h2>
 
-<p>Articol creat de : <?php echo $row['USERNAME'];?></p>
+<p>Articol creat de : <?php if(sizeof($row>0))  echo $row['USERNAME'];?></p>
 
-<?php 
-if(strlen($row['IMG'])>0)
+<?php
+if(sizeof($row>0))  
+{if(strlen($row['IMG'])>0)
 {echo "<a class=\"example-image-link\" href=\"/site/img/".$row['IMG']."\" data-title=\"".$row['TITLE']."\" data-lightbox=\"imag1\">";
  echo "<img class=\"example-image-link\" alt=\"\" src=\"/site/img/";
 echo $row['IMG']."\" style=\"width:100%;height:200px;display:block;\"></a>";}
-	?>
-<br>
-<?php $arrtxt=preg_split("/\n/",$row['TXT'],-1,PREG_SPLIT_NO_EMPTY);
-	echo "<p class=\"art_txt\" style=\"font-weight:bold\">".$arrtxt[0]."</p>";
+ $arrtxt=preg_split("/\n/",$row['TXT'],-1,PREG_SPLIT_NO_EMPTY);
+   if(sizeof($arrtxt)>0)
+	{echo "<p class=\"art_txt\" style=\"font-weight:bold\">".$arrtxt[0]."</p>";
 	$mainarttxt=array();
 	for($i=1;$i<sizeof($arrtxt);$i=$i+1)
 	{if(strlen($arrtxt[$i])>3)
@@ -163,11 +163,14 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;display:block;\"></a>";}
 		echo "<br>";
 	}echo "</div>";
 	}	
+   }
+   }
 	?>
 <span class="pagin">
-<?php
-	showpagin($sect);
 
+<?php
+if(sizeof($arrtxt)>0)
+	showpagin($sect);
 	?>
 </span>
 <p id="txtHint"></p>
@@ -184,8 +187,10 @@ echo $row['IMG']."\" style=\"width:100%;height:200px;display:block;\"></a>";}
 <div class="commpanel">
 <textarea id="addcom" class="commbox"></textarea><br>
 <div class="commhead"><?php echo $aux;?> 
-<button type="submit" class="btn-outline-success" onClick="addcom('<?php echo $aux;?>','<?php echo $_GET['id']?>');">Post</button>
-	</div>
+<?php
+if(sizeof($row)>0)
+echo "<button type=\"submit\" class=\"btn-outline-success\" onClick=\"addcom('".$aux."','".$_GET['id']."');\">Post</button>";
+?>	</div>
 	</div>
 <p id="resp"></p>
 <br>

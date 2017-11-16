@@ -4,7 +4,7 @@ $username = "root";
 $password = "";
 $dname="site";
 $conn=new mysqli($servername,$username,$password,$dname);
-if($_GET['tip']=="all"||$_GET['tip']=="none"||strlen($_GET['tip'])==0)
+if($_GET['tip']=="1"||strlen($_GET['tip'])==0)
 $val="";
 	else $val="WHERE TYPE=".$_GET['tip'];;
 $sql="SELECT * FROM article ".$val;
@@ -16,7 +16,8 @@ if ($conn->connect_error) {
 	else $rows=[];
 $i=0;
 	$var=array();
-foreach($rows as $row){
+if(sizeof($rows)>0)
+{foreach($rows as $row){
 $pattern="/\b\w*".$_GET['search']."\w*\b/i";
 preg_match_all($pattern,$row[1]." ".$row[2],$match);
 if(sizeof($match[0])>0)
@@ -32,4 +33,5 @@ if(sizeof($var)>0){
 	 echo $rows[$key][1]."</a><br>";		
 	echo substr($rows[$key][2],0,100);
 	}}
+   }
 ?>
