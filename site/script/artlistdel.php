@@ -6,7 +6,7 @@ $username = "root";
 $password = "";
 $dname="site";
 $conn=new mysqli($servername,$username,$password,$dname);
-if($_GET['tip']=="all")
+if($_GET['tip']==1)
 	$cond="";
 else $cond="WHERE TYPE=".$_GET['tip'];
 $sql="SELECT * FROM article ".$cond;

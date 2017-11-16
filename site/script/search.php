@@ -4,7 +4,7 @@ $username = "root";
 $password = "";
 $dname="site";
 $conn=new mysqli($servername,$username,$password,$dname);
-if($_GET['tip']=="1"||strlen($_GET['tip'])==0)
+if($_GET['tip']==1||strlen($_GET['tip'])==0)
 $val="";
 	else $val="WHERE TYPE=".$_GET['tip'];;
 $sql="SELECT * FROM article ".$val;

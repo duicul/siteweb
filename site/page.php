@@ -15,9 +15,10 @@ $dname="site";
 
 // Create connection
 //$conn = new mysqli($servername,$username,$password,$dname);
-$conn=new mysqli($servername,$username,$password,$dname);
-//echo $_GET['id'];
-//echo $_GET['type'];
+$conn=@new mysqli($servername,$username,$password,$dname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 if (isset($_SERVER['HTTP_CLIENT_IP']))
         $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
     else if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
@@ -34,16 +35,14 @@ if (isset($_SERVER['HTTP_CLIENT_IP']))
         $ipaddress = 'UNKNOWN';
 $sql="INSERT INTO visit (AID,IP) VALUES ('".$_GET['id']."','".$ipaddress."')";
 	//echo $sql."<br>";
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-     $result = $conn->query($sql);
+
+     $result =@ $conn->query($sql);
 	
 $sql="SELECT COUNT(AID) as NUMAR FROM visit WHERE AID='".$_GET['id']."'";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-     $result = $conn->query($sql);
+     $result = @$conn->query($sql);
 	
 	$row = mysqli_fetch_assoc($result);
 	

@@ -20,7 +20,7 @@ $conn=new mysqli($servername,$username,$password,$dname);
              echo "<div class=\"container-fluid\" align=\"center\">";
             echo "<h3 align=\"center\">Admin commands</h3><br/>";
             echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#artinschangeModal\">Add/Change article</a><br>";
-			echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#artdelModal\" onClick=\"listdel('all')\">Remove article</a><br>"; 
+			echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#artdelModal\" onClick=\"listdel(1)\">Remove article</a><br>"; 
 			echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#mainchangeModal\">Add/Change main page</a><br>";
 			echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#maindelModal\" onClick=\"mainlistdel();\">Delete main page</a><br>";
          //echo "<a class=\"btn btn-default\" href=\"#\" data-toggle=\"modal\" data-target=\"#transchangeModal\">Add translation</a><br>";

@@ -15,7 +15,7 @@ $dname="site";
 
 // Create connection
 //$conn = new mysqli($servername,$username,$password,$dname);
-$conn=new mysqli($servername,$username,$password,$dname);
+$conn=@new mysqli($servername,$username,$password,$dname);
 $sql="SELECT * FROM mainpage WHERE TYPE='".$_GET['tip']."'";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -26,7 +26,7 @@ if ($conn->connect_error) {
 		$aux=$_SESSION['user'];
 	else $aux='anonymous';
 $sql="SELECT * FROM article a WHERE TYPE='".$_GET['tip']."' ORDER BY DATE LIMIT 1";
-	$result = $conn->query($sql);
+	$result =@ $conn->query($sql);
 	$newart = mysqli_fetch_assoc($result);
    function showpagin($sect){
 	echo "<span class=\"pagin\" id=\"#toppagin\">";
