@@ -111,7 +111,11 @@ function googleTranslateElementInit() {
 
 <?php 
 if(strlen($row['IMG'])>0)
-{echo "<a class=\"example-image-link\" href=\"/site/img/".$row['IMG']."\" data-title=\"".isset($trans['TITLE'])?$trans['TITLE']:$row['TITLE']."\" data-lightbox=\"imag1\">";
+{echo "<a class=\"example-image-link\" href=\"/site/img/".$row['IMG']."\" data-title=\"";
+ if(isset($trans['TITLE']))
+ echo $trans['TITLE'];
+ else echo $row['TITLE'];
+ echo "\" data-lightbox=\"imag1\">";
  echo "<img class=\"example-image-link\" alt=\"\" src=\"/site/img/";
 echo $row['IMG']."\" style=\"width:100%;height:200px;\"></a>";}
 ?>

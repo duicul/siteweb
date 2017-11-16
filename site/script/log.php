@@ -77,7 +77,7 @@ $conn=new mysqli($servername,$username,$password,$dname);
 			echo "<select id=\"type@main\" onChange=\"getartbytype();\" onClick=\"getartbytype();\">";
 			 echo "<option value=\"-1\">None</option>";
 			 foreach($rows as $row)
-	         if($row[0]!=0)
+	         if($row[0]!=0&&strlen($row[0])>0)
 				 echo "<option value=\"".$row[0]."\">".$row[1]."</option>";
             echo "</select>  <br />";
 		    echo "Types: ";

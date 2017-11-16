@@ -15,7 +15,7 @@ $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 if (file_exists($target_file)) {
     echo "Sorry, file already exists.";
 }
-if ($_FILES["file@main"]["size"] > 500000) {
+if ($_FILES["file@main"]["size"] > 5000000) {
     echo "Sorry, your file is too large.";
     $uploadOk = 0;
 	header('Location: '.$uri.'/site/');
@@ -74,16 +74,17 @@ if(sizeof($row)>0)
 else    	
 {$aux=$_POST['txt@main'].$filetxt;
 $aux=preg_replace(".\\n.","<br>",$aux);
-$sql="INSERT INTO mainpage (TITLE,TXT,IMG) VALUES ('".htmlspecialchars($_POST['title@main'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlspecialchars($aux,$flags=ENT_QUOTES|ENT_HTML5)."','".$file."')";
+ if(isset($_POST['title@main'])&&strlen($_POST['title@main'])!=0)
+{$sql="INSERT INTO mainpage (TITLE,TXT,IMG) VALUES ('".htmlspecialchars($_POST['title@main'],$flags=ENT_QUOTES|ENT_HTML5)."','".htmlspecialchars($aux,$flags=ENT_QUOTES|ENT_HTML5)."','".$file."')";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 if($conn->query($sql)==TRUE)
 echo "User added";
 else {echo "User <b>not</b> added<br>";
-     echo "Error: " . $sql . "<br>" . $conn->error."<br>";}
+     echo "Error: " . $sql . "<br>" . $conn->error."<br>";}}}
  
 $conn->close();
 echo "Connected successfully";
-}}
+}
 ?> 

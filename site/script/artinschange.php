@@ -7,7 +7,7 @@ $dname="site";
 //echo "change";
 if(!($_SESSION['user']&&isset($_SESSION['user'])&&$_SESSION['admin']==1))
 	header('Location: '.$uri.'/site/');
-else {$conn=new mysqli($servername,$username,$password,$dname);
+else {$conn=@new mysqli($servername,$username,$password,$dname);
 $target_dir=dirname(getcwd())."\img\\";
 $target_file = $target_dir . basename($_FILES["file@art"]["name"]);
 $uploadOk = 1;
@@ -37,7 +37,7 @@ if($_FILES['txtfile@art']['error'] == UPLOAD_ERR_OK&& is_uploaded_file($_FILES['
 if (file_exists($target_file)) {
    // echo "Sorry, file already exists.";
 }
-if ($_FILES["file@art"]["size"] > 500000) {
+if ($_FILES["file@art"]["size"] > 5000000) {
     //echo "Sorry, your file is too large.";
     $uploadOk = 0;
 	header('Location: '.$uri.'/site/');
@@ -128,16 +128,16 @@ if(sizeof($row)>0)
      $result = $conn->query($sql);}  
 }
 else    	
-{
-$aux=$filetxt.$_POST['txt@art'];
+{if(isset($_POST['title@art'])&&strlen($_POST['title@art'])!=0)
+{$aux=$filetxt.$_POST['txt@art'];
 $sql="INSERT INTO article (ID,TITLE,TYPE,TXT,IMG,USERNAME,IMG1,IMG2,IMG3) VALUES (UUID(),'".htmlspecialchars($_POST['title@art'],$flags=ENT_QUOTES|ENT_HTML5)."',".$_POST['type@art'].",'".htmlentities(htmlspecialchars($aux,$flags=ENT_QUOTES|ENT_HTML5))."','".$file."','".$_SESSION['user']."','".$file1."','".$file2."','".$file3."')";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 if($conn->query($sql)==TRUE)
 echo "User added";
-else {echo "User <b>not</b> added<br>";}
+else {echo "User <b>not</b> added<br>";}}}
 $conn->close();
 echo "Connected successfully";
-}}
+}
 ?> 

@@ -549,10 +549,12 @@ function mainins(){
 	var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-			    link();}
+			    link();
+			    console.log(this.responseText);}
         };
-	if(document.getElementById("type@main").value.length>0)
+	if(document.getElementById("type@main").value>0)
 	{var file = document.getElementById("file@main").files[0];
+	  console.log(document.getElementById("type@main").value);
 	 var filetxt = document.getElementById("txtfilemain").files[0];
     var formData = new FormData();
     formData.append("file@main", file);
